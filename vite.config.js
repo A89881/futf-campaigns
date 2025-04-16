@@ -6,4 +6,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   base: '/my-vue-app/', // <- this must match your GitHub repo name
   plugins: [vue(), tailwindcss(),],
+  // resolve: {
+  //   alias: {
+  //     '@': path.resolve(__dirname, '../src'),
+  //   },
+  // },
 })
