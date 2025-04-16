@@ -6,10 +6,12 @@
       <div class="space-y-4">
         <p>
           Jag heter [Ditt Namn] och jag läser teknisk fysik vid Uppsala universitet. Att engagera sig i FUTF har gett
-          mig möjligheten att kombinera teknik med kreativitet – något jag vill utveckla ännu mer som informationsansvarig.
+          mig möjligheten att kombinera teknik med kreativitet – något jag vill utveckla ännu mer som
+          informationsansvarig.
         </p>
         <p>
-          För mig handlar engagemang om <strong>struktur</strong>, <strong>gemenskap</strong> och <strong>riktning</strong>. 
+          För mig handlar engagemang om <strong>struktur</strong>, <strong>gemenskap</strong> och
+          <strong>riktning</strong>.
           Jag vill att FUTF ska vara en förening där alla vet vad som händer – och känner sig inkluderade i det.
         </p>
         <ul class="list-disc list-inside text-blue-900">
