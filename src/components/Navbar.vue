@@ -1,9 +1,10 @@
 <template>
   <header
-    :class="[
-      'fixed top-0 left-0 w-full z-50 transition-all duration-300',
-      isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
-    ]"
+  :class="[
+  'fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-sm',
+  isScrolled ? 'bg-white/90 shadow-lg py-2' : 'bg-black/10 py-4'
+  ]"
+
   >
     <nav class="max-w-7xl mx-auto px-4 flex justify-between items-center">
       <router-link
@@ -104,6 +105,14 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* header {
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, padding 0.3s ease;
+} */
+
+.shadow-lg {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .text-futfBlue {
   color: #1b4b7b;
 }
