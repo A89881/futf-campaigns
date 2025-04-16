@@ -1,4 +1,5 @@
 <template>
+ <Layout>
   <div class="p-6 max-w-lg mx-auto">
     <h2 class="text-2xl font-bold text-center mb-4">Har du frågor eller idéer? Hör gärna av dig!</h2>
     <form class="grid gap-4">
@@ -12,4 +13,19 @@
       <p>📸 <a href="https://instagram.com/dinkampanj">@dinkampanj</a></p>
     </div>
   </div>
+</Layout>
 </template>
+
+<script setup>
+import Layout from '../components/Layout.vue';
+import ValueCard from '../components/ValueCard.vue'
+</script>
+
+<style scoped>
+.text-futf-blue {
+  color: #1b4b7b;
+}
+.bg-futf-gold {
+  background-color: #f2b705;
+}
+</style>
