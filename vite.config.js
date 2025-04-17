@@ -6,9 +6,4 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   base: '/futf-campaigns/', // <- this must match your GitHub repo name
   plugins: [vue(), tailwindcss(),],
-  // resolve: {
-  //   alias: {
-  //     '@': path.resolve(__dirname, '../src'),
-  //   },
-  // },
 })
