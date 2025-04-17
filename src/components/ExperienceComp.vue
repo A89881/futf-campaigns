@@ -65,20 +65,33 @@ const experiences = [
 </script>
 
 <style scoped>
-.text-futf-blue {
+/* .text-futf-blue {
   color: #001f3f;
 }
 
 .bg-futf-blue {
   background-color: #001f3f;
-}
+} */
 
-.bg-futf-gold {
+/* .bg-futf-gold {
   background-color: #FFD700;
 
-}
+} */
 
-.text-futf-orange {
+/* .text-futf-orange {
   color: #FF8C00;
+} */
+
+.bg-futf-blue {
+    background-color: #1b4b7b;
+}
+.bg-futf-gold {
+    background-color: #f2b705;
+}  
+.text-futf-blue {
+    color: #1b4b7b;
+}
+.text-futf-gold {
+    color: #f2b705;
 }
 </style>
