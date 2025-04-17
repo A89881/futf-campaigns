@@ -15,7 +15,7 @@
           </div>
 
           <h3 class="text-xl font-semibold text-futf-blue mb-3">{{ item.title }}</h3>
-          <p class="text-gray-600">{{ item.description }}</p>
+          <p class="text-black-600">{{ item.description }}</p>
         </div>
       </div>
 

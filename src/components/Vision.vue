@@ -4,7 +4,7 @@
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-futf-blue mb-4">Mina visioner</h2>
         <div class="w-20 h-1 bg-futf-gold mx-auto"></div>
-        <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+        <p class="mt-4 text-futf-blue font-semibold text-l max-w-2xl mx-auto">
           Som informationsansvarig vill jag arbeta för att stärka FUTF:s kommunikation och synlighet.
           Här är mina huvudsakliga fokusområden:
         </p>
@@ -13,11 +13,11 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="(vision, index) in visions" :key="index"
           class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start mb-4">
-            <CheckCircle class="w-6 h-6 text-futf-gold mr-3" />
-            <h3 class="text-xl font-semibold text-futf-blue">{{ vision.title }}</h3>
+          <div class="flex items-center mb-4"> <!-- Changed from items-start to items-center -->
+            <CheckCircle class="w-6 h-6 text-futf-gold mr-3 flex-shrink-0" /> <!-- Added flex-shrink-0 -->
+            <h3 class="text-xl font-semibold text-futf-blue leading-tight">{{ vision.title }}</h3>
           </div>
-          <p class="text-gray-600 mt-2">{{ vision.description }}</p>
+          <p class="text-black-600 mt-2">{{ vision.description }}</p>
         </div>
       </div>
     </div>

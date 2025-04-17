@@ -40,9 +40,9 @@
             </div>
 
             <!-- Mina Värdeord section -->
-            <div class="mb-8"> <!-- Added wrapper div with mb-8 -->
-              <h2 class="text-2xl font-bold text-futf-blue text-center mb-8">Mina Värdeord</h2>
-              <div class="w-20 h-1 bg-futf-gold mx-auto mt-4 mb-8"></div> <!-- Added mb-8 -->
+            <div class="text-center mb-8"> <!-- Added wrapper div with mb-8 -->
+              <h1 class="text-2xl font-bold text-futf-blue"> Mina Värdeord</h1>
+              <div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               <ValueCard icon="shield" title="Struktur"
