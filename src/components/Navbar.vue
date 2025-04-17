@@ -1,7 +1,7 @@
 <template>
   <header :class="[
     'fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-sm',
-    isScrolled ? 'bg-white/100 shadow-lg py-2' : 'bg-gray/100 py-3'
+    isScrolled ? 'bg-white/100 shadow-lg py-2' : 'bg-white/100 py-3'
   ]">
     <nav class="max-w-7xl mx-auto px-4 flex justify-between items-center">
       <router-link to="/" :class="[
@@ -29,13 +29,13 @@
       <!-- Mobile menu button -->
       <button class="md:hidden focus:outline-none" @click="toggleMenu" aria-label="Meny">
         <component :is="isMenuOpen ? X : Menu"
-          :class="['h-6 w-6 transition-colors', isScrolled ? 'text-futf-blue' : 'text-futf-gold']" />
+          :class="['h-6 w-6 transition-colors', isScrolled ? 'text-futf-blue' : 'text-futf-blue']" />
       </button>
     </nav>
 
     <!-- Mobile menu -->
     <transition name="fade">
-      <div v-if="isMenuOpen" class="md:hidden bg-futf-gold border-t border-gray-200 px-4 py-4">
+      <div v-if="isMenuOpen" class="md:hidden bg-white border-t border-gray-200 px-4 py-4">
         <router-link to="/" class="block py-2 font-medium text-futf-blue hover:text-futfOrange" @click="toggleMenu">
           <Home class="inline w-5 h-5 mr-2" /> Hem
         </router-link>
