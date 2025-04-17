@@ -5,7 +5,9 @@
             <div class="absolute inset-0 bg-futf-blue">
                 <div class="absolute inset-0 bg-gradient-to-r from-futf-blue/90 to-futf-blue/70"></div>
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <img src="/src/assets/img/download.jpeg" alt="Kandidat" class="w-full h-full object-cover opacity-30" />
+                    <img src="/src/assets/img/bizzness.jpg" alt="Kandidat" class="w-full h-full object-cover opacity-30" />
+                    <div class="w-full h-full bg-futf-lightblue opacity-30"></div>
+
                 </div>
             </div>
 
@@ -14,7 +16,7 @@
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 italic">En röst för tydlighet. <span
                         class="text-futf-gold">Ett utskott för framtiden.</span></h1>
                 <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10">Jag kandiderar till
-                    informationsansvarig för FUTF – för att skapa struktur, synlighet och engagemang genom tydlig
+                    informationsansvarig för FUTF - för att skapa struktur, synlighet och engagemang genom tydlig
                     kommunikation och strategisk marknadsföring.</p>
                 <button @click="scrollToContent"
                     class="bg-futf-gold hover:bg-white text-futf-blue font-bold px-8 py-3 rounded-md transition-colors center cursor-pointer">

@@ -38,29 +38,29 @@
 </template>
 
 <script setup>
-import { Briefcase, Users, Brush, Calendar } from 'lucide-vue-next';
+import { Briefcase, Target, Brush, Megaphone } from 'lucide-vue-next';
 
 const experiences = [
-  {
-    icon: Briefcase,
-    title: "Tidigare föreningsengagemang",
-    description: "Erfarenhet från styrelsearbete och projektledning i studentorganisationer."
-  },
-  {
-    icon: Brush,
-    title: "Grafisk produktion & kommunikation",
-    description: "Kunskaper i design och effektiv kommunikation för marknadsföring."
-  },
-  {
-    icon: Calendar,
-    title: "Eventplanering",
-    description: "Planering och genomförande av framgångsrika evenemang från idé till uppföljning."
-  },
-  {
-    icon: Users,
-    title: "Teknisk fysiker med öga för struktur",
-    description: "Analytiska förmågor kombinerat med ett kreativt synsätt för effektiva lösningar."
-  }
+{
+  icon: Briefcase,
+  title: "Starkt föreningsengagemang",
+  description: "Mycket erfarenhet av studentengemang, både i FUTF (IT, CaFé, m.m) och gymnasiet, med fokus på struktur och kommunikation."
+},
+{
+  icon: Megaphone,
+  title: "Tidigare marknadsförings erfarenheter",
+  description: "Erfarenheter för marknadsföring på gymnasiet via skolreklam, studentambassadör, visuell identitet och innehållsproduktion."
+},
+{
+  icon: Brush,
+  title: "Grafisk design & visuell kommunikation",
+  description: "Befaren i att skapa grafik för både tryck och digitala kanaler - affischer, merch, sociala medier, hemsidor."
+},
+{
+  icon: Target,
+  title: "Målinriktad och organiserad",
+  description: "Strukturerad, målinriktad och engagerad - med stark initiativförmåga och en vilja att omsätta idéer till verklighet." 
+}
 ];
 </script>
 

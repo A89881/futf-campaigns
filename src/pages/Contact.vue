@@ -80,7 +80,7 @@
                       <div>
                         <h3 class="font-semibold text-futf-gold">E-post</h3>
                         <a href="mailto:bakwert0123@gmail.com" class="text-white/90 hover:text-white">
-                          bakwert0123@example.com
+                          bakwert0123@gmail.com
                         </a>
                       </div>
                     </div>
