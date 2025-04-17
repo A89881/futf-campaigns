@@ -1,7 +1,7 @@
 <template> 
   <Layout>
   <div class="min-h-screen">
-    <div class="pt-10 pb-16">
+    <div class="pt-6 pb-16">
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
           <h1 class="text-4xl font-bold text-futf">Kontakta mig</h1>
@@ -113,11 +113,10 @@
                       <MapPin class="h-6 w-6 text-futf-gold" />
                     </div>
                     <div>
-                      <h3 class="font-semibold text-futf-gold">Campus</h3>
+                      <h3 class="font-semibold text-futf-gold"> Address</h3>
                       <p class="text-white/90">
-                        Uppsala Universitet<br />
-                        Ångströmlaboratoriet<br />
-                        752 37 Uppsala <br />
+                        Naturstensvägen 27<br />
+                        752 68 Uppsala <br />
                       </p>
                     </div>
                   </div>

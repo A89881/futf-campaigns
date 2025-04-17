@@ -2,8 +2,8 @@
   <section id="vision" class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-futfBlue mb-4">Mina visioner</h2>
-        <div class="w-20 h-1 bg-futfGold mx-auto"></div>
+        <h2 class="text-3xl font-bold text-futf-blue mb-4">Mina visioner</h2>
+        <div class="w-20 h-1 bg-futf-gold mx-auto"></div>
         <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
           Som informationsansvarig vill jag arbeta för att stärka FUTF:s kommunikation och synlighet.
           Här är mina huvudsakliga fokusområden:
@@ -14,8 +14,8 @@
         <div v-for="(vision, index) in visions" :key="index"
           class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
           <div class="flex items-start mb-4">
-            <CheckCircle class="w-6 h-6 text-futfGold mr-3" />
-            <h3 class="text-xl font-semibold text-futfBlue">{{ vision.title }}</h3>
+            <CheckCircle class="w-6 h-6 text-futf-gold mr-3" />
+            <h3 class="text-xl font-semibold text-futf-blue">{{ vision.title }}</h3>
           </div>
           <p class="text-gray-600 mt-2">{{ vision.description }}</p>
         </div>
@@ -53,15 +53,31 @@ const visions = [
 
 <style scoped>
 /* Exempel på FUTF-färger om du inte redan har dem i Tailwind config */
-.text-futfBlue {
+/* .text-futf-blue {
   color: #003865;
-}
+} */
 
-.text-futfGold {
+/* .text-futf-gold {
   color: #f9b233;
+} */
+
+/* .bg-futf-gold {
+  background-color: #f9b233;
+} */
+
+.bg-futf-blue {
+  background-color: #1b4b7b;
 }
 
-.bg-futfGold {
-  background-color: #f9b233;
+.bg-futf-gold {
+  background-color: #f2b705;
+}
+
+.text-futf-blue {
+  color: #1b4b7b;
+}
+
+.text-futf-gold {
+  color: #f2b705;
 }
 </style>
