@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/my-vue-app/', // <- this must match your GitHub repo name
+  base: '/futf-campaigns/', // <- this must match your GitHub repo name
   plugins: [vue(), tailwindcss(),],
   // resolve: {
   //   alias: {
