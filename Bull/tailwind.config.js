@@ -25,8 +25,8 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				futf: {
-					blue: '#0C2340',
-					gold: '#FFB81C',
+					blue: ' #1b4b7b',
+					gold: ' #f2b705',
 					orange: '#F15A29',
 					lightblue: '#5B92E5'
 				},
@@ -106,7 +106,12 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out',
 				'slide-up': 'slide-up 0.5s ease-out'
 			}
-		}
+		},
+		variants: {
+			extend: {
+			  backgroundColor: ['hover', 'focus'], // Ensure variants are enabled
+			  textColor: ['hover', 'focus'],
+			}
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
