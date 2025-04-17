@@ -28,26 +28,54 @@
 import { CheckCircle } from 'lucide-vue-next'
 
 const visions = [
-  {
-    title: 'Bygga ett marknadsföringsutskott',
-    description: 'Skapa en strukturerad organisation för att förbättra föreningens synlighet och kommunikation.',
-  },
-  {
-    title: 'Tydliggöra informationsansvarigs roll',
-    description: 'Etablera tydliga ansvarsområden och förväntningar för en effektiv informationshantering.',
-  },
-  {
-    title: 'Skapa webbshop och profilmerch',
-    description: 'Utveckla FUTF:s varumärke genom attraktiva produkter och enkel beställningsprocess.',
-  },
-  {
-    title: 'Etablera sociala medier-strategi',
-    description: 'Bygga en konsekvent närvaro på sociala medier för att nå ut till fler studenter.',
-  },
-  {
-    title: 'Regelbundna PR-möten inom sektionen',
-    description: 'Säkerställa god kommunikation och planering genom strukturerade möten.',
-  },
+{
+  title: 'Bygga ett marknadsföringsutskott',
+  description: 'Skapa en strukturerad organisation för att förbättra föreningens synlighet och kommunikation.'
+},
+{
+  title: 'Införa rollansvar inom utskottet',
+  description: 'Tydliga roller såsom märkesansvarig, grafisk-profil ansvarig, merch/webbshopansvarig och etc. Främst att främja delegering, ansvarstagande och effektivisering.'
+},
+{
+  title: 'Skapa en webbshop för merch',
+  description: 'Etablera en print-on-demand-lösning med profilprodukter som bälten, muggar och kläder för att stärka synligheten och FUTF-branden.'
+},
+{
+  title: 'Öka synligheten i sociala medier',
+  description: 'Satsa på kreativ och engagerande närvaro i sociala kanaler, inklusive TikTok, för att stärka sektionens digitala röst.'
+},
+{
+  title: 'Förtydliga rollen som marknadsföringsansvarig',
+  description: 'Revidera beskrivningen av posten för att göra uppdraget tydligare med fokus på ledarskap, struktur och möten inom utskottet med andra PR-ansvariga.'
+},
+{
+  title: 'Starta “Veckans/Månadens F:are”',
+  description: 'Framhäva medlemmars engagemang och insatser genom regelbundna utmärkelser, vilket stärker gemenskapen.'
+},
+{
+  title: 'Stärka samarbetet med externa konton',
+  description: 'Initiera samarbete med exempelvis Uppsala universitet och Uppsala student för ökad räckvidd och synlighet.'
+},
+{
+  title: 'Förbättra sponsorrelationer tillsammans med Arbetsmarknadsutskottet',
+  description: 'Utveckla en tydlig strategi för sponsormarknadsföring i samarbete med arbetsmarknadsutskottet för att lyfta samarbeten.'
+},
+{
+  title: 'Tydlig målgruppsfokus',
+  description: 'Utforma kommunikation med två huvudsakliga målgrupper i åtanke: potentiella sponsorer och studenter på sektionen.'
+},
+{
+  title: 'Skapa engagemang genom delaktighet',
+  description: 'Främja ett inkluderande klimat där fler studenter engageras i marknadsföringsarbetet genom ett välkomnande och meningsfullt utskott.'
+},
+{
+  title: 'Starta YouTube-satsning med engagerande innehåll',
+  description: 'Skapa videoinnehåll som alumnintervjuer, “en dag i livet”-inslag, intervjuer med styrelsen och återblickar på gamla F-spex för att öka intresset och bevara föreningens historia.'
+},
+{
+  title: 'Bibehålla högt söktryck till engagemang',
+  description: 'Fortsätta stärka sektionens attraktionskraft genom inspirerande innehåll, synlighet och struktur som gör det tydligt varför och hur man engagerar sig.'
+}
 ]
 </script>
 

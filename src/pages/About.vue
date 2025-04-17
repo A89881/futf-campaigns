@@ -15,18 +15,22 @@
               <div>
                 <h2 class="text-2xl font-bold text-futf-blue mb-4">Min bakgrund</h2>
                 <p class="text-gray-700 mb-4">
-                  Som teknisk fysiker har jag alltid haft ett starkt intresse för både vetenskap och kreativitet.
-                  Mitt engagemang inom FUTF och andra studentföreningar har gett mig en bred förståelse för
-                  föreningslivet och dess behov av tydlig kommunikation och struktur.
+                  Tja! Jag heter Abhay, är från Uppsala och troligtvis den yngsta här (brodern fick dricka för en månad
+                  sen).
+                  Trots det har jag redan hunnit dyka djupt in i föreningslivet och hittat hem
+                  i FUTF. På fritiden gillar jag att spela sport, chilla och goofa med mina polare - ofta genom att
+                  spela in dåliga raplåtar eller kolla på alldeles för många nördiga fysikvideos (get a load of this
+                  guy) .
                 </p>
                 <p class="text-gray-700">
-                  Jag är övertygad om att min kombination av analytiskt tänkande och kreativ kommunikationsförmåga
-                  gör mig väl lämpad för rollen som informationsansvarig. Jag vill bidra till att göra FUTF till en ännu
-                  starkare förening med tydlig identitet och effektiv kommunikation.
+                  Jag söker rollen som informationsansvarig för att jag verkligen bryr mig om föreningen och vet hur
+                  mycket bra kommunikation
+                  kan göra. Med erfarenhet från grafisk design, marknadsföring och föreningsliv vill jag bidra med
+                  struktur, driv och engagemang – och samtidigt bygga ett utskott som gör jobbet både proffsigt och ku
                 </p>
               </div>
               <div class="bg-gray-100 rounded-lg overflow-hidden">
-                <img src="/src/assets/img/download.jpeg" alt="Kandidat" class="w-full h-80 object-cover" />
+                <img src="/src/assets/img/smiley.jpg" alt="Kandidat" class="w-full h-80 object-cover" />
               </div>
             </div>
 
@@ -57,14 +61,14 @@
 
             <!-- Varför engagemanget section -->
             <div class="p-8 rounded-lg border-2 border-futf-blue mb-16"> <!-- Added mb-16 -->
-              <h2 class="text-2xl font-bold text-futf-blue mb-4">Varför engagemanget är viktigt</h2>
-              <p class="text-gray-700 mb-4">
+              <h2 class="text-2xl font-bold text-futf-blue mb-4">Varför engagemanget är viktigt !!!</h2>
+              <p class="text-gray-900 mb-4">
                 För mig är föreningslivet en central del av studentupplevelsen. Det är där vi skapar minnen,
                 bygger relationer och utvecklar viktiga färdigheter vid sidan av studierna.
               </p>
-              <p class="text-gray-700">
+              <p class="text-gray-900">
                 Som informationsansvarig vill jag arbeta för att FUTF ska nå ut bredare, kommunicera tydligare,
-                och stärka gemenskapen bland tekniska fysiker. En stark kommunikation både internt och externt
+                och stärka gemenskapen bland våra medlemmar. En stark kommunikation både internt och externt
                 bidrar till en livfull förening med engagerade medlemmar.
               </p>
             </div>
