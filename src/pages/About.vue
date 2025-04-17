@@ -26,7 +26,7 @@
                 </p>
               </div>
               <div class="bg-gray-100 rounded-lg overflow-hidden">
-                <img src="/public/img/download.jpeg" alt="Kandidat" class="w-full h-80 object-cover" />
+                <img src="/src/assets/img/download.jpeg" alt="Kandidat" class="w-full h-80 object-cover" />
               </div>
             </div>
 

@@ -5,7 +5,7 @@
             <div class="absolute inset-0 bg-futf-blue">
                 <div class="absolute inset-0 bg-gradient-to-r from-futf-blue/90 to-futf-blue/70"></div>
                 <div class="absolute inset-0 flex items-center justify-center">
-                    <img src="/img/download.jpeg" alt="Kandidat" class="w-full h-full object-cover opacity-30" />
+                    <img src="/src/assets/img/download.jpeg" alt="Kandidat" class="w-full h-full object-cover opacity-30" />
                 </div>
             </div>
 
