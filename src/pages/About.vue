@@ -3,20 +3,21 @@
     <div class="min-h-screen">
       <div class="pt-24 pb-16">
         <div class="container mx-auto px-4">
-          <div class="text-center mb-12">
+          <!-- Om mig section -->
+          <div class="text-center mb-16"> <!-- Increased mb from 12 to 16 -->
             <h1 class="text-4xl font-bold text-futf-blue">Om mig</h1>
             <div class="w-50 h-1 bg-futf-gold mx-auto mt-4"></div>
           </div>
 
           <div class="max-w-4xl mx-auto">
+            <!-- Min bakgrund section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
               <div>
                 <h2 class="text-2xl font-bold text-futf-blue mb-4">Min bakgrund</h2>
                 <p class="text-gray-700 mb-4">
                   Som teknisk fysiker har jag alltid haft ett starkt intresse för både vetenskap och kreativitet.
                   Mitt engagemang inom FUTF och andra studentföreningar har gett mig en bred förståelse för
-                  föreningslivet
-                  och dess behov av tydlig kommunikation och struktur.
+                  föreningslivet och dess behov av tydlig kommunikation och struktur.
                 </p>
                 <p class="text-gray-700">
                   Jag är övertygad om att min kombination av analytiskt tänkande och kreativ kommunikationsförmåga
@@ -29,16 +30,20 @@
               </div>
             </div>
 
-            <div class="text-center mb-12">
-              <h1 class="text-2xl font-bold text-futf-blue text-center">Mina Erfarenheter</h1>
+            <!-- Mina Erfarenheter section -->
+            <div class="text-center mb-8"> <!-- Reduced mb from 12 to 8 -->
+              <h1 class="text-2xl font-bold text-futf-blue">Mina Erfarenheter</h1>
               <div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div>
             </div>
+            <div class="mb-16"> <!-- Wrapped Timeline in div with mb-16 -->
+              <Timeline />
+            </div>
 
-            <Timeline />
-
-            <h2 class="text-2xl font-bold text-futf-blue mb-8 text-center">Mina Värdeord
-              <div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div>
-            </h2>
+            <!-- Mina Värdeord section -->
+            <div class="mb-8"> <!-- Added wrapper div with mb-8 -->
+              <h2 class="text-2xl font-bold text-futf-blue text-center mb-8">Mina Värdeord</h2>
+              <div class="w-20 h-1 bg-futf-gold mx-auto mt-4 mb-8"></div> <!-- Added mb-8 -->
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               <ValueCard icon="shield" title="Struktur"
                 description="Jag tror på tydliga ramar och processer som grund för kreativt arbete." />
@@ -50,7 +55,8 @@
                 description="En tydlig vision och strategi driver föreningen framåt." />
             </div>
 
-            <div class="p-8 rounded-lg border-2 border-futf-blue">
+            <!-- Varför engagemanget section -->
+            <div class="p-8 rounded-lg border-2 border-futf-blue mb-16"> <!-- Added mb-16 -->
               <h2 class="text-2xl font-bold text-futf-blue mb-4">Varför engagemanget är viktigt</h2>
               <p class="text-gray-700 mb-4">
                 För mig är föreningslivet en central del av studentupplevelsen. Det är där vi skapar minnen,
@@ -89,15 +95,18 @@ import Timeline from '../components/Timeline.vue';
 }
 
 .bg-futf-blue {
-    background-color: #1b4b7b;
+  background-color: #1b4b7b;
 }
+
 .bg-futf-gold {
-    background-color: #f2b705;
-}  
-.text-futf-blue {
-    color: #1b4b7b;
+  background-color: #f2b705;
 }
+
+.text-futf-blue {
+  color: #1b4b7b;
+}
+
 .text-futf-gold {
-    color: #f2b705;
+  color: #f2b705;
 }
 </style>
