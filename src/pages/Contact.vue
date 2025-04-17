@@ -61,6 +61,11 @@
                 <p v-if="showToast" class="mt-4 text-green-200 font-semibold">
                   Meddelande skickat! Tack för ditt meddelande. Jag återkommer så snart som möjligt.
                 </p>
+
+                 <!-- Add this below your success toast -->
+                <p v-if="submitError" class="mt-4 text-red-300 font-semibold">
+                  {{ submitError }}
+                </p>
               </div>
 
               <!-- Contact Info -->
@@ -148,6 +153,8 @@
 import { ref } from 'vue'
 import { Mail, Send, Phone, MapPin } from 'lucide-vue-next'
 import Layout from '../components/Layout.vue'
+import { db } from '../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 const formData = ref({
   name: '',
@@ -157,17 +164,45 @@ const formData = ref({
 
 const isSubmitting = ref(false)
 const showToast = ref(false)
+const submitError = ref(null)
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   isSubmitting.value = true
-  setTimeout(() => {
+  submitError.value = null
+
+  if (!formData.value.name || !formData.value.email || !formData.value.message) {
+    submitError.value = 'Alla fält är obligatoriska'
+    return
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email)) {
+    submitError.value = 'Ange en giltig e-postadress'
+    return
+  }
+
+  try {
+    // Add document to Firestore
+    await addDoc(collection(db, 'contactSubmissions'), {
+      name: formData.value.name,
+      email: formData.value.email,
+      message: formData.value.message,
+      timestamp: serverTimestamp() // Adds server-side timestamp
+    })
+
     showToast.value = true
     formData.value = { name: '', email: '', message: '' }
-    isSubmitting.value = false
+
+    // Hide toast after 5 seconds
     setTimeout(() => {
       showToast.value = false
     }, 5000)
-  }, 1000)
+
+  } catch (error) {
+    console.error('Error submitting form:', error)
+    submitError.value = 'Något gick fel. Försök igen senare.'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
