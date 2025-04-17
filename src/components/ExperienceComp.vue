@@ -7,26 +7,32 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-        <div v-for="(item, index) in experiences" :key="index" class="text-center p-6 hover:bg-gray-50 rounded-xl transition-all">
-          <div class="bg-futf-gold/10 rounded-full p-4 mx-auto mb-4 w-20 h-20 flex items-center justify-center">
+        <div v-for="(item, index) in experiences" :key="index"
+          class="text-center p-6 hover:bg-gray-50 rounded-xl transition-all">
+          <div
+            class="bg-[rgba(255,215,0,0.1)] rounded-full p-4 mx-auto mb-4 w-20 h-20 flex items-center justify-center">
             <component :is="item.icon" class="h-8 w-8 text-futf-blue" />
           </div>
+
           <h3 class="text-xl font-semibold text-futf-blue mb-3">{{ item.title }}</h3>
           <p class="text-gray-600">{{ item.description }}</p>
         </div>
       </div>
 
       <div class="text-center mt-10">
-        <!-- <router-link 
-          to="/erfarenheter" 
-          class="inline-flex items-center text-futf-blue hover:text-futf-orange font-medium"
-        >
+        <router-link to="/om-mig"
+          class="inline-flex items-center text-futf-blue hover:text-futf-orange transition-colors font-medium group cursor-pointer">
           Se alla mina erfarenheter
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </router-link> -->
+          <span
+            class="ml-2 transform transition-transform duration-200 group-hover:translate-x-1 group-hover:text-futf-orange">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </router-link>
       </div>
+
     </div>
   </section>
 </template>
@@ -62,12 +68,16 @@ const experiences = [
 .text-futf-blue {
   color: #001f3f;
 }
+
 .bg-futf-blue {
   background-color: #001f3f;
 }
+
 .bg-futf-gold {
   background-color: #FFD700;
+
 }
+
 .text-futf-orange {
   color: #FF8C00;
 }

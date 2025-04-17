@@ -5,7 +5,7 @@
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
           <h1 class="text-4xl font-bold text-futf-blue">Om mig</h1>
-          <div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div>
+          <div class="w-50 h-1 bg-futf-gold mx-auto mt-4"></div>
         </div>
 
         <div class="max-w-4xl mx-auto">

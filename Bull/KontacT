@@ -1,12 +1,12 @@
-<template> 
+<!-- <template> 
   <Layout>
   <div class="min-h-screen">
-    <div class="pt-10 pb-16">
+    <div class="pt-24 pb-16">
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-          <h1 class="text-4xl font-bold text-futf">Kontakta mig</h1>
-          <div class="w-50 h-1 bg-futf-gold mx-auto mt-4"></div>
-          <p class="mt-6 text-black-600 max-w-2xl mx-auto font-medium group text-xl">
+          <h1 class="text-4xl font-bold text-futf-blue">Kontakta mig</h1>
+          <div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div>
+          <p class="mt-6 text-gray-600 max-w-2xl mx-auto">
             Har du frågor eller idéer? Jag uppskattar alla tankar och förslag!
             Fyll i formuläret nedan eller använd någon av kontaktvägarna.
           </p>
@@ -14,8 +14,8 @@
 
         <div class="max-w-5xl mx-auto">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <!-- Contact Form -->
-            <div class="bg-futf-blue rounded-lg shadow-md p-8 text-white">
+      
+            <div class="bg-futf-blue rounded-lg shadow-md p-8 text-futfGold">
               <h2 class="text-2xl font-bold text-futf-gold mb-6">Skicka ett meddelande</h2>
               <form @submit.prevent="handleSubmit">
                 <div class="space-y-6">
@@ -56,12 +56,11 @@
                     ></textarea>
                   </div>
                   <div>
-                    
                     <button
                       type="submit"
                       :disabled="isSubmitting"
-                      class="w-full bg-yellow-500 hover:bg-white text-futf-blue  px-4 py-2 rounded-md transition-colors duration-300 ease-in-out cursor-pointer"
-                                         >
+                      class="w-full bg-futf-gold text-futf-blue px-4 py-2 rounded-md hover:bg-yellow-400 transition"
+                    >
                       <span v-if="isSubmitting" class="flex items-center justify-center">
                         <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
@@ -83,7 +82,7 @@
               </p>
             </div>
 
-            <!-- Contact Info -->
+     
             <div>
               <div class="bg-futf-blue text-white rounded-lg shadow-md p-8 mb-8">
                 <h2 class="text-2xl font-bold text-futf-gold mb-6">Kontaktuppgifter</h2>
@@ -94,8 +93,8 @@
                     </div>
                     <div>
                       <h3 class="font-semibold text-futf-gold">E-post</h3>
-                      <a href="mailto:bakwert0123@gmail.com" class="text-white/90 hover:text-white">
-                        bakwert0123@example.com
+                      <a href="mailto:kandidat@example.com" class="text-white/90 hover:text-white">
+                        kandidat@example.com
                       </a>
                     </div>
                   </div>
@@ -105,7 +104,7 @@
                     </div>
                     <div>
                       <h3 class="font-semibold text-futf-gold">Telefon</h3>
-                      <p class="text-white/90">076-134 56 96</p>
+                      <p class="text-white/90">070-123 45 67</p>
                     </div>
                   </div>
                   <div class="flex items-start">
@@ -117,23 +116,23 @@
                       <p class="text-white/90">
                         Uppsala Universitet<br />
                         Ångströmlaboratoriet<br />
-                        752 37 Uppsala <br />
+                        Uppsala
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Följ mig -->
+             
               <div class="bg-futf-blue text-white rounded-lg p-6">
                 <h2 class="text-xl font-semibold text-futf-gold mb-4">Följ mig</h2>
                 <p class="mb-4 text-white/90">
                   Håll dig uppdaterad om min kampanj och mina visioner genom mina sociala kanaler.
                 </p>
                 <div class="flex space-x-4">
-                  <a href="https://www.instagram.com/abbebabbe07/" target="_blank" rel="noopener noreferrer"
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
                     class="bg-white/10 text-white p-3 rounded-full hover:bg-white/20 transition-colors" aria-label="Instagram">
-                    <!-- Instagram icon -->
+             
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -141,9 +140,9 @@
                       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                     </svg>
                   </a>
-                  <a href="https://www.linkedin.com/in/abhay-mishra-5aa78319a/" target="_blank" rel="noopener noreferrer"
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
                     class="bg-white/10 text-white p-3 rounded-full hover:bg-white/20 transition-colors" aria-label="LinkedIn">
-                    <!-- LinkedIn icon -->
+           
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -161,8 +160,9 @@
     </div>
   </div>
   </Layout>
-</template>
+</template> -->
 
+<!-- 
 <script setup>
 import { ref } from 'vue'
 import { Mail, Send, Phone, MapPin } from 'lucide-vue-next'
@@ -192,16 +192,26 @@ const handleSubmit = () => {
 
 <style scoped>
 /* Optional: tweak input focus styles */
-.bg-futf-blue {
-    background-color: #1b4b7b;
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 1px #1d4ed8;
 }
-.bg-futf-gold {
-    background-color: #f2b705;
-}  
-.text-futf-blue {
-    color: #1b4b7b;
+
+.text-futfBlue {
+    color: #001f3f;
 }
-.text-futf-gold {
-    color: #f2b705;
+
+.bg-futfBlue {
+    background-color: #001f3f;
 }
-</style>
+
+.text-futfGold {
+    color: #f7c948;
+}
+
+.bg-futfGold {
+    background-color: #f7c948;
+}
+</style> -->
