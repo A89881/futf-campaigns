@@ -4,6 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/futf-campaigns/', // <- this must match your GitHub repo name
+  base: '/',
   plugins: [vue(), tailwindcss(),],
 })
