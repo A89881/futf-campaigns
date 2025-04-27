@@ -44,22 +44,22 @@ const experiences = [
 {
   icon: Briefcase,
   title: "Starkt föreningsengagemang",
-  description: "Mycket erfarenhet av studentengemang, både i FUTF (IT, CaFé, m.m) och gymnasiet, med fokus på struktur och kommunikation."
+  description: "Mycket erfarenhet av studentengemang, både i FUTF (IT, CaFé, m.m) och från gymnasiet, med ett fokus på struktur och kommunikation."
 },
 {
   icon: Megaphone,
   title: "Tidigare marknadsförings erfarenheter",
-  description: "Erfarenheter för marknadsföring på gymnasiet via skolreklam, studentambassadör, visuell identitet och innehållsproduktion."
+  description: "Erfarenheter inom marknadsföring på gymnasiet via mitt arbete som studentambassadör och inom skolreklam, grafisk profil och content production."
 },
 {
   icon: Brush,
   title: "Grafisk design & visuell kommunikation",
-  description: "Befaren i att skapa grafik för både tryck och digitala kanaler - affischer, merch, sociala medier, hemsidor."
+  description: "Erfaren inom skapande av grafik för både tryck och digitala platformar såsom affischer, merch, sociala medier, hemsidor."
 },
 {
   icon: Target,
-  title: "Målinriktad och organiserad",
-  description: "Strukturerad, målinriktad och engagerad - med stark initiativförmåga och en vilja att omsätta idéer till verklighet." 
+  title: "Projektledning och organisation",
+  description: "Komptens i att leda projekt och arbetsgrupper med stark initiativförmåga och en vilja att omvandla idéer till verklighet." 
 }
 ];
 </script>

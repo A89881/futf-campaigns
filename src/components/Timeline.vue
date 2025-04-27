@@ -85,12 +85,12 @@
     {
       year: '2022',
       title: 'Studentrepresentant Teknikprogrammet',
-      description: 'Valdes till representant och deltog i dialog mellan elever, lärare och skolledning kring utveckling av utbildningen.',
+      description: 'Blev till representant och deltog i dialog mellan elever, lärare och skolledning kring utveckling av utbildningen.',
     },
     {
       year: '2022',
       title: 'Sleeq UF - Design & Juridik',
-      description: 'Startade ett UF-företag med mina polare med fokus på kläder. Ansvarade för designprofil och den juridiska strukturen kring webbshopen.',
+      description: 'Startade ett UF-företag med mina polare med fokus på kläder. Ansvarade för designprofil och den juridiska aspekten kring webbshopen.',
     },
     {
       year: '2023',
@@ -105,12 +105,12 @@
     {
       year: '2024',
       title: 'FUTF-engagemang',
-      description: 'Aktiv i CaFé- och IT-gruppen, kurs- och skyddsombud samt fredagsfikare. Bidrog till föreningslivet både i det lilla och stora.',
+      description: 'Aktiv i CaFé- och IT-gruppen, kurs- och skyddsombud samt fredagsfikare. Bidrog till föreningslivet både i det lilla och det stora.',
     },
     {
       year: '2025',
       title: 'Webbdesign & kommunikation',
-      description: 'Byggde denna kampanjsida, FUTF:s arbetsmarknads-tefatsida samt bidrog till nya FUTF.se (detaljer kommer!). Strukturerade för UI och grafisk profil.',
+      description: 'Byggde denna kampanjsida, FUTF:s arbetsmarknads-tefatsida samt bidrog till nya FUTF.se (detaljer kommer!). Strukturerade UI och grafisk profil.',
     },
     {
       year: '2025',
@@ -126,7 +126,7 @@
     [...new Set(timelineItems.value.map(item => item.year))].sort((a, b) => {
       if (a === 'Pre-2021') return -1
       if (b === 'Pre-2021') return 1
-      return b - a
+      return b + a
     })
   )
   

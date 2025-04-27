@@ -25,8 +25,8 @@
                 <p class="text-gray-700">
                   Jag söker rollen som informationsansvarig för att jag verkligen bryr mig om föreningen och vet hur
                   mycket bra kommunikation
-                  kan göra. Med erfarenhet från grafisk design, marknadsföring och föreningsliv vill jag bidra med
-                  struktur, driv och engagemang – och samtidigt bygga ett utskott som gör jobbet både proffsigt och ku
+                  kan göras. Med erfarenhet från grafisk design, marknadsföring och föreningsliv vill jag bidra med
+                  struktur, driv och engagemang – och samtidigt bygga ett utskott som gör jobbet både proffsigt och kul
                 </p>
               </div>
               <div class="bg-gray-100 rounded-lg overflow-hidden">

@@ -15,7 +15,7 @@
             <div class="container mx-auto px-4 z-10 text-center">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 italic">En röst för tydlighet. <span
                         class="text-futf-gold">Ett utskott för framtiden.</span></h1>
-                <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10">Jag kandiderar till
+                <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10">Jag kandiderar till rollen som
                     informationsansvarig för FUTF - för att skapa struktur, synlighet och engagemang genom tydlig
                     kommunikation och strategisk marknadsföring.</p>
                 <button @click="scrollToContent"

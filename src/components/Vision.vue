@@ -2,11 +2,11 @@
   <section id="vision" class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-futf-blue mb-4">Mina visioner</h2>
+        <h2 class="text-3xl font-bold text-futf-blue mb-4">Mina Vitkigaste Visioner</h2>
         <div class="w-20 h-1 bg-futf-gold mx-auto"></div>
         <p class="mt-4 text-futf-blue font-semibold text-l max-w-2xl mx-auto">
           Som informationsansvarig vill jag arbeta för att stärka FUTF:s kommunikation och synlighet.
-          Här är mina huvudsakliga fokusområden:
+          Här är mina huvudsakliga fokusområden (det finns flera men kontakta mig om du undrar över de):
         </p>
       </div>
 
@@ -32,50 +32,50 @@ const visions = [
   title: 'Bygga ett marknadsföringsutskott',
   description: 'Skapa en strukturerad organisation för att förbättra föreningens synlighet och kommunikation.'
 },
-{
-  title: 'Införa rollansvar inom utskottet',
-  description: 'Tydliga roller såsom märkesansvarig, grafisk-profil ansvarig, merch/webbshopansvarig och etc. Främst att främja delegering, ansvarstagande och effektivisering.'
-},
+// {
+//   title: 'Införa rollansvar inom utskottet',
+//   description: 'Tydliga roller såsom märkesansvarig, grafisk-profil ansvarig, merch/webbshopansvarig och etc. Främst att främja delegering, ansvarstagande och effektivisering.'
+// },
 {
   title: 'Skapa en webbshop för merch',
   description: 'Etablera en print-on-demand-lösning med profilprodukter som bälten, muggar och kläder för att stärka synligheten och FUTF-branden.'
 },
 {
   title: 'Öka synligheten i sociala medier',
-  description: 'Satsa på kreativ och engagerande närvaro i sociala kanaler, inklusive TikTok, för att stärka sektionens digitala röst.'
+  description: 'Satsa på kreativ och engagerande närvaro i sociala kanaler, inklusive TikTok, Youtube, m.m för att stärka sektionens digitala röst.'
 },
-{
-  title: 'Förtydliga rollen som marknadsföringsansvarig',
-  description: 'Revidera beskrivningen av posten för att göra uppdraget tydligare med fokus på ledarskap, struktur och möten inom utskottet med andra PR-ansvariga.'
-},
+// {
+//   title: 'Förtydliga rollen som marknadsföringsansvarig',
+//   description: 'Revidera beskrivningen av posten för att göra uppdraget tydligare med fokus på ledarskap, struktur och möten inom utskottet med andra PR-ansvariga.'
+// },
 {
   title: 'Starta “Veckans/Månadens F:are”',
   description: 'Framhäva medlemmars engagemang och insatser genom regelbundna utmärkelser, vilket stärker gemenskapen.'
 },
-{
-  title: 'Stärka samarbetet med externa konton',
-  description: 'Initiera samarbete med exempelvis Uppsala universitet och Uppsala student för ökad räckvidd och synlighet.'
-},
+// {
+//   title: 'Stärka samarbetet med externa konton',
+//   description: 'Initiera samarbete med exempelvis Uppsala universitet och Uppsala student för ökad räckvidd och synlighet.'
+// },
 {
   title: 'Förbättra sponsorrelationer tillsammans med Arbetsmarknadsutskottet',
   description: 'Utveckla en tydlig strategi för sponsormarknadsföring i samarbete med arbetsmarknadsutskottet för att lyfta samarbeten.'
 },
-{
-  title: 'Tydlig målgruppsfokus',
-  description: 'Utforma kommunikation med två huvudsakliga målgrupper i åtanke: potentiella sponsorer och studenter på sektionen.'
-},
+// {
+//   title: 'Tydlig målgruppsfokus',
+//   description: 'Utforma kommunikation med två huvudsakliga målgrupper i åtanke: potentiella sponsorer och studenter på sektionen.'
+// },
 {
   title: 'Skapa engagemang genom delaktighet',
   description: 'Främja ett inkluderande klimat där fler studenter engageras i marknadsföringsarbetet genom ett välkomnande och meningsfullt utskott.'
 },
-{
-  title: 'Starta YouTube-satsning med engagerande innehåll',
-  description: 'Skapa videoinnehåll som alumnintervjuer, “en dag i livet”-inslag, intervjuer med styrelsen och återblickar på gamla F-spex för att öka intresset och bevara föreningens historia.'
-},
-{
-  title: 'Bibehålla högt söktryck till engagemang',
-  description: 'Fortsätta stärka sektionens attraktionskraft genom inspirerande innehåll, synlighet och struktur som gör det tydligt varför och hur man engagerar sig.'
-}
+// {
+//   title: 'Starta YouTube-satsning med engagerande innehåll',
+//   description: 'Skapa videoinnehåll som alumnintervjuer, “en dag i livet”-inslag, intervjuer med styrelsen och återblickar på gamla F-spex för att öka intresset och bevara föreningens historia.'
+// },
+// {
+//   title: 'Bibehålla högt söktryck till engagemang',
+//   description: 'Fortsätta stärka sektionens attraktionskraft genom inspirerande innehåll, synlighet och struktur som gör det tydligt varför och hur man engagerar sig.'
+// }
 ]
 </script>
 
