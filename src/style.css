@@ -1,1 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&family=Pacifico&display=swap");
+
+/* @import url('https://fonts.cdnfonts.com/css/bukhari-script'); */
 @import "tailwindcss";
+
+/* 1) Fonts (Google Fonts) */
+
+/* 2) Tokens */
+:root{
+  /* Brand */
+  --primary:#ffde59;
+  --accent:#f1b434;
+  --red:#e61700;
+
+  /* Neutrals */
+  --black:#000000;
+  --white:#ffffff;
+
+  /* “Paper” + surfaces (retro feel, not pure white) */
+  --paper:#fff7e6;      /* varm off-white */
+  --surface:#fff2d1;    /* varm kortyta */
+  --ink:#141414;        /* text på ljusa ytor */
+  --muted:#4b4b4b;
+  --border:#1a1a1a;
+
+  /* Shadows */
+  --shadow: 0 10px 25px rgba(0,0,0,.18);
+  --shadow-tight: 0 6px 18px rgba(0,0,0,.15);
+
+  /* Roundedness */
+  --radius: 18px;
+
+  /* Fonts */
+  --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-display: "Lilita One", ui-sans-serif, system-ui;
+  --font-script: "Pacifico", cursive;
+}
+
+html, body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* 3) Base typography */
+@layer base {
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.2px;
+  }
+}
+
+/* 4) Reusable “retro” components */
+@layer components {
+  /* Retro top bar / header background (like your reference) */
+  .retro-topbar {
+    background: var(--primary);
+    color: var(--black);
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* Card style (warm paper + subtle shadow) */
+  .retro-card {
+    background: var(--white);
+    border: 2px solid rgba(0,0,0,.08);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  /* Poster/Sign headline (50s feel) */
+  .retro-sign {
+    font-family: var(--font-script);
+    color: var(--black);
+    text-shadow:
+      3px 3px 0 rgba(0,0,0,.15);
+  }
+
+  /* Big campaign headline (chunky) */
+  .retro-display {
+    font-family: var(--font-display);
+    color: var(--black);
+    text-shadow:
+      2px 2px 0 rgba(0,0,0,.10);
+  }
+
+  /* Primary button = yellow with black ink */
+  .btn-primary {
+    background: var(--primary);
+    color: var(--black);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-tight);
+    transition: transform .12s ease, filter .12s ease;
+  }
+  .btn-primary:hover { filter: brightness(.98); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0px); }
+
+  /* Accent button = accent yellow */
+  .btn-accent {
+    background: var(--accent);
+    color: var(--black);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-tight);
+    transition: transform .12s ease, filter .12s ease;
+  }
+
+  /* Red (Zohran-style) */
+  .badge-red, .btn-red {
+    background: var(--red);
+    color: var(--white);
+    border: 2px solid rgba(0,0,0,.35);
+    border-radius: 14px;
+    box-shadow: var(--shadow-tight);
+  }
+
+  /* Link styling */
+  .retro-link {
+    color: var(--black);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .retro-link:hover { color: var(--red); }
+}
+
+/* 5) Optional: subtle “paper grain” background (modern twist) */
+@layer utilities {
+  .paper-grain {
+    background-image:
+      radial-gradient(rgba(0,0,0,.04) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+}
