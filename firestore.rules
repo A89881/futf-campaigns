@@ -17,6 +17,15 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    match /portfolio/appendix {
+      allow read: if true;
+      allow create, update: if isPortfolioAdmin()
+        && request.resource.data.keys().hasOnly(['documents', 'updatedAt'])
+        && request.resource.data.documents is list
+        && request.resource.data.documents.size() <= 50;
+      allow delete: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

@@ -26,8 +26,9 @@
       </section>
 
       <div v-if="isMobile" class="mobile-portfolio">
+      <section id="about" class="section shell"><SectionHeading number="01" title="About me" intro="Mumbai, Manchester, Umeå, Uppsala—and the choices that connected them." /><AboutStory /></section>
       <section id="resume" class="section about shell">
-        <SectionHeading number="01" title="Resume" intro="Engineering, research, communication, and community work - viewed as one connected practice." />
+        <SectionHeading number="02" title="Resume" intro="Engineering, research, communication, and community work - viewed as one connected practice." />
         <div class="about-grid">
           <div class="portrait-wrap reveal">
             <img src="../assets/img/smiley.jpg" alt="Abhay Mishra smiling outdoors" />
@@ -56,7 +57,7 @@
                 <div>
                   <p class="kind">{{ item.period }}</p>
                   <h3>{{ item.degree }}</h3>
-                  <p class="school">{{ item.school }} · {{ item.location }}</p>
+                  <p><a class="school organisation-link" :href="item.schoolHref" target="_blank" rel="noopener noreferrer">{{ item.school }} <ArrowUpRight :size="12" /></a> · {{ item.location }}</p>
                   <p>{{ item.focus }}</p>
                 </div>
               </article>
@@ -88,7 +89,7 @@
                 <ul class="tags" :aria-label="`${project.title} technologies`">
                   <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
                 </ul>
-                <router-link v-if="project.href" class="project-link" :to="project.href">{{ project.cta }} <ArrowUpRight :size="15" /></router-link>
+                <router-link v-if="project.href?.startsWith('/')" class="project-link" :to="project.href">{{ project.cta }} <ArrowUpRight :size="15" /></router-link><a v-else-if="project.href" class="project-link" :href="project.href" target="_blank" rel="noopener noreferrer">{{ project.cta }} <ArrowUpRight :size="15" /></a><a v-if="project.github" class="project-link" :href="project.github" target="_blank" rel="noopener noreferrer">Source on GitHub <ArrowUpRight :size="15" /></a>
               </div>
               <div class="project-glyph" aria-hidden="true"><span></span><i></i></div>
             </article>
@@ -139,6 +140,7 @@ import FieldCanvas from '../components/FieldCanvas.vue'
 import Footer from '../components/Footer.vue'
 import Navbar from '../components/Navbar.vue'
 import SectionHeading from '../components/SectionHeading.vue'
+import AboutStory from '../components/AboutStory.vue'
 import { education, principles, profile, projects, skills } from '../data/portfolio'
 const ExperienceTimeline = defineAsyncComponent(() => import('../components/ExperienceTimeline.vue'))
 const AppendixGrid = defineAsyncComponent(() => import('../components/AppendixGrid.vue'))

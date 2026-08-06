@@ -1,17 +1,5 @@
-<template>
-  <div class="work-experience-list">
-    <article v-for="item in workExperience" :key="item.id" class="resume-work-item">
-      <div class="resume-work-period"><span class="kind">{{ item.category === 'research' ? 'Research' : 'Employment' }}</span><time>{{ displayRange(item) }}</time></div>
-      <div><h3>{{ item.title }}</h3><p class="organisation">{{ item.organisation }} · {{ item.location }}</p><p>{{ item.description }}</p><ul v-if="item.highlights.length"><li v-for="highlight in item.highlights" :key="highlight">{{ highlight }}</li></ul></div>
-    </article>
-  </div>
-</template>
-
+<template><div class="work-experience-list"><article v-for="item in workExperience" :key="item.id" class="resume-work-item"><div class="resume-work-period"><span class="kind">{{ t(item.category === 'research' ? 'Research' : 'Employment') }}</span><time>{{ displayRange(item) }}</time></div><div><h3>{{ t(item.title) }}</h3><p><a v-if="organisationUrl(item)" class="organisation organisation-link" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ExternalLink :size="12" /></a><span v-else class="organisation">{{ item.organisation }}</span> · {{ item.location }}</p><p>{{ t(item.description) }}</p><ul v-if="item.highlights.length"><li v-for="highlight in item.highlights" :key="highlight">{{ t(highlight) }}</li></ul></div></article></div></template>
 <script setup>
-import { computed } from 'vue'
-import { useExperienceStore } from '../composables/useExperienceStore'
-const { experiences } = useExperienceStore()
-const workExperience = computed(() => experiences.value.filter((item) => item.category === 'professional' || item.category === 'research'))
-const formatDate = (value) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`))
-const displayRange = (item) => `${item.startDate ? formatDate(item.startDate) : item.start} - ${item.endDate ? formatDate(item.endDate) : item.end}`
+import { computed } from 'vue'; import { ExternalLink } from 'lucide-vue-next'; import { useExperienceStore } from '../composables/useExperienceStore'; import { organisationLinks } from '../data/portfolio'; import { useLocale } from '../composables/useLocale'
+const { experiences } = useExperienceStore(); const { t } = useLocale(); const workExperience = computed(() => experiences.value.filter((item) => item.category === 'professional' || item.category === 'research')); const formatDate = (value) => new Intl.DateTimeFormat('en-GB', { ...(value.length === 10 ? { day: 'numeric' } : {}), month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value.length === 7 ? `${value}-01` : value}T00:00:00Z`)); const displayRange = (item) => `${item.startDate ? formatDate(item.startDate) : item.start} - ${item.endDate ? formatDate(item.endDate) : t(item.end)}`; const organisationUrl = (item) => item.organisationHref || organisationLinks[item.organisation]
 </script>

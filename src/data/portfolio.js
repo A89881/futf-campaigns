@@ -31,6 +31,8 @@ export const projects = [
       'Developed a computational physics solver for longitudinal spin susceptibility using Dyson equations and LSDA-based DFT methods. Built robust numerical-processing and data-visualisation scripts for large-scale Materials Theory simulation outputs.',
     tags: ['Python', 'Computational physics', 'Numerical methods', 'DFT'],
     accent: 'blue',
+    href: 'https://github.com/A89881/Longitudinal-Spin-Susceptibility-Solver-via-RSPt-Inputs-2025',
+    cta: 'View on GitHub',
   },
   {
     index: '02',
@@ -41,6 +43,7 @@ export const projects = [
       'Designed and programmed a remote-controlled bionic hand using servo actuation and wireless signal processing. The project received NTI Gymnasium’s Best Practical Graduation Project award.',
     tags: ['C++', 'Arduino', 'Mechatronics', 'Wireless control'],
     accent: 'pink',
+    href: 'https://github.com/A89881/RoboticHandControl', cta: 'View on GitHub',
   },
   {
     index: '03',
@@ -51,6 +54,7 @@ export const projects = [
       'Created Python tools to compare genomic datasets and extract statistical differences across samples. Implemented visualisation pipelines and automated comparison routines to improve reproducibility.',
     tags: ['Python', 'Bioinformatics', 'Data analysis', 'Automation'],
     accent: 'blue',
+    href: 'https://github.com/A89881/DataComparisonBio', cta: 'View on GitHub',
   },
   {
     index: '04',
@@ -61,6 +65,7 @@ export const projects = [
       'Developed an interactive graphing calculator for plotting, differentiation, and intersection analysis, combining a desktop GUI with numerical computation and mathematical visualisation.',
     tags: ['Python', 'NumPy', 'Matplotlib', 'Tkinter'],
     accent: 'pink',
+    href: 'https://github.com/A89881/GraphCalculator', cta: 'View on GitHub',
   },
   {
     index: '05',
@@ -72,9 +77,23 @@ export const projects = [
     tags: ['Vue', 'JavaScript', 'Git', 'Responsive design'],
     accent: 'blue',
     href: '/campaign',
+    github: 'https://github.com/A89881/futf-campaigns',
     cta: 'View campaign archive',
   },
 ]
+
+export const organisationLinks = {
+  'BruhnBruhn Innovation': 'https://bruhnbruhn.com/about-us/',
+  'Uppsala University': 'https://www.uu.se/en/',
+  'Uppsala University - Faculty of Engineering and Science': 'https://www.uu.se/en/about-uu/organisation/faculties/faculty-of-science-and-technology',
+  'Uppsala University - Department of Physics and Astronomy': 'https://www.uu.se/en/contact-and-organisation/organisation?query=X208%3A39',
+  'NTI Gymnasium': 'https://ntigymnasiet.se/uppsala/',
+  'Allakando': 'https://www.allakando.se/',
+  'SLU - Swedish University of Agricultural Sciences': 'https://www.slu.se/om-slu/kontakta-slu/',
+  'Uppsala Union of Engineering and Science Students (UTN)': 'https://utn.se/en',
+  'F1RST - Uppsala': 'https://f1rst.se/vilka-vi-ar/',
+  'FUTF - Uppsala Engineering Physics Guild': 'https://futf.se/sektionen/omfutf',
+}
 
 export const defaultExperiences = [
   {
@@ -82,6 +101,7 @@ export const defaultExperiences = [
     category: 'professional',
     title: 'Junior Software Engineer',
     organisation: 'BruhnBruhn Innovation',
+    organisationHref: 'https://bruhnbruhn.com/about-us/',
     location: 'Uppsala, Sweden',
     start: 'September 2025',
     end: 'Present',
@@ -99,6 +119,7 @@ export const defaultExperiences = [
     category: 'professional',
     title: 'Student Ambassador - Faculty of Engineering and Science',
     organisation: 'Uppsala University',
+    organisationHref: 'https://www.uu.se/en/staff/faculty/science-and-technology/education-and-teaching/student-recruitment',
     location: 'Uppsala, Sweden',
     start: 'September 2025',
     end: 'Present',
@@ -111,6 +132,7 @@ export const defaultExperiences = [
     category: 'professional',
     title: 'SciFest Functionary',
     organisation: 'Uppsala University - Faculty of Engineering and Science',
+    organisationHref: 'https://www.uu.se/en/about-uu/organisation/faculties/faculty-of-science-and-technology',
     location: 'Uppsala, Sweden',
     start: 'October 2025',
     end: 'October 2025',
@@ -123,6 +145,7 @@ export const defaultExperiences = [
     category: 'research',
     title: 'Summer Research Intern - Division of Materials Theory',
     organisation: 'Uppsala University - Department of Physics and Astronomy',
+    organisationHref: 'https://www.uu.se/en/contact-and-organisation/organisation?query=X208%3A39',
     location: 'Uppsala, Sweden',
     start: 'June 2025',
     end: 'September 2025',
@@ -138,6 +161,7 @@ export const defaultExperiences = [
     category: 'professional',
     title: 'Substitute Teacher - Tutoring Support',
     organisation: 'NTI Gymnasium',
+    organisationHref: 'https://ntigymnasiet.se/uppsala/',
     location: 'Uppsala, Sweden',
     start: 'September 2024',
     end: 'June 2025',
@@ -150,6 +174,7 @@ export const defaultExperiences = [
     category: 'professional',
     title: 'Study Coach',
     organisation: 'Allakando',
+    organisationHref: 'https://www.allakando.se/',
     location: 'Uppsala, Sweden',
     start: 'June 2024',
     end: 'October 2024',
@@ -162,6 +187,7 @@ export const defaultExperiences = [
     category: 'professional',
     title: 'Field Assistant and Statistical Analysis Intern',
     organisation: 'SLU - Swedish University of Agricultural Sciences',
+    organisationHref: 'https://www.slu.se/om-slu/kontakta-slu/',
     location: 'Uppsala, Sweden',
     start: 'June 2024',
     end: 'July 2024',
@@ -291,6 +317,7 @@ export const education = [
     degree: 'Master of Science in Engineering - Engineering Physics',
     focus: 'Applied Computational Engineering',
     school: 'Uppsala University',
+    schoolHref: 'https://www.uu.se/en/study/programme/masters-programme-engineering-physics',
     location: 'Uppsala, Sweden',
     period: 'August 2024 - June 2028',
   },
@@ -298,6 +325,7 @@ export const education = [
     degree: 'High School Diploma - Teknikprogrammet',
     focus: 'Information and Media Technology',
     school: 'NTI Gymnasium',
+    schoolHref: 'https://ntigymnasiet.se/uppsala/',
     location: 'Uppsala, Sweden',
     period: 'August 2021 - June 2024',
   },

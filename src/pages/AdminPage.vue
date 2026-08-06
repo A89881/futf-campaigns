@@ -49,10 +49,11 @@
             <label>Title<input v-model="form.title" maxlength="180" required /></label>
             <label>Organisation<input v-model="form.organisation" maxlength="180" required /></label>
             <label>Location<input v-model="form.location" maxlength="120" /></label>
-            <label>Start<input v-model="form.start" maxlength="60" placeholder="September 2025" required /></label>
-            <label>End<input v-model="form.end" maxlength="60" placeholder="Present" required /></label>
-            <label>Exact start date <span>Optional; overrides the month label</span><input v-model="form.startDate" type="date" /></label>
-            <label>Exact end date <span>Optional; leave blank when ongoing</span><input v-model="form.endDate" type="date" /></label>
+            <label>Start month and year <span>Required</span><input v-model="form.startMonth" type="month" required /></label>
+            <label>Start day <span>Optional</span><input v-model.number="form.startDay" type="number" min="1" max="31" placeholder="Day" /></label>
+            <label>End month and year <span>Required unless ongoing</span><input v-model="form.endMonth" type="month" :required="!form.ongoing" :disabled="form.ongoing" /></label>
+            <label>End day <span>Optional</span><input v-model.number="form.endDay" type="number" min="1" max="31" placeholder="Day" :disabled="form.ongoing" /></label>
+            <label class="ongoing-field"><input v-model="form.ongoing" type="checkbox" /> This role is ongoing</label>
             <label class="full">Description<textarea v-model="form.description" rows="5" maxlength="4000" required></textarea></label>
             <label class="full">Highlights <span>One per line</span><textarea v-model="form.highlightsText" rows="6" maxlength="10000"></textarea></label>
           </div>
@@ -70,6 +71,11 @@
             </div>
           </article>
         </div>
+
+        <section class="appendix-admin" aria-labelledby="appendix-editor-title"><div class="admin-titlebar"><div><p class="eyebrow"><span></span>Supporting evidence</p><h2 id="appendix-editor-title">Appendix editor</h2><p>Add public PDF links or private placeholders. Public documents become previewable on the Appendix page.</p></div><button class="button primary" type="button" @click="newAppendixDocument"><Plus :size="16" /> Add document</button></div>
+          <form v-if="appendixEditing" class="experience-form" @submit.prevent="saveAppendixDocument"><div class="form-heading"><h2>{{ appendixEditingId ? 'Edit document' : 'Add document' }}</h2><button type="button" aria-label="Close document editor" @click="cancelAppendixEdit"><X :size="20" /></button></div><div class="form-grid"><label>Title<input v-model="appendixForm.title" required maxlength="180" /></label><label>Type<input v-model="appendixForm.type" required maxlength="80" placeholder="Certification" /></label><label>Date<input v-model="appendixForm.date" required maxlength="80" placeholder="April 2025" /></label><label>PDF URL <span>Root-relative or HTTPS</span><input v-model="appendixForm.href" type="text" maxlength="1000" placeholder="/documents/file.pdf" /></label><label class="ongoing-field"><input v-model="appendixForm.available" type="checkbox" /> Publicly available</label><label class="full">Description<textarea v-model="appendixForm.description" rows="4" maxlength="2000" required></textarea></label></div><div class="form-buttons"><button class="button primary" type="submit">Save document</button><button class="admin-action" type="button" @click="cancelAppendixEdit">Cancel</button></div></form>
+          <div class="admin-entry-list"><article v-for="document in appendixDocumentsAdmin" :key="document.id" class="admin-entry"><div><span class="kind">{{ document.type }}</span><h2>{{ document.title }}</h2><p>{{ document.available ? 'Public with preview' : 'Private placeholder' }} · {{ document.date }}</p></div><div class="entry-actions"><button type="button" aria-label="Edit document" @click="editAppendixDocument(document)"><Pencil :size="16" /></button><button class="delete" type="button" aria-label="Delete document" @click="deleteAppendixDocument(document)"><Trash2 :size="16" /></button></div></article></div>
+        </section>
       </section>
     </main>
   </div>
@@ -79,11 +85,13 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import { ArrowDown, ArrowLeft, ArrowUp, Download, Eye, EyeOff, LogOut, Pencil, Plus, RotateCcw, ShieldCheck, Trash2, Upload, X } from 'lucide-vue-next'
 import { useExperienceStore } from '../composables/useExperienceStore'
+import { useAppendixStore } from '../composables/useAppendixStore'
 import { GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { profile } from '../data/portfolio'
 
 const { experiences, add, update, remove, move, importEntries, reset, seedCloudIfEmpty } = useExperienceStore()
+const { documents: appendixDocumentsAdmin, addDocument, updateDocument, removeDocument } = useAppendixStore()
 const authenticated = ref(false)
 const email = ref(profile.email)
 const passphrase = ref('')
@@ -93,8 +101,10 @@ const authError = ref('')
 const editing = ref(false)
 const editingId = ref(null)
 const notice = ref('')
-const blank = () => ({ category: 'professional', title: '', organisation: '', location: 'Uppsala, Sweden', start: '', end: 'Present', startDate: '', endDate: '', description: '', highlightsText: '' })
+const blank = () => ({ category: 'professional', title: '', organisation: '', location: 'Uppsala, Sweden', startMonth: '', startDay: '', endMonth: '', endDay: '', ongoing: true, description: '', highlightsText: '' })
 const form = reactive(blank())
+const appendixBlank = () => ({ title: '', type: 'Certification', date: '', description: '', href: '', available: true })
+const appendixForm = reactive(appendixBlank()); const appendixEditing = ref(false); const appendixEditingId = ref(null)
 
 let unsubscribeAuth
 onMounted(() => {
@@ -157,12 +167,33 @@ const resetPassword = async () => {
   catch { authError.value = 'Password reset is unavailable. Check the email and Firebase Authentication configuration.' }
 }
 
-const assignForm = (entry = blank()) => Object.assign(form, entry, { highlightsText: (entry.highlights || []).join('\n') })
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const parseMonth = (date, label) => {
+  if (/^\d{4}-\d{2}/.test(date || '')) return date.slice(0, 7)
+  const match = String(label || '').match(/([A-Za-z]+)\s+(\d{4})/)
+  const month = match ? monthNames.findIndex((name) => name.toLowerCase() === match[1].toLowerCase()) + 1 : 0
+  return month ? `${match[2]}-${String(month).padStart(2, '0')}` : ''
+}
+const parseDay = (date) => /^\d{4}-\d{2}-\d{2}$/.test(date || '') ? Number(date.slice(8, 10)) : ''
+const makeDate = (month, day) => month ? `${month}${day ? `-${String(day).padStart(2, '0')}` : ''}` : ''
+const isValidDay = (month, day) => {
+  if (!day) return true
+  const [year, monthNumber] = month.split('-').map(Number)
+  return day >= 1 && day <= new Date(Date.UTC(year, monthNumber, 0)).getUTCDate()
+}
+const monthLabel = (month) => month ? `${monthNames[Number(month.slice(5, 7)) - 1]} ${month.slice(0, 4)}` : ''
+const assignForm = (entry = blank()) => Object.assign(form, blank(), entry, {
+  startMonth: entry.startMonth || parseMonth(entry.startDate, entry.start), startDay: entry.startDay || parseDay(entry.startDate),
+  endMonth: entry.endMonth || parseMonth(entry.endDate, entry.end), endDay: entry.endDay || parseDay(entry.endDate),
+  ongoing: entry.ongoing ?? String(entry.end || '').toLowerCase() === 'present', highlightsText: (entry.highlights || []).join('\n')
+})
 const newEntry = () => { editingId.value = null; assignForm(); editing.value = true; window.scrollTo({ top: 240, behavior: 'smooth' }) }
 const editEntry = (entry) => { editingId.value = entry.id; assignForm(entry); editing.value = true; window.scrollTo({ top: 240, behavior: 'smooth' }) }
 const cancelEdit = () => { editing.value = false; editingId.value = null; assignForm() }
 const saveEntry = async () => {
-  const entry = { ...form, highlights: form.highlightsText.split('\n').map((item) => item.trim()).filter(Boolean) }
+  const { startMonth, startDay, endMonth, endDay, ongoing, highlightsText, ...content } = form
+  if (!isValidDay(startMonth, startDay) || (!ongoing && !isValidDay(endMonth, endDay))) { notice.value = 'Choose a valid day for the selected month and year.'; return }
+  const entry = { ...content, start: monthLabel(startMonth), end: ongoing ? 'Present' : monthLabel(endMonth), startDate: makeDate(startMonth, startDay), endDate: ongoing ? '' : makeDate(endMonth, endDay), highlights: highlightsText.split('\n').map((item) => item.trim()).filter(Boolean) }
   try { if (editingId.value) await update(editingId.value, entry); else await add(entry); notice.value = 'Experience published securely.'; cancelEdit() }
   catch (error) { notice.value = error.message || 'Publishing failed.' }
 }
@@ -191,4 +222,9 @@ const resetEntries = async () => {
   if (window.confirm('Restore all experience entries to the CV and LinkedIn source data?')) { try { await reset(); notice.value = 'Source experience data restored.' } catch (error) { notice.value = error.message } }
 }
 const logout = async () => { await signOut(auth); authenticated.value = false; editing.value = false }
+const newAppendixDocument = () => { appendixEditingId.value = null; Object.assign(appendixForm, appendixBlank()); appendixEditing.value = true }
+const editAppendixDocument = (document) => { appendixEditingId.value = document.id; Object.assign(appendixForm, document); appendixEditing.value = true }
+const cancelAppendixEdit = () => { appendixEditing.value = false; appendixEditingId.value = null; Object.assign(appendixForm, appendixBlank()) }
+const saveAppendixDocument = async () => { try { if (appendixEditingId.value) await updateDocument(appendixEditingId.value, appendixForm); else await addDocument(appendixForm); notice.value = 'Appendix document published.'; cancelAppendixEdit() } catch (error) { notice.value = error.message || 'Could not publish the document.' } }
+const deleteAppendixDocument = async (document) => { if (window.confirm(`Delete “${document.title}”?`)) { try { await removeDocument(document.id); notice.value = 'Appendix document removed.' } catch (error) { notice.value = error.message } } }
 </script>

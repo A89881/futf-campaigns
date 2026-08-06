@@ -3,10 +3,10 @@
     <div class="experience-toolbar">
       <div class="experience-filters" role="group" aria-label="Filter experiences">
         <button v-for="option in filters" :key="option.value" type="button" :class="{ active: filter === option.value }" @click="filter = option.value">
-          {{ option.label }} <span>{{ count(option.value) }}</span>
+          {{ t(option.label) }} <span>{{ count(option.value) }}</span>
         </button>
       </div>
-      <router-link class="manage-link" to="/admin">Manage experience <Settings :size="15" /></router-link>
+      <router-link class="manage-link" to="/admin">{{ t('Manage experience') }} <Settings :size="15" /></router-link>
     </div>
 
     <div class="stacked-timeline" aria-label="Timeline showing overlapping experience periods">
@@ -25,8 +25,8 @@
           <span class="period">{{ displayStart(item) }}<br />{{ displayEnd(item) }}</span>
         </div>
         <div class="experience-title">
-          <h3>{{ item.title }}</h3>
-          <p class="organisation">{{ item.organisation }}</p>
+          <h3>{{ t(item.title) }}</h3>
+          <a v-if="organisationUrl(item)" class="organisation organisation-link" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ExternalLink :size="12" /></a><p v-else class="organisation">{{ item.organisation }}</p>
           <p class="location">{{ item.location }}</p>
         </div>
         <div class="experience-details">
@@ -42,10 +42,13 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { Settings } from 'lucide-vue-next'
+import { ExternalLink, Settings } from 'lucide-vue-next'
 import { useExperienceStore } from '../composables/useExperienceStore'
+import { organisationLinks } from '../data/portfolio'
+import { useLocale } from '../composables/useLocale'
 
 const { experiences } = useExperienceStore()
+const { t } = useLocale()
 const filter = ref('all')
 const filters = [
   { label: 'All', value: 'all' },
@@ -58,14 +61,14 @@ const startMonth = 2022 * 12
 const endMonth = 2027 * 12
 const monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 const toMonth = (value, useEnd = false) => {
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) { const [year, month] = value.split('-').map(Number); return year * 12 + month - 1 }
+  if (/^\d{4}-\d{2}(?:-\d{2})?$/.test(value)) { const [year, month] = value.split('-').map(Number); return year * 12 + month - 1 }
   if (value.toLowerCase() === 'present') return new Date().getFullYear() * 12 + new Date().getMonth()
   const match = value.toLowerCase().match(/([a-z]+)?\s*(\d{4})/)
   if (!match) return useEnd ? endMonth - 1 : startMonth
   const month = match[1] ? Math.max(0, monthNames.indexOf(match[1])) : (useEnd ? 11 : 0)
   return Number(match[2]) * 12 + month
 }
-const formatExactDate = (value) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`))
+const formatExactDate = (value) => new Intl.DateTimeFormat('en-GB', { ...(value.length === 10 ? { day: 'numeric' } : {}), month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value.length === 7 ? `${value}-01` : value}T00:00:00Z`))
 const displayStart = (item) => item.startDate ? formatExactDate(item.startDate) : item.start
 const displayEnd = (item) => item.endDate ? formatExactDate(item.endDate) : item.end
 const timelineItems = computed(() => filteredExperiences.value.map((item) => {
@@ -81,4 +84,5 @@ const peakConcurrency = computed(() => {
 const years = [2022, 2023, 2024, 2025, 2026]
 const count = (category) => category === 'all' ? experiences.value.length : experiences.value.filter((item) => item.category === category).length
 const label = (category) => ({ professional: 'Professional', research: 'Research', community: 'Community' }[category])
+const organisationUrl = (item) => item.organisationHref || organisationLinks[item.organisation]
 </script>

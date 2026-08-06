@@ -16,8 +16,8 @@ const sanitiseEntry = (entry) => ({
   category: ['professional', 'research', 'community'].includes(entry.category) ? entry.category : 'professional',
   title: cleanText(entry.title, 180), organisation: cleanText(entry.organisation, 180),
   location: cleanText(entry.location, 120), start: cleanText(entry.start, 60), end: cleanText(entry.end, 60),
-  startDate: /^\d{4}-\d{2}-\d{2}$/.test(entry.startDate || '') ? entry.startDate : '',
-  endDate: /^\d{4}-\d{2}-\d{2}$/.test(entry.endDate || '') ? entry.endDate : '',
+  startDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.startDate || '') ? entry.startDate : '',
+  endDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.endDate || '') ? entry.endDate : '',
   description: cleanText(entry.description),
   highlights: Array.isArray(entry.highlights) ? entry.highlights.map((item) => cleanText(item, 500)).filter(Boolean).slice(0, 20) : [],
 })

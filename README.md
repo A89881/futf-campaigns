@@ -13,6 +13,8 @@ A responsive personal portfolio for Abhay Mishra, built as a Vue single-page app
 - A dark theme with a near-black base, blue primary accent, and pink secondary accent.
 - Firebase Authentication and Firestore-backed experience editing.
 - A private appendix for redacted or safe-to-publish supporting documents.
+- An EN/SV language switch backed by one shared localization layer rather than duplicate pages.
+- Verified project-source and organisation links, plus in-page PDF previews for local appendix files.
 - Automated GitHub Pages builds and an independent Firestore-rules deployment workflow.
 
 ## Technology
@@ -72,12 +74,13 @@ firestore.rules
 | Route | Purpose |
 | --- | --- |
 | `/` | Landing page; also renders the complete scrollable portfolio at mobile widths |
+| `/about` | Personal background, origins, accelerated education, and life beyond the CV |
 | `/resume` | Profile, education, skills, and jobs/research-only Work Experience |
 | `/projects` | Selected technical and community projects |
 | `/experience` | Professional, research, and community timeline |
 | `/appendix` | Supporting documents and publication guidance |
 | `/contact` | Email and social links, including Instagram |
-| `/campaign` | Mishra 2025 campaign archive within this portfolio |
+| `/campaign` | Fully interactive preservation of the original Mishra 2025 campaign site |
 | `/privacy` | Privacy and data-handling information |
 | `/admin` | Authenticated experience editor |
 
@@ -98,18 +101,18 @@ Experience entries use this shape:
   location: 'City, Country',
   start: 'September 2025',  // readable fallback label
   end: 'Present',
-  startDate: '2025-09-01',  // optional exact ISO date
-  endDate: '',              // optional; blank means ongoing
+  startDate: '2025-09',     // required month/year; optional day: 2025-09-01
+  endDate: '',              // month/year or exact date; blank means ongoing
   description: 'Polished overview.',
   highlights: ['Specific responsibility or result.']
 }
 ```
 
-Use `YYYY-MM-DD` for exact dates. The public UI displays exact dates when present and falls back to `start` and `end` labels otherwise. Only `professional` and `research` categories appear under Resume → Work Experience; `community` remains on the complete Experience page.
+Use `YYYY-MM` when only month and year are known, or `YYYY-MM-DD` when the exact day is known. Month and year are required for a starting date; the day is optional. Ongoing entries may leave the ending date blank. The public UI displays dates in day/month/year order when a day exists and month/year otherwise. Only `professional` and `research` categories appear under Resume → Work Experience; `community` remains on the complete Experience page.
 
 ## Experience editor
 
-Open `/admin`, authenticate, and use **Add experience** or edit an existing entry. The editor supports exact day inputs, ordering, import/export, deletion, and restoring repository seed data. Export JSON before substantial edits so the current Firestore state can be versioned or recovered.
+Open `/admin`, authenticate, and use **Add experience** or edit an existing entry. The editor supports optional days with required month/year precision, ordering, import/export, deletion, and restoring repository seed data. The same screen includes an Appendix editor for adding public PDF links or private placeholders. Export JSON before substantial experience edits so the current Firestore state can be versioned or recovered.
 
 Firestore is the live source when available. The composable maintains a local cache so public content remains resilient if Firestore is temporarily unavailable. Repository seed data remains the final fallback.
 
@@ -163,9 +166,13 @@ Theme tokens live at the top of `src/style.css`. Components should use semantic 
 
 When adding UI, test both themes and check text contrast, focus outlines, borders, hover states, and canvas visibility.
 
+## Languages
+
+The EN/SV switch uses `src/composables/useLocale.js`. It keeps both languages in the same routes and components, stores the preference locally, and updates the document language for assistive technology. This avoids an external translation API, API keys, usage fees, network latency, and accidental transmission of page content. Add new English-to-Swedish phrases to the centralized dictionary and wrap visible text with `t(...)` where content is introduced.
+
 ## Appendix documents
 
-Only commit material approved for public release. Add the sanitized file under `public/appendix/`, then add its metadata and path to the documents data in `src/data/portfolio.js`. Prefer descriptive filenames without spaces. Open the production URL after deployment to confirm the path and PDF rendering.
+Only commit material approved for public release. Add the sanitized file under `public/documents/`, then register its root-relative URL through the Appendix editor or seed it in `src/data/portfolio.js`. Root-relative PDFs support the in-page preview; HTTPS documents hosted elsewhere remain openable in a new tab because embedding them would require weakening the frame policy. Prefer descriptive filenames without spaces. The Appendix Firestore rules must be deployed before admin changes can publish.
 
 ## Automated deployment
 

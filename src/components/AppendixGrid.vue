@@ -1,17 +1,2 @@
-<template>
-  <div class="document-grid">
-    <article v-for="document in appendixDocuments" :key="document.title" class="document-card" :class="{ unavailable: !document.available }">
-      <div class="document-icon"><FileText :size="25" /></div>
-      <p class="kind">{{ document.type }} · {{ document.date }}</p>
-      <h2>{{ document.title }}</h2>
-      <p>{{ document.description }}</p>
-      <a v-if="document.available" :href="document.href" target="_blank" rel="noopener noreferrer">Open PDF <ArrowUpRight :size="15" /></a>
-      <span v-else>Private document</span>
-    </article>
-  </div>
-</template>
-
-<script setup>
-import { ArrowUpRight, FileText } from 'lucide-vue-next'
-import { appendixDocuments } from '../data/portfolio'
-</script>
+<template><div class="document-grid"><article v-for="document in documents" :key="document.id" class="document-card" :class="{ unavailable: !document.available }"><div class="document-icon"><FileText :size="25" /></div><p class="kind">{{ document.type }} · {{ document.date }}</p><h2>{{ document.title }}</h2><p>{{ document.description }}</p><div v-if="document.available" class="document-actions"><button v-if="previewable(document)" type="button" @click="preview = document">{{ t('Preview') }} <Eye :size="15" /></button><a :href="document.href" target="_blank" rel="noopener noreferrer">{{ t('Open PDF') }} <ArrowUpRight :size="15" /></a></div><span v-else>{{ t('Private document') }}</span></article></div><Teleport to="body"><div v-if="preview" class="preview-modal" role="dialog" aria-modal="true" :aria-label="`Preview ${preview.title}`"><div class="preview-toolbar"><div><p class="kind">Document preview</p><strong>{{ preview.title }}</strong></div><button type="button" aria-label="Close preview" @click="preview = null"><X :size="22" /></button></div><iframe :src="preview.href" :title="preview.title"></iframe></div></Teleport></template>
+<script setup>import { ref } from 'vue'; import { ArrowUpRight, Eye, FileText, X } from 'lucide-vue-next'; import { useAppendixStore } from '../composables/useAppendixStore'; import { useLocale } from '../composables/useLocale'; const { documents } = useAppendixStore(); const { t } = useLocale(); const preview = ref(null); const previewable = (document) => document.href?.startsWith('/')</script>

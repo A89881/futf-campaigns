@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LandingPage from '../pages/LandingPage.vue'
 const routes = [
   { path: '/', name: 'Home', component: LandingPage, meta: { title: 'Abhay Mishra - Engineering Physics & Software' } },
+  { path: '/about', name: 'About', component: () => import('../pages/AboutPage.vue'), meta: { title: 'About Abhay Mishra' } },
   { path: '/resume', name: 'Resume', component: () => import('../pages/ResumePage.vue'), meta: { title: 'Resume - Abhay Mishra' } },
   { path: '/projects', name: 'Projects', component: () => import('../pages/ProjectsPage.vue'), meta: { title: 'Projects - Abhay Mishra' } },
   { path: '/experience', name: 'Experience', component: () => import('../pages/ExperiencePage.vue'), meta: { title: 'Experience - Abhay Mishra' } },
