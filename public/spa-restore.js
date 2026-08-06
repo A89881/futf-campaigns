@@ -1,6 +1,5 @@
-const redirect = sessionStorage.getItem('spa-redirect')
+const redirect = new URLSearchParams(location.search).get('spa')
 
-if (redirect) {
-  sessionStorage.removeItem('spa-redirect')
+if (redirect?.startsWith('/') && !redirect.startsWith('//')) {
   history.replaceState(null, '', redirect)
 }

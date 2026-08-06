@@ -1,2 +1,2 @@
-sessionStorage.setItem('spa-redirect', location.pathname + location.search + location.hash)
-location.replace('/')
+const route = location.pathname + location.search + location.hash
+location.replace(`/?spa=${encodeURIComponent(route)}`)
