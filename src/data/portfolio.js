@@ -439,6 +439,130 @@ export const defaultExperiences = [
   },
 ]
 
+// Repository-owned Swedish fallbacks. Firestore may override any individual
+// field, so Swedish copy can be edited without mutating the English source.
+export const experienceTranslations = {
+  sv: {
+    'bruhnbruhn-jse': {
+      title: 'Junior mjukvaruutvecklare',
+      description: 'Utvecklar molnbaserade mjukvarusystem, distribuerade mikrotjänstarkitekturer och AI-baserade demonstrationsplattformar inom ekosystemen DacreoOS och SpaceStack för tillämpningar inom rymdteknik och jordobservation.',
+      highlights: [
+        'Utformar och underhåller containerbaserade mikrotjänster, skalbara backendtjänster och plattformsintegrationer.',
+        'Arbetar med Kubernetes-distributioner, GitLab CI/CD-flöden, observabilitet, heartbeat-övervakning och tjänster för systemstatus.',
+        'Skapar automatiserade ramverk för testning och validering samt integrerar behandling av jordobservationsdata.',
+        'Utvecklar och utvärderar maskininlärnings- och datorseendemodeller för bildanalys och videoanalys i realtid.',
+      ],
+    },
+    'uu-student-ambassador': {
+      title: 'Studentambassadör – teknisk-naturvetenskapliga fakulteten',
+      description: 'Presenterar Uppsala universitets tekniska och naturvetenskapliga utbildningar samt studentlivet för blivande studenter genom utåtriktat arbete, marknadsföring och föredrag.',
+      highlights: [],
+    },
+    'scifest-2025': {
+      title: 'Funktionär på SciFest',
+      description: 'Hjälpte till med besöksregistrering, loungeverksamhet, förberedelser och återställning under SciFest 2025.',
+      highlights: [],
+    },
+    'materials-theory-research': {
+      title: 'Sommarforskningspraktikant – avdelningen för materialteori',
+      description: 'Arbetade i Olle Erikssons forskargrupp för materialteori under handledning av Rohit Pathak, Vladislav Borisov och Olle Eriksson. Använde beräkningsfysik, databehandling och numeriska metoder för att simulera och visualisera lösningsdata.',
+      highlights: [
+        'Utvecklade generaliserad programvara för att bestämma longitudinell spinnsusceptibilitet med hjälp av Dyson-ekvationer.',
+        'Löste kopplade linjära ekvationer för statisk bar och växelverkande susceptibilitet baserat på ADA-DFT-modeller inom LSDA.',
+      ],
+    },
+    'nti-substitute-teacher': {
+      title: 'Vikarie – studiestöd',
+      description: 'Arbetade som vikarie i matematik och fysik på gymnasienivå och höll veckovisa studiestödstillfällen.',
+      highlights: [],
+    },
+    'allakando-study-coach': {
+      title: 'Studiecoach',
+      description: 'Vägledde elever i deras studier och hjälpte dem att utveckla hållbara studievanor och förbättra sina studieresultat.',
+      highlights: [],
+    },
+    'slu-field-analytics': {
+      title: 'Fältassistent och praktikant inom statistisk analys',
+      description: 'Arbetade med extraktion av växtmaterial för fältförsök och fick erfarenhet av statistisk analys av det insamlade materialet.',
+      highlights: [],
+    },
+    'utnarm-2026-pr': {
+      title: 'Kommittémedlem och PR-ansvarig – UTNARM 2026',
+      description: 'Kommittémedlem med ansvar för att genomföra UTNARM 2026:s marknadsförings- och engagemangsstrategi för både företag och studenter. Seriös strategi, ambitiöst genomförande – och genuint väldigt roligt.',
+      highlights: [],
+    },
+    'utn-council-2026': {
+      title: 'Sammankallande representant – UTN:s fullmäktige (FUM)',
+      description: 'Sammankallande representant för FUTF i studentkårens fullmäktige. Samordnar representationen, för fram sektionens ståndpunkter i UTN:s policydiskussioner och ansvarar för dokumentationen och förberedelserna bakom arbetet.',
+      highlights: [],
+    },
+    'first-community': {
+      title: 'Styrelseledamot och communityansvarig',
+      description: 'Styrelseledamot i den nystartade lokalavdelningen vid Uppsala universitet med ansvar för marknadsföring och utåtriktat arbete, ambassadörsnätverket och den lokala organisationens utveckling.',
+      highlights: [],
+    },
+    'utnarm-2025-corporate-host': {
+      title: 'Företagsvärd – UTNARM 2025',
+      description: 'Var värd för ett deltagande företag och dess huvudsakliga kontaktperson kring mässdagen, med ansvar för att både de praktiska detaljerna och det personliga välkomnandet fungerade väl.',
+      highlights: [],
+    },
+    'tdb-2025-head-buddy': {
+      title: 'Huvudfadder – TDB-mottagningen 2025',
+      description: 'Var med och ledde mottagningen för nya studenter på teknisk fysik: två intensiva veckor med planering och aktiviteter för en ny klass och deras faddrar – ungefär 80 personer totalt.',
+      highlights: [],
+    },
+    'forsranningen-2025-volunteer': {
+      title: 'Funktionär på Forsfestivalen – Forsränningen 2025',
+      description: 'Arbetade ideellt med bar- och köksverksamhet under Forsfestivalen vid Ångströmlaboratoriet.',
+      highlights: ['Deltagarintyg finns i appendixet.'],
+    },
+    'futf-content-design': {
+      title: 'Innehållsskapare och grafisk designer – marknadsförings- och informationsgruppen',
+      description: 'Skapade och utvecklade profilprodukter, kampanjmaterial, innehåll för sociala medier och grafiska tillgångar för sektionen, inklusive videoredigering och produktionsinriktad grafisk design.',
+      highlights: [],
+    },
+    'futf-course-safety': {
+      title: 'Kurs- och skyddsombud – utbildnings- och studentmiljökommittén',
+      description: 'Företrädde studenternas synpunkter och intressen i frågor om kurser, utbildningskvalitet, säkerhet och den övergripande studiemiljön.',
+      highlights: [],
+    },
+    'futf-it-group': {
+      title: 'Utvecklare och grafisk designer – IT-gruppen',
+      description: 'Bidrog med frontendutveckling, UX-design, marknadsföring, dokumentation och praktisk samordning i sektionens digitala arbete.',
+      highlights: [],
+    },
+    'futf-cafe-host': {
+      title: 'Cafévärd – Cafégruppen',
+      description: 'Arbetade med caféverksamhet, försäljning, köksarbete, marknadsföring och grafisk design – en oväntat användbar kombination av service, logistik och kommunikation.',
+      highlights: [],
+    },
+    'futf-friday-fika': {
+      title: 'Bagare – Fredagsfika',
+      description: 'Hjälpte till att hålla traditionen med fredagsfika på teknisk fysik vid liv. Alla bidrag behöver inte Kubernetes; ibland är kaka helt enkelt rätt infrastruktur.',
+      highlights: [],
+    },
+    'futf-event-media': {
+      title: 'Medarbetare inom eventmedia och marknadsföring',
+      description: 'Arbetade med eventfotografering, videoredigering och marknadsföring för sektionens banketter och gasquer.',
+      highlights: [
+        'Marknadsföringsansvarig – Halvtidsgasque 2026',
+        'Fotograf – Examensbanketten 2026, TeFAT-banketten 2026 och FX-halvformella gasque 2025',
+        'Videoredigerare – Årliga damgasquen 2026',
+      ],
+    },
+    'nti-ambassador': {
+      title: 'Studentambassadör och elevrepresentant',
+      description: 'Representerade teknikprogrammet i dialog med elever, lärare och skolledning samt vid gymnasiemässor, öppet hus och kampanjaktiviteter.',
+      highlights: [],
+    },
+    'sleeq-uf': {
+      title: 'Design- och juridikansvarig',
+      description: 'Var med och grundade ett elevdrivet klädföretag och arbetade med företagets visuella identitet samt de juridiska delarna av webbshoppen.',
+      highlights: [],
+    },
+  },
+}
+
 export const education = [
   {
     degree: 'Master of Science in Engineering - Engineering Physics',

@@ -105,11 +105,20 @@ Experience entries use this shape:
   startDate: '2025-09',     // required month/year; optional day: 2025-09-01
   endDate: '',              // month/year or exact date; blank means ongoing
   description: 'Polished overview.',
-  highlights: ['Specific responsibility or result.']
+  highlights: ['Specific responsibility or result.'],
+  translations: {
+    sv: {
+      title: 'Svensk rolltitel',
+      description: 'Självständig svensk beskrivning.',
+      highlights: ['Självständig svensk punkt.']
+    }
+  }
 }
 ```
 
 Use `YYYY-MM` when only month and year are known, or `YYYY-MM-DD` when the exact day is known. Month and year are required for a starting date; the day is optional. Ongoing entries may leave the ending date blank. The public UI displays dates in day/month/year order when a day exists and month/year otherwise. Only `professional` and `research` categories appear under Resume → Work Experience; `community` remains on the complete Experience page.
+
+English is stored in the top-level `title`, `description`, and `highlights` fields. Swedish is stored separately under `translations.sv`; neither language is generated from or written over the other. Repository-owned Swedish fallbacks for every seed entry live in `experienceTranslations.sv` in `src/data/portfolio.js`. Firestore overrides take priority one field at a time, so an administrator can tune one Swedish description without changing its English counterpart or the other Swedish entries.
 
 ## Administration
 
@@ -173,7 +182,7 @@ When adding UI, test both themes and check text contrast, focus outlines, border
 
 The EN/SV switch uses `src/composables/useLocale.js`. It keeps both languages in the same routes and components, stores the preference locally, and updates the document language for assistive technology. This avoids an external translation API, API keys, usage fees, network latency, and accidental transmission of page content.
 
-Fixed interface and project translations live in the central dictionary. Experience and Appendix records additionally support `translations.sv`. The administrator can edit Swedish titles, descriptions, dates, types, and highlights independently; blank Swedish fields fall back to English. Editing one language never overwrites the other. Add new fixed phrases to the dictionary and render them through `t(...)`.
+Fixed interface and project translations live in the central dictionary. Experience and Appendix records additionally support `translations.sv`. Every repository-seeded experience has its own Swedish title, body, and highlights in `experienceTranslations.sv`; the administrator can replace those fields independently in Firestore. Blank Swedish fields first use the repository Swedish fallback and only use English when no Swedish version exists. Editing one language never overwrites the other. Add new fixed phrases to the dictionary and render them through `t(...)`.
 
 ## Appendix documents
 
@@ -202,7 +211,9 @@ The preserved campaign's original form wrote to a Realtime Database path with th
 
 ## Automated deployment
 
-`deploy-pages.yml` runs on pull requests and pushes to `New-Design-2026`. It installs the lockfile exactly with `npm ci`, builds the site, and deploys `dist/` to GitHub Pages for qualifying pushes. In **Repository Settings → Pages**, choose **GitHub Actions** as the source. If the release branch changes to `main`, update the workflow's `on.push.branches` filter.
+`deploy-pages.yml` runs on pull requests and pushes to both `main` and `New-Design-2026`. It installs the lockfile exactly with `npm ci`, builds the site, uploads `dist/`, and deploys qualifying pushes to GitHub Pages. Pull requests build for validation but never deploy. In **Repository Settings → Pages**, choose **GitHub Actions** as the source. Keep `main` as the long-term release branch; `New-Design-2026` remains included while the redesign is being finalized.
+
+The workflow also exposes **Run workflow** as a recovery control once the workflow file exists on GitHub's default branch. GitHub intentionally suppresses new workflow runs when a push is made with a workflow's built-in `GITHUB_TOKEN`; use a normal user-authenticated Git Bash push, a personal access token/GitHub App intended to trigger workflows, or the manual button for automated commits. A run that fails before the first step with `Failed to resolve action download info: Service Unavailable` is a GitHub Actions service failure rather than a Vite/build error; rerun that job after GitHub recovers.
 
 `public/CNAME` declares `www.mishra.se`. DNS must point the chosen hostname to GitHub Pages, and **Enforce HTTPS** should be enabled after the certificate is available.
 
@@ -236,7 +247,9 @@ The referenced service account needs only the permissions necessary to deploy Fi
 - **Old experience content appears:** inspect Firestore first, then clear the site's local storage/cache or use **Restore source data** intentionally.
 - **Project order or visibility does not save:** deploy `firestore.rules`, confirm the signed-in verified email matches the administrator, and use **Restore defaults** if the saved ID list is stale.
 - **A new document returns 404:** ensure it is under `public/`, use a root-relative URL, preserve filename case, and rebuild.
-- **GitHub Pages does not deploy:** inspect the Actions run, confirm Pages uses GitHub Actions, and verify the pushed branch matches the workflow filter.
+- **No GitHub Actions run appears at all:** confirm the workflow is present on the pushed branch and that the push was user-authenticated rather than made with `GITHUB_TOKEN`. The repository default branch is `main`, so merge the workflow there to make the manual **Run workflow** control consistently available.
+- **A Pages run starts but does not deploy:** inspect the Actions run, confirm **Settings → Pages → Build and deployment → Source** is set to **GitHub Actions**, and confirm the `github-pages` environment allows the pushed release branch.
+- **A run fails before Checkout with `Service Unavailable`:** use **Re-run jobs**. GitHub failed while downloading the action itself; changing application code will not repair that infrastructure outage.
 
 ## Ongoing maintenance
 

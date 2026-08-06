@@ -1,33 +1,41 @@
 import { readonly, ref } from 'vue'
 import { doc, getDoc, onSnapshot, serverTimestamp, setDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase'
-import { defaultExperiences, profile } from '../data/portfolio'
+import { defaultExperiences, experienceTranslations, profile } from '../data/portfolio'
 
 const STORAGE_KEY = 'abhay-portfolio-experiences-cache-v2'
 const experienceDocument = doc(db, 'portfolio', 'experience')
-const experiences = ref(defaultExperiences.map((item) => ({ ...item, highlights: [...item.highlights] })))
 const cloudStatus = ref('loading')
 let initialised = false
 let unsubscribe = null
 
 const cleanText = (value, max = 4000) => String(value ?? '').trim().slice(0, max)
-const sanitiseEntry = (entry) => ({
-  id: cleanText(entry.id, 100) || crypto.randomUUID(),
-  category: ['professional', 'research', 'community'].includes(entry.category) ? entry.category : 'professional',
-  title: cleanText(entry.title, 180), organisation: cleanText(entry.organisation, 180),
-  location: cleanText(entry.location, 120), start: cleanText(entry.start, 60), end: cleanText(entry.end, 60),
-  startDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.startDate || '') ? entry.startDate : '',
-  endDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.endDate || '') ? entry.endDate : '',
-  description: cleanText(entry.description),
-  highlights: Array.isArray(entry.highlights) ? entry.highlights.map((item) => cleanText(item, 500)).filter(Boolean).slice(0, 20) : [],
-  translations: {
-    sv: {
-      title: cleanText(entry.translations?.sv?.title, 180),
-      description: cleanText(entry.translations?.sv?.description, 4000),
-      highlights: Array.isArray(entry.translations?.sv?.highlights) ? entry.translations.sv.highlights.map((item) => cleanText(item, 500)).filter(Boolean).slice(0, 20) : [],
+const cleanHighlights = (items) => Array.isArray(items) ? items.map((item) => cleanText(item, 500)).filter(Boolean).slice(0, 20) : []
+const sourceTranslation = (entry) => experienceTranslations.sv[cleanText(entry.id, 100)] || {}
+const sanitiseEntry = (entry) => {
+  const fallback = sourceTranslation(entry)
+  const translatedHighlights = cleanHighlights(entry.translations?.sv?.highlights)
+  return {
+    id: cleanText(entry.id, 100) || crypto.randomUUID(),
+    category: ['professional', 'research', 'community'].includes(entry.category) ? entry.category : 'professional',
+    title: cleanText(entry.title, 180), organisation: cleanText(entry.organisation, 180),
+    organisationHref: cleanText(entry.organisationHref, 1000),
+    location: cleanText(entry.location, 120), start: cleanText(entry.start, 60), end: cleanText(entry.end, 60),
+    startDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.startDate || '') ? entry.startDate : '',
+    endDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.endDate || '') ? entry.endDate : '',
+    description: cleanText(entry.description),
+    highlights: cleanHighlights(entry.highlights),
+    translations: {
+      sv: {
+        title: cleanText(entry.translations?.sv?.title || fallback.title, 180),
+        description: cleanText(entry.translations?.sv?.description || fallback.description, 4000),
+        highlights: translatedHighlights.length ? translatedHighlights : cleanHighlights(fallback.highlights),
+      },
     },
-  },
-})
+  }
+}
+
+const experiences = ref(defaultExperiences.map(sanitiseEntry))
 
 const applyEntries = (entries) => {
   if (!Array.isArray(entries)) return false

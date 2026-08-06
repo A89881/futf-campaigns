@@ -56,7 +56,7 @@
             <label class="ongoing-field"><input v-model="form.ongoing" type="checkbox" /> This role is ongoing</label>
             <label class="full">Description<textarea v-model="form.description" rows="5" maxlength="4000" required></textarea></label>
             <label class="full">Highlights <span>One per line</span><textarea v-model="form.highlightsText" rows="6" maxlength="10000"></textarea></label>
-            <div class="full translation-heading"><span>Swedish wording</span><p>Optional overrides. Leave a field blank to fall back to English without changing the English text.</p></div>
+            <div class="full translation-heading"><span>Swedish wording</span><p>Independently editable. Seed entries use their repository Swedish copy when a field is blank; English is stored separately and is never overwritten.</p></div>
             <label class="full">Swedish title<input v-model="form.svTitle" maxlength="180" /></label>
             <label class="full">Swedish description<textarea v-model="form.svDescription" rows="5" maxlength="4000"></textarea></label>
             <label class="full">Swedish highlights <span>One per line</span><textarea v-model="form.svHighlightsText" rows="6" maxlength="10000"></textarea></label>
