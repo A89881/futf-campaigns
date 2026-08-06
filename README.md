@@ -62,6 +62,9 @@ public/
   documents/              Git-backed, safe-to-publish appendix PDFs
   AbhayMishraCV-English.pdf
   CNAME                   Custom GitHub Pages domain
+  404.html                Preserves direct SPA routes on GitHub Pages
+  spa-redirect.js         Captures a missing route before returning to index
+  spa-restore.js          Restores the captured route before Vue starts
   _headers                Security headers for hosts that support this convention
 .github/workflows/
   deploy-pages.yml        Build and GitHub Pages deployment
@@ -86,6 +89,8 @@ firestore.rules
 | `/admin` | Authenticated experience, project-curation, and appendix editor |
 
 The campaign is intentionally a normal subpage. There is no separate campaign deployment or maintenance branch.
+
+GitHub Pages serves `public/404.html` for direct requests such as `/campaign`. The redirect/restore scripts preserve the original path through that fallback before Vue Router starts. Keep both scripts when adding or changing routes; otherwise direct links will fall back to `/` even though in-app navigation still works.
 
 ## Editing ordinary portfolio content
 
