@@ -15,6 +15,7 @@ A responsive personal portfolio for Abhay Mishra, built as a Vue single-page app
 - A private appendix for redacted or safe-to-publish supporting documents.
 - An EN/SV language switch backed by one shared localization layer rather than duplicate pages.
 - Verified project-source and organisation links, plus in-page PDF previews for local appendix files.
+- Firestore-backed project curation: all catalogue entries remain in admin while public visibility and significance order are configurable.
 - Automated GitHub Pages builds and an independent Firestore-rules deployment workflow.
 
 ## Technology
@@ -58,7 +59,7 @@ src/
   router.js               Route table and lazy loading
   style.css               Theme tokens and responsive design system
 public/
-  appendix/               Safe-to-publish supporting documents
+  documents/              Git-backed, safe-to-publish appendix PDFs
   AbhayMishraCV-English.pdf
   CNAME                   Custom GitHub Pages domain
   _headers                Security headers for hosts that support this convention
@@ -82,7 +83,7 @@ firestore.rules
 | `/contact` | Email and social links, including Instagram |
 | `/campaign` | Fully interactive preservation of the original Mishra 2025 campaign site |
 | `/privacy` | Privacy and data-handling information |
-| `/admin` | Authenticated experience editor |
+| `/admin` | Authenticated experience, project-curation, and appendix editor |
 
 The campaign is intentionally a normal subpage. There is no separate campaign deployment or maintenance branch.
 
@@ -110,9 +111,9 @@ Experience entries use this shape:
 
 Use `YYYY-MM` when only month and year are known, or `YYYY-MM-DD` when the exact day is known. Month and year are required for a starting date; the day is optional. Ongoing entries may leave the ending date blank. The public UI displays dates in day/month/year order when a day exists and month/year otherwise. Only `professional` and `research` categories appear under Resume → Work Experience; `community` remains on the complete Experience page.
 
-## Experience editor
+## Administration
 
-Open `/admin`, authenticate, and use **Add experience** or edit an existing entry. The editor supports optional days with required month/year precision, ordering, import/export, deletion, and restoring repository seed data. The same screen includes an Appendix editor for adding public PDF links or private placeholders. Export JSON before substantial experience edits so the current Firestore state can be versioned or recovered.
+Open `/admin` and authenticate with the verified administrator account. The Experience editor supports optional days with required month/year precision, ordering, import/export, deletion, and restoring repository seed data. Project curation lists the complete GitHub catalogue and lets the administrator show, hide, and reorder entries without deleting their source definitions. The same screen includes an Appendix metadata editor for Git-backed PDF paths and private placeholders. English and Swedish wording are independently editable. Export JSON before substantial experience edits so the current Firestore state can be versioned or recovered.
 
 Firestore is the live source when available. The composable maintains a local cache so public content remains resilient if Firestore is temporarily unavailable. Repository seed data remains the final fallback.
 
@@ -135,13 +136,15 @@ At the time this README was prepared, the project's public Firebase configuratio
 
 ## Firestore and authorization
 
-The site stores experience entries in Cloud Firestore. `firestore.rules` permits public reads of the portfolio collection but allows writes only when all of these are true:
+The site stores experience entries, project visibility/order settings, and appendix metadata in Cloud Firestore. `firestore.rules` permits public reads of those portfolio documents but allows portfolio writes only when all of these are true:
 
 - the request is authenticated;
 - the Firebase user has a verified email;
 - the normalized email matches the configured administrator address.
 
-Deploy rules locally with the Firebase CLI:
+The contact form may only create validated documents in `contactSubmissions`; public reads, updates, and deletes are denied. Field types and maximum lengths are checked server-side. The client adds a honeypot and one-minute local cooldown. Enable Firebase App Check and budget alerts for stronger production abuse protection.
+
+Deploy Firestore rules locally with the Firebase CLI:
 
 ```bash
 npx firebase-tools login
@@ -149,14 +152,14 @@ npx firebase-tools use futf-campaign-forms
 npx firebase-tools deploy --only firestore:rules
 ```
 
-Changing an admin email requires changing both the public profile configuration and the matching rule, then deploying the rule. UI checks are for usability only; never weaken the server-side rule to rely on a hidden route or button.
+Changing an admin email requires changing the public profile configuration and `firestore.rules`, then deploying the rule file. UI checks are for usability only; never weaken server-side rules to rely on a hidden route or button.
 
 ## Security practices
 
 - Protect the administrator Google account with a passkey or multi-factor authentication.
 - Keep Email/Password disabled unless it is actively needed. If enabled, configure Firebase password policy and email-enumeration protection.
 - Never commit service-account JSON, refresh tokens, private documents, or `.env` files containing credentials.
-- Treat appendix files as public internet content. Redact personal identity numbers, signatures, addresses, QR codes, student identifiers, and private contact details before copying them into `public/appendix/`.
+- Treat appendix files as public internet content. Redact personal identity numbers, signatures, addresses, QR codes, student identifiers, and private contact details before copying them into `public/documents/`.
 - The CSP in `index.html` is the fallback for GitHub Pages. `public/_headers` adds clickjacking, MIME-sniffing, referrer, and permissions policies on hosting platforms that process `_headers`; GitHub Pages itself does not apply that file.
 - Review Firebase Authentication users and Firestore usage periodically.
 
@@ -168,11 +171,34 @@ When adding UI, test both themes and check text contrast, focus outlines, border
 
 ## Languages
 
-The EN/SV switch uses `src/composables/useLocale.js`. It keeps both languages in the same routes and components, stores the preference locally, and updates the document language for assistive technology. This avoids an external translation API, API keys, usage fees, network latency, and accidental transmission of page content. Add new English-to-Swedish phrases to the centralized dictionary and wrap visible text with `t(...)` where content is introduced.
+The EN/SV switch uses `src/composables/useLocale.js`. It keeps both languages in the same routes and components, stores the preference locally, and updates the document language for assistive technology. This avoids an external translation API, API keys, usage fees, network latency, and accidental transmission of page content.
+
+Fixed interface and project translations live in the central dictionary. Experience and Appendix records additionally support `translations.sv`. The administrator can edit Swedish titles, descriptions, dates, types, and highlights independently; blank Swedish fields fall back to English. Editing one language never overwrites the other. Add new fixed phrases to the dictionary and render them through `t(...)`.
 
 ## Appendix documents
 
-Only commit material approved for public release. Add the sanitized file under `public/documents/`, then register its root-relative URL through the Appendix editor or seed it in `src/data/portfolio.js`. Root-relative PDFs support the in-page preview; HTTPS documents hosted elsewhere remain openable in a new tab because embedding them would require weakening the frame policy. Prefer descriptive filenames without spaces. The Appendix Firestore rules must be deployed before admin changes can publish.
+Appendix PDFs are intentionally Git-backed; Firebase Storage and a Blaze billing account are not required. Use this workflow:
+
+1. Redact the PDF and give it a stable, URL-safe filename such as `course-certificate-2026.pdf`.
+2. Copy it into `public/documents/`.
+3. Commit and push the file, then wait for the GitHub Pages deployment.
+4. In `/admin`, choose **Add document**, enter its metadata and the root-relative path `/documents/course-certificate-2026.pdf`, and optionally add independent Swedish wording.
+
+Private placeholders have no path and do not publish a file. Root-relative PDFs can be previewed in-page, while the toolbar always includes an open-separately fallback for browsers configured to download PDFs. Replacing a document is a normal Git change: replace the file without changing its name, or add a newly named file and update the admin path.
+
+For documents that should exist without relying on Firestore, add their metadata to `appendixDocuments` in `src/data/portfolio.js`. Firestore metadata takes precedence when the live appendix document exists.
+
+## Adding GitHub projects
+
+The complete project catalogue lives in the `projects` array in `src/data/portfolio.js`; public visibility does not remove entries from that catalogue. Use `href` for the primary destination. For a playable web project, point `href` to the live deployment and add a separate `github` property for its source repository. Set `visible: false` for a new entry that should initially be available only in admin.
+
+The administrator can then show/hide projects and reorder them by significance from `/admin`. Firestore stores only the ordered IDs and hidden IDs, so repository content remains version-controlled and newly added catalogue entries automatically appear in the admin list. Add each new fixed English phrase to `src/composables/useLocale.js` so Swedish remains complete.
+
+## Contact submissions
+
+The Contact page writes to the `contactSubmissions` collection in Cloud Firestore with `name`, `email`, `subject`, `message`, and a server timestamp. The website cannot read submissions back. Review them in **Firebase Console → Firestore Database → contactSubmissions** or later connect a trusted server-side notification workflow. Never enable public read access for this collection.
+
+The preserved campaign's original form wrote to a Realtime Database path with the same name. That Realtime Database currently returns HTTP 423 because it has been disabled by its owner, so the maintained portfolio uses Firestore in the same Firebase project instead. This keeps the live form operational without deleting or mutating the old Realtime Database records. If the old database is re-enabled later, export its submissions and migrate them deliberately; do not restore broad anonymous read access.
 
 ## Automated deployment
 
@@ -180,12 +206,12 @@ Only commit material approved for public release. Add the sanitized file under `
 
 `public/CNAME` declares `www.mishra.se`. DNS must point the chosen hostname to GitHub Pages, and **Enforce HTTPS** should be enabled after the certificate is available.
 
-The Firestore rules workflow uses GitHub OIDC rather than a long-lived service-account key. Configure these repository secrets:
+The Firebase rules workflow deploys Firestore rules and uses GitHub OIDC rather than a long-lived service-account key. Configure these repository secrets:
 
 - `GCP_WORKLOAD_IDENTITY_PROVIDER`
 - `GCP_SERVICE_ACCOUNT`
 
-The referenced service account needs only the permissions necessary to deploy Firestore rules. Protect the deployment environment and require review where appropriate.
+The referenced service account needs only the permissions necessary to deploy Firestore rules. Protect the deployment environment and require review where appropriate. Appendix files require no separate cloud deployment: they are included in the normal GitHub Pages artifact.
 
 ## Release checklist
 
@@ -195,8 +221,9 @@ The referenced service account needs only the permissions necessary to deploy Fi
 4. Test light and dark themes, keyboard focus, and reduced-motion behaviour.
 5. Test Google sign-in on the production hostname and confirm an unauthorized account cannot publish.
 6. Add, edit, reorder, export, and remove a temporary experience entry.
-7. Verify the CV, appendix documents, LinkedIn, Instagram, email, and campaign archive links.
-8. Check that no private documents, credentials, or service-account files are staged.
+7. Hide/show and reorder a project, then confirm the public Projects page follows the saved curation.
+8. Verify the CV, appendix documents, LinkedIn, Instagram, email, and campaign archive links.
+9. Check that no private documents, credentials, or service-account files are staged.
 
 ## Troubleshooting
 
@@ -204,7 +231,10 @@ The referenced service account needs only the permissions necessary to deploy Fi
 - **Google login says unauthorized domain:** add the exact browser hostname in Firebase Authentication settings.
 - **Google provider disabled:** enable Google under Authentication → Sign-in method.
 - **Sign-in succeeds but publishing fails:** deploy the current Firestore rules, verify the user's email, and confirm it exactly matches the administrator email in the rule.
+- **Contact form says the database is unavailable:** deploy `firestore.rules`; older live rules deny the contact collection.
+- **PDF preview is blank:** confirm the path starts with `/documents/`, verify the filename and capitalization, hard-refresh after deployment, and use **Open separately** if the browser forces PDF downloads.
 - **Old experience content appears:** inspect Firestore first, then clear the site's local storage/cache or use **Restore source data** intentionally.
+- **Project order or visibility does not save:** deploy `firestore.rules`, confirm the signed-in verified email matches the administrator, and use **Restore defaults** if the saved ID list is stale.
 - **A new document returns 404:** ensure it is under `public/`, use a root-relative URL, preserve filename case, and rebuild.
 - **GitHub Pages does not deploy:** inspect the Actions run, confirm Pages uses GitHub Actions, and verify the pushed branch matches the workflow filter.
 

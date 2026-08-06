@@ -83,13 +83,13 @@
             <article v-for="project in projects" :key="project.title" class="project" :class="project.accent">
               <div class="project-index">{{ project.index }}</div>
               <div class="project-main">
-                <div class="project-kicker"><p class="project-type">{{ project.type }}</p><time>{{ project.period }}</time></div>
-                <h3>{{ project.title }}</h3>
-                <p>{{ project.description }}</p>
+                <div class="project-kicker"><p class="project-type">{{ t(project.type) }}</p><time>{{ project.period }}</time></div>
+                <h3>{{ t(project.title) }}</h3>
+                <p>{{ t(project.description) }}</p>
                 <ul class="tags" :aria-label="`${project.title} technologies`">
                   <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
                 </ul>
-                <router-link v-if="project.href?.startsWith('/')" class="project-link" :to="project.href">{{ project.cta }} <ArrowUpRight :size="15" /></router-link><a v-else-if="project.href" class="project-link" :href="project.href" target="_blank" rel="noopener noreferrer">{{ project.cta }} <ArrowUpRight :size="15" /></a><a v-if="project.github" class="project-link" :href="project.github" target="_blank" rel="noopener noreferrer">Source on GitHub <ArrowUpRight :size="15" /></a>
+                <router-link v-if="project.href?.startsWith('/')" class="project-link" :to="project.href">{{ t(project.cta) }} <ArrowUpRight :size="15" /></router-link><a v-else-if="project.href" class="project-link" :href="project.href" target="_blank" rel="noopener noreferrer">{{ t(project.cta) }} <ArrowUpRight :size="15" /></a><a v-if="project.github" class="project-link" :href="project.github" target="_blank" rel="noopener noreferrer">{{ t('Source on GitHub') }} <ArrowUpRight :size="15" /></a>
               </div>
               <div class="project-glyph" aria-hidden="true"><span></span><i></i></div>
             </article>
@@ -141,10 +141,14 @@ import Footer from '../components/Footer.vue'
 import Navbar from '../components/Navbar.vue'
 import SectionHeading from '../components/SectionHeading.vue'
 import AboutStory from '../components/AboutStory.vue'
-import { education, principles, profile, projects, skills } from '../data/portfolio'
+import { useLocale } from '../composables/useLocale'
+import { education, principles, profile, skills } from '../data/portfolio'
+import { useProjectStore } from '../composables/useProjectStore'
 const ExperienceTimeline = defineAsyncComponent(() => import('../components/ExperienceTimeline.vue'))
 const AppendixGrid = defineAsyncComponent(() => import('../components/AppendixGrid.vue'))
 const WorkExperienceList = defineAsyncComponent(() => import('../components/WorkExperienceList.vue'))
+const { t } = useLocale()
+const { visibleProjects: projects } = useProjectStore()
 const isMobile = ref(false)
 let mediaQuery
 const updateMobile = () => { isMobile.value = mediaQuery.matches }

@@ -20,6 +20,13 @@ const sanitiseEntry = (entry) => ({
   endDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.endDate || '') ? entry.endDate : '',
   description: cleanText(entry.description),
   highlights: Array.isArray(entry.highlights) ? entry.highlights.map((item) => cleanText(item, 500)).filter(Boolean).slice(0, 20) : [],
+  translations: {
+    sv: {
+      title: cleanText(entry.translations?.sv?.title, 180),
+      description: cleanText(entry.translations?.sv?.description, 4000),
+      highlights: Array.isArray(entry.translations?.sv?.highlights) ? entry.translations.sv.highlights.map((item) => cleanText(item, 500)).filter(Boolean).slice(0, 20) : [],
+    },
+  },
 })
 
 const applyEntries = (entries) => {

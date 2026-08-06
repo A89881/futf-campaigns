@@ -7,7 +7,6 @@ const firebaseConfig = {
   authDomain: 'futf-campaign-forms.firebaseapp.com',
   databaseURL: 'https://futf-campaign-forms-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'futf-campaign-forms',
-  storageBucket: 'futf-campaign-forms.firebasestorage.app',
   messagingSenderId: '1025517324869',
   appId: '1:1025517324869:web:cc7b22bde8017bcb38f12c',
 }

@@ -25,14 +25,14 @@
           <span class="period">{{ displayStart(item) }}<br />{{ displayEnd(item) }}</span>
         </div>
         <div class="experience-title">
-          <h3>{{ t(item.title) }}</h3>
+          <h3>{{ localized(item, 'title') }}</h3>
           <a v-if="organisationUrl(item)" class="organisation organisation-link" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ExternalLink :size="12" /></a><p v-else class="organisation">{{ item.organisation }}</p>
           <p class="location">{{ item.location }}</p>
         </div>
         <div class="experience-details">
-          <p>{{ item.description }}</p>
+          <p>{{ localized(item, 'description') }}</p>
           <ul v-if="item.highlights.length">
-            <li v-for="highlight in item.highlights" :key="highlight">{{ highlight }}</li>
+            <li v-for="highlight in localizedHighlights(item)" :key="highlight">{{ highlight }}</li>
           </ul>
         </div>
       </article>
@@ -48,7 +48,9 @@ import { organisationLinks } from '../data/portfolio'
 import { useLocale } from '../composables/useLocale'
 
 const { experiences } = useExperienceStore()
-const { t } = useLocale()
+const { locale, t } = useLocale()
+const localized = (item, field) => locale.value === 'sv' ? (item.translations?.sv?.[field] || t(item[field])) : item[field]
+const localizedHighlights = (item) => locale.value === 'sv' && item.translations?.sv?.highlights?.length ? item.translations.sv.highlights : item.highlights
 const filter = ref('all')
 const filters = [
   { label: 'All', value: 'all' },
