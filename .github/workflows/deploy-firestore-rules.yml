@@ -1,0 +1,24 @@
+name: Deploy Firestore security rules
+
+on:
+  push:
+    branches: [New-Design-2026]
+    paths: [firestore.rules, firebase.json, .github/workflows/deploy-firestore-rules.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - name: Deploy Firestore rules
+        run: npx --yes firebase-tools deploy --only firestore:rules --project futf-campaign-forms
