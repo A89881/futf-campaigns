@@ -48,10 +48,21 @@ const assertAdmin = () => {
   }
 }
 
+const explainFirestoreError = (error) => {
+  if (error?.code === 'permission-denied') {
+    return new Error(`Firestore rejected this write for ${auth.currentUser?.email || 'the current account'}. Deploy the repository's firestore.rules to project futf-campaign-forms and confirm this verified email is the configured administrator.`)
+  }
+  return error
+}
+
 const publish = async (next) => {
   assertAdmin()
   const cleaned = next.map(sanitiseEntry).filter((item) => item.title && item.organisation).slice(0, 50)
-  await setDoc(experienceDocument, { entries: cleaned, updatedAt: serverTimestamp() })
+  try {
+    await setDoc(experienceDocument, { entries: cleaned, updatedAt: serverTimestamp() })
+  } catch (error) {
+    throw explainFirestoreError(error)
+  }
   applyEntries(cleaned)
 }
 
@@ -75,8 +86,12 @@ export const useExperienceStore = () => {
   const reset = () => publish(defaultExperiences)
   const seedCloudIfEmpty = async () => {
     assertAdmin()
-    const snapshot = await getDoc(experienceDocument)
-    if (!snapshot.exists()) await publish(defaultExperiences)
+    try {
+      const snapshot = await getDoc(experienceDocument)
+      if (!snapshot.exists()) await publish(defaultExperiences)
+    } catch (error) {
+      throw explainFirestoreError(error)
+    }
   }
   return { experiences: readonly(experiences), cloudStatus: readonly(cloudStatus), add, update, remove, move, importEntries, reset, seedCloudIfEmpty }
 }
