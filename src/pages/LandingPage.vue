@@ -102,17 +102,6 @@
 
       <section id="appendix" class="section shell mobile-appendix"><SectionHeading number="04" title="Appendix" intro="Supporting documents, shared with privacy in mind." /><AppendixGrid /></section>
 
-      <section class="section principles-section">
-        <div class="shell">
-          <SectionHeading number="05" title="How I work" />
-          <div class="principles-grid">
-            <article v-for="principle in principles" :key="principle.number">
-              <span>{{ principle.number }}</span><h3>{{ t(principle.title) }}</h3><p>{{ t(principle.text) }}</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
       <section id="contact" class="contact shell">
         <p class="eyebrow"><span></span>{{ t('Contact') }}</p>
         <h2>{{ t('Let’s make something') }}<br /><em>{{ t('worthwhile.') }}</em></h2>
@@ -141,7 +130,7 @@ import SectionHeading from '../components/SectionHeading.vue'
 import AboutStory from '../components/AboutStory.vue'
 import resumePortrait from '../assets/img/arbetshelg VT 26-8460.jpg'
 import { useLocale } from '../composables/useLocale'
-import { education, principles, profile, skills } from '../data/portfolio'
+import { education, profile, skills } from '../data/portfolio'
 import { useProjectStore } from '../composables/useProjectStore'
 const ExperienceTimeline = defineAsyncComponent(() => import('../components/ExperienceTimeline.vue'))
 const AppendixGrid = defineAsyncComponent(() => import('../components/AppendixGrid.vue'))

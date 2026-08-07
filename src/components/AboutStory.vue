@@ -12,6 +12,20 @@
       </figure>
     </div>
 
+    <section class="about-principles" :aria-labelledby="`how-i-work-${locale}`">
+      <header class="about-principles-heading">
+        <p class="kind">{{ t('A little about how I work') }}</p>
+        <h2 :id="`how-i-work-${locale}`">{{ t('How I work') }}</h2>
+      </header>
+      <div class="principles-grid">
+        <article v-for="principle in principles" :key="principle.number">
+          <span>{{ principle.number }}</span>
+          <h3>{{ t(principle.title) }}</h3>
+          <p>{{ t(principle.text) }}</p>
+        </article>
+      </div>
+    </section>
+
     <ol class="origin-path" :aria-label="content.placesLabel">
       <li v-for="place in content.places" :key="place.name">
         <span>{{ place.period }}</span>
@@ -37,8 +51,9 @@
 import { computed } from 'vue'
 import aboutPortrait from '../assets/img/arbetshelg VT 26-0039.jpg'
 import { useLocale } from '../composables/useLocale'
+import { principles } from '../data/portfolio'
 
-const { locale } = useLocale()
+const { locale, t } = useLocale()
 
 const stories = {
   en: {

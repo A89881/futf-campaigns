@@ -98,6 +98,7 @@ img { display: block; max-width: 100%; }
 .about-story-opening { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); gap: clamp(50px, 8vw, 110px); align-items: start; }
 .about-story-intro { max-width: 850px; }.about-story-intro .lead { color: var(--ink); font: 400 clamp(26px, 3.2vw, 43px)/1.42 var(--display); letter-spacing: -.035em; }.about-story-intro > p:not(.lead) { max-width: 720px; color: var(--muted); font-size: 17px; line-height: 1.85; }
 .about-story-photo { width: 100%; max-width: 440px; justify-self: end; }.about-story-photo img { aspect-ratio: 3/4; object-position: 50% 45%; }
+.about-principles { margin-top: clamp(65px, 9vw, 120px); }.about-principles-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 24px; }.about-principles-heading h2 { margin: 0; font: 500 clamp(30px, 4vw, 48px)/1.05 var(--display); letter-spacing: -.04em; }.about-principles-heading .kind { margin: 0; }
 .origin-path { display: grid; grid-template-columns: repeat(4, 1fr); margin: clamp(70px, 9vw, 120px) 0; padding: 0; border-block: 1px solid var(--line); list-style: none; }.origin-path li { min-height: 240px; padding: 28px; border-right: 1px solid var(--line); }.origin-path li:last-child { border: 0; }.origin-path span { color: var(--primary); font: 500 10px/1 var(--mono); }.origin-path strong { display: block; margin-top: 55px; font: 500 24px/1 var(--display); }.origin-path p { color: var(--muted); font-size: 13px; line-height: 1.65; }.about-life { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 10vw, 140px); }.about-life h2 { margin: 12px 0 0; font: 500 clamp(35px, 5vw, 60px)/1.05 var(--display); letter-spacing: -.05em; }.about-life > div:last-child { color: var(--muted); line-height: 1.85; }
 .resume-subtitle { margin: 0 0 32px; padding-bottom: 17px; border-bottom: 1px solid var(--line); font: 500 26px/1 var(--display); letter-spacing: -.04em; }
 .education-list { display: grid; gap: 42px; }
@@ -164,7 +165,6 @@ img { display: block; max-width: 100%; }
 .timeline-dot { z-index: 1; width: 7px; height: 7px; margin: 4px auto 0; border-radius: 50%; background: var(--blue); box-shadow: 0 0 15px rgba(98,198,255,.5); }
 .timeline-item:nth-child(even) .timeline-dot { background: var(--pink); box-shadow: 0 0 15px rgba(255,71,126,.5); }
 .timeline p { margin-top: 10px; }
-.principles-section { background: var(--surface-2); }
 .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); }
 .principles-grid article { padding: 35px; border-right: 1px solid var(--line); }.principles-grid article:last-child { border: 0; }
 .principles-grid span { color: var(--primary); font: 500 10px/1 var(--mono); }.principles-grid h3 { margin-top: 50px; }.principles-grid p { margin-top: 14px; }
@@ -252,7 +252,7 @@ img { display: block; max-width: 100%; }
   .hero { padding-top: 95px; grid-template-columns: 1fr; }.hero::after { display: none; }.hero-copy { z-index: 2; }.hero-visual { height: 400px; min-height: 0; margin-top: -25px; opacity: .78; }.hero-foot { margin-top: 20px; }
   .about-grid, .resume-grid { grid-template-columns: 1fr; }.portrait-wrap { width: min(100%, 480px); }
   .contact-layout { grid-template-columns: 1fr; }
-  .about-story-opening { grid-template-columns: 1fr; }.about-story-photo { width: min(100%, 480px); justify-self: start; }.origin-path { grid-template-columns: repeat(2, 1fr); }.origin-path li:nth-child(2) { border-right: 0; }.origin-path li:nth-child(-n+2) { border-bottom: 1px solid var(--line); }.about-life { grid-template-columns: 1fr; }
+  .about-story-opening { grid-template-columns: 1fr; }.about-story-photo { width: min(100%, 480px); justify-self: start; }.about-principles-heading { display: block; }.about-principles-heading h2 { margin-top: 12px; }.origin-path { grid-template-columns: repeat(2, 1fr); }.origin-path li:nth-child(2) { border-right: 0; }.origin-path li:nth-child(-n+2) { border-bottom: 1px solid var(--line); }.about-life { grid-template-columns: 1fr; }
   .resume-work-item { grid-template-columns: 1fr; gap: 16px; }
   .campaign-card-grid { grid-template-columns: repeat(2, 1fr); }.campaign-experience-grid { grid-template-columns: repeat(2, 1fr); }.campaign-nav > div { display: none; }
   .project { grid-template-columns: 45px 1fr; }.project-glyph { position: absolute; width: 150px; right: -35px; top: 30px; opacity: .24; }.project-main { z-index: 1; }

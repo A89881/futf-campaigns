@@ -51,6 +51,7 @@ Use this sequence for every ordinary portfolio update so repository content, tra
 | --- | --- | --- |
 | Name, biography, education, skills, links, default projects | `src/data/portfolio.js` | Yes: build, commit, and push |
 | About-page narrative and its independently translated EN/SV wording | `src/components/AboutStory.vue` | Yes: build, commit, and push |
+| “How I work” principles shown inside About on desktop and mobile | `principles` in `src/data/portfolio.js`; Swedish wording in `src/composables/useLocale.js` | Yes: build, commit, and push |
 | About and resume portraits | `src/assets/img/`; imports in `AboutStory.vue`, `ResumePage.vue`, and `LandingPage.vue` | Yes: build, commit, and push |
 | Navigation, labels, and other fixed EN/SV interface copy | `src/composables/useLocale.js` | Yes: build, commit, and push |
 | Live experience order, dates, descriptions, and translations | `/admin` → Experience editor | Firestore publishes immediately; also export JSON before large changes |
@@ -220,7 +221,7 @@ When adding UI, test both themes and check text contrast, focus outlines, border
 
 The EN/SV switch uses `src/composables/useLocale.js`. It keeps both languages in the same routes and components, stores the preference locally, and updates the document language for assistive technology. This avoids an external translation API, API keys, usage fees, network latency, and accidental transmission of page content.
 
-Fixed interface and project translations live in the central dictionary. Experience and Appendix records additionally support `translations.sv`. Every repository-seeded experience has its own Swedish title, body, and highlights in `experienceTranslations.sv`; the administrator can replace those fields independently in Firestore. Blank Swedish fields first use the repository Swedish fallback and only use English when no Swedish version exists. Editing one language never overwrites the other. Add new fixed phrases to the dictionary and render them through `t(...)`.
+Fixed interface and project translations live in the central dictionary. The About narrative stores complete `en` and `sv` objects side by side in `AboutStory.vue`. These repository-owned page texts can be changed in one language without changing the other, but they are not edited through `/admin`; they require a normal build, commit, and push. Experience and Appendix records additionally support `translations.sv` in the admin editor. Every repository-seeded experience has its own Swedish title, body, and highlights in `experienceTranslations.sv`; the administrator can replace those fields independently in Firestore. Blank Swedish fields first use the repository Swedish fallback and only use English when no Swedish version exists. Editing one language never overwrites the other. Add new fixed phrases to the dictionary and render them through `t(...)`.
 
 ## Appendix documents
 
