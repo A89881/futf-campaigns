@@ -172,9 +172,7 @@ const googleLogin = async () => {
   busy.value = true; authError.value = ''
   try {
     await authReady
-    const provider = new GoogleAuthProvider()
-    provider.setCustomParameters({ login_hint: profile.email, prompt: 'select_account' })
-    const credential = await signInWithPopup(auth, provider)
+    const credential = await signInWithPopup(auth, new GoogleAuthProvider())
     await acceptCredential(credential.user)
   } catch (error) {
     const messages = {
@@ -182,7 +180,7 @@ const googleLogin = async () => {
       'auth/popup-blocked': 'The browser blocked the Google sign-in window. Allow pop-ups for this site and try again.',
       'auth/unauthorized-domain': `Google sign-in is not authorised for ${window.location.hostname}. Add this hostname under Firebase Authentication > Settings > Authorised domains.`,
       'auth/operation-not-allowed': 'Google sign-in is disabled in Firebase. Enable the Google provider under Authentication > Sign-in method.',
-      'auth/internal-error': `Firebase could not start Google sign-in for ${window.location.hostname}. Confirm this exact hostname is listed under Firebase Authentication > Settings > Authorised domains, then reload the page.`
+      'auth/internal-error': `Firebase could not start Google sign-in for ${window.location.hostname}. Reload the page once, allow pop-ups, and try again; password sign-in remains available.`
     }
     authError.value = messages[error.code] || error.message || 'Google sign-in failed.'
   }

@@ -31,7 +31,7 @@
         <SectionHeading number="02" title="Resume" intro="Engineering, research, communication, and community work - viewed as one connected practice." />
         <div class="about-grid">
           <div class="portrait-wrap reveal">
-            <img src="../assets/img/smiley.jpg" alt="Abhay Mishra smiling outdoors" />
+            <img :src="resumePortrait" :alt="t('Professional portrait of Abhay Mishra')" />
             <span class="image-caption">Uppsala, Sweden</span>
           </div>
           <div class="about-copy reveal delay-1">
@@ -141,6 +141,7 @@ import Footer from '../components/Footer.vue'
 import Navbar from '../components/Navbar.vue'
 import SectionHeading from '../components/SectionHeading.vue'
 import AboutStory from '../components/AboutStory.vue'
+import resumePortrait from '../assets/img/arbetshelg VT 26-8460.jpg'
 import { useLocale } from '../composables/useLocale'
 import { education, principles, profile, skills } from '../data/portfolio'
 import { useProjectStore } from '../composables/useProjectStore'

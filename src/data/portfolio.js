@@ -605,6 +605,7 @@ export const appendixDocuments = [
     description: 'Current English CV covering education, employment, technical projects, student engagement, and skills.',
     href: '/AbhayMishraCV-English.pdf',
     available: true,
+    translations: { sv: { title: 'Curriculum Vitae', type: 'CV', date: 'Maj 2026', description: 'Aktuellt engelskspråkigt CV med utbildning, anställningar, tekniska projekt, studentengagemang och kompetenser.' } },
   },
   {
     title: 'Forsränningen 2025 Participation Certificate',
@@ -613,6 +614,7 @@ export const appendixDocuments = [
     description: 'Certificate from the Uppsala Union of Engineering and Science Students confirming volunteer service. Personal identity number redacted for public display.',
     href: '/documents/Forsranningen-2025-certificate-redacted.pdf',
     available: true,
+    translations: { sv: { title: 'Deltagarintyg från Forsränningen 2025', type: 'Intyg', date: 'April 2025', description: 'Intyg från Uppsala teknolog- och naturvetarkår som bekräftar ideellt arbete. Personnumret är maskerat i den offentliga versionen.' } },
   },
   {
     title: 'Academic transcript and grades',
@@ -621,6 +623,7 @@ export const appendixDocuments = [
     description: 'Official grade documentation is shared directly when relevant rather than published publicly.',
     href: null,
     available: false,
+    translations: { sv: { title: 'Studieintyg och betyg', type: 'Akademiska meriter', date: 'Tillgängligt på begäran', description: 'Officiella betygshandlingar delas direkt när de är relevanta i stället för att publiceras öppet.' } },
   },
   {
     title: 'Letters of recommendation',
@@ -629,5 +632,6 @@ export const appendixDocuments = [
     description: 'References and recommendation letters are available for appropriate professional and academic contexts.',
     href: null,
     available: false,
+    translations: { sv: { title: 'Rekommendationsbrev', type: 'Referenser', date: 'Tillgängligt på begäran', description: 'Referenser och rekommendationsbrev finns tillgängliga för relevanta professionella och akademiska sammanhang.' } },
   },
 ]

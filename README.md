@@ -50,6 +50,8 @@ Use this sequence for every ordinary portfolio update so repository content, tra
 | Content being changed | Source of truth | Deployment needed? |
 | --- | --- | --- |
 | Name, biography, education, skills, links, default projects | `src/data/portfolio.js` | Yes: build, commit, and push |
+| About-page narrative and its independently translated EN/SV wording | `src/components/AboutStory.vue` | Yes: build, commit, and push |
+| About and resume portraits | `src/assets/img/`; imports in `AboutStory.vue`, `ResumePage.vue`, and `LandingPage.vue` | Yes: build, commit, and push |
 | Navigation, labels, and other fixed EN/SV interface copy | `src/composables/useLocale.js` | Yes: build, commit, and push |
 | Live experience order, dates, descriptions, and translations | `/admin` → Experience editor | Firestore publishes immediately; also export JSON before large changes |
 | Permanent fallback experience content | `defaultExperiences` and `experienceTranslations.sv` in `src/data/portfolio.js` | Yes: build, commit, and push |
@@ -179,9 +181,9 @@ In the Firebase console for project `futf-campaign-forms`:
 5. Authenticate once with the administrator Google account and confirm its email is verified.
 6. Deploy `firestore.rules` before using the editor.
 
-Google login uses Firebase's popup flow with an account chooser. The application waits for browser-session persistence to initialize before starting either Google or password authentication. If login reports `auth/unauthorized-domain` or `auth/internal-error`, confirm the exact live hostname is present in the authorised-domain list. If it reports `auth/operation-not-allowed`, enable the Google provider. Popup blockers must allow a user-initiated window for the site.
+Google login uses Firebase's standard popup flow. The application waits for browser-session persistence to initialize before starting either Google or password authentication, and the SDK should be kept current within its supported major version. If login reports `auth/unauthorized-domain`, confirm the exact hostname is present in the authorised-domain list. If it reports `auth/operation-not-allowed`, enable the Google provider. An enabled provider alone is not sufficient: the hostname must also be authorised, and the browser must allow the user-initiated popup. After changing Firebase Authentication settings or deploying auth code, perform a hard refresh before retesting.
 
-The authorised-domain list must contain `www.mishra.se` and `mishra.se` in addition to Firebase's default domains and `localhost`. This is server-side Firebase configuration; application code cannot safely grant that permission.
+The authorised-domain list must contain `www.mishra.se`, `mishra.se`, `localhost`, and `127.0.0.1` in addition to Firebase's default domains. This is server-side Firebase configuration; application code cannot safely grant that permission.
 
 ## Firestore and authorization
 
