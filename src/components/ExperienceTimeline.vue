@@ -34,6 +34,7 @@
           <ul v-if="localizedHighlights(item).length">
             <li v-for="highlight in localizedHighlights(item)" :key="highlight">{{ highlight }}</li>
           </ul>
+          <a v-if="item.linkHref" class="experience-reference-link" :href="item.linkHref" target="_blank" rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }} <ExternalLink :size="13" /></a>
         </div>
       </article>
     </div>

@@ -52,6 +52,7 @@
             <a v-if="organisationUrl(item)" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ArrowUpRight :size="11" /></a>
             <span v-else>{{ item.organisation }}</span>
             <p>{{ localized(item, 'description') }}</p>
+            <a v-if="item.linkHref" class="mobile-reference-link" :href="item.linkHref" target="_blank" rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }} <ArrowUpRight :size="11" /></a>
           </div>
         </article>
       </div>
@@ -90,6 +91,7 @@
             <h4>{{ localized(item, 'title') }}</h4>
             <a v-if="organisationUrl(item)" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ArrowUpRight :size="11" /></a>
             <span v-else>{{ item.organisation }}</span>
+            <a v-if="item.linkHref" class="mobile-reference-link" :href="item.linkHref" target="_blank" rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }} <ArrowUpRight :size="11" /></a>
           </div>
         </article>
       </div>

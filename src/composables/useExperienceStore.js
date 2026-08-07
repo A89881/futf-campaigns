@@ -11,6 +11,10 @@ let unsubscribe = null
 
 const cleanText = (value, max = 4000) => String(value ?? '').trim().slice(0, max)
 const cleanHighlights = (items) => Array.isArray(items) ? items.map((item) => cleanText(item, 500)).filter(Boolean).slice(0, 20) : []
+const cleanLink = (value) => {
+  const href = cleanText(value, 1000)
+  return (/^https:\/\//i.test(href) || /^\/(?!\/)/.test(href)) ? href : ''
+}
 const sourceTranslation = (entry) => experienceTranslations.sv[cleanText(entry.id, 100)] || {}
 const sanitiseEntry = (entry) => {
   const fallback = sourceTranslation(entry)
@@ -20,6 +24,7 @@ const sanitiseEntry = (entry) => {
     category: ['professional', 'research', 'community'].includes(entry.category) ? entry.category : 'professional',
     title: cleanText(entry.title, 180), organisation: cleanText(entry.organisation, 180),
     organisationHref: cleanText(entry.organisationHref, 1000),
+    linkHref: cleanLink(entry.linkHref), linkLabel: cleanText(entry.linkLabel, 120),
     location: cleanText(entry.location, 120), start: cleanText(entry.start, 60), end: cleanText(entry.end, 60),
     startDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.startDate || '') ? entry.startDate : '',
     endDate: /^\d{4}-\d{2}(?:-\d{2})?$/.test(entry.endDate || '') ? entry.endDate : '',
@@ -28,6 +33,7 @@ const sanitiseEntry = (entry) => {
     translations: {
       sv: {
         title: cleanText(entry.translations?.sv?.title || fallback.title, 180),
+        linkLabel: cleanText(entry.translations?.sv?.linkLabel, 120),
         description: cleanText(entry.translations?.sv?.description || fallback.description, 4000),
         highlights: translatedHighlights.length ? translatedHighlights : cleanHighlights(fallback.highlights),
       },
