@@ -137,7 +137,7 @@ export const projects = [
       'Developed a responsive campaign platform for the Engineering Physics Guild, integrating dynamic frontend components and Git-based version-control workflows.',
     tags: ['Vue', 'JavaScript', 'Git', 'Responsive design'],
     accent: 'blue',
-    href: '/campaign',
+    href: '/campaign/',
     github: 'https://github.com/A89881/futf-campaigns',
     cta: 'View campaign archive',
   },

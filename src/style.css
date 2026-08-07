@@ -50,7 +50,8 @@ img { display: block; max-width: 100%; }
 .nav-links a.router-link-active { color: var(--ink); }
 .theme-toggle { width: 38px; height: 38px; display: grid; place-items: center; color: var(--muted); border: 1px solid var(--line); background: transparent; cursor: pointer; }
 .language-toggle { height: 38px; min-width: 42px; padding: 0 9px; color: var(--muted); border: 1px solid var(--line); background: transparent; cursor: pointer; font: 500 10px/1 var(--mono); }.language-toggle:hover { color: var(--ink); border-color: var(--primary); }
-.admin-nav { color: var(--dim) !important; }
+.admin-nav { min-height: 38px; display: inline-flex; align-items: center; gap: 7px; padding: 0 11px; color: var(--dim) !important; border: 1px solid var(--line); }
+.admin-nav:hover { color: var(--ink) !important; border-color: var(--secondary); }
 .nav-cv { display: inline-flex; gap: 8px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); color: var(--ink) !important; }
 .disabled { color: var(--dim) !important; cursor: not-allowed; }
 .menu-button { display: none; color: var(--ink); border: 0; background: transparent; align-items: center; gap: 8px; }
@@ -144,7 +145,12 @@ img { display: block; max-width: 100%; }
 .skills-list { border-top: 1px solid var(--line); }
 .skill-group { padding: 21px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 130px 1fr; gap: 25px; }
 .skill-group h3 { font-size: 16px; }.skill-group p { margin: 0; color: var(--muted); font-size: 14px; }
-.work-experience-list { border-top: 1px solid var(--line); }
+.resume-work { margin-top: clamp(82px, 10vw, 128px); }
+.resume-section-title { max-width: 940px; }
+.resume-section-title .kind { margin: 0 0 15px; }
+.resume-section-title h2, .resume-section-title h3 { margin: 0 0 18px; line-height: 1.25; }
+.resume-section-title > p:last-child { margin: 0; color: var(--muted); line-height: 1.75; }
+.work-experience-list { margin-top: 32px; border-top: 1px solid var(--line); }
 .resume-work-item { display: grid; grid-template-columns: minmax(165px, .45fr) 1.55fr; gap: 46px; padding: 43px 0; border-bottom: 1px solid var(--line); }
 .resume-work-period { display: flex; flex-direction: column; gap: 12px; }.resume-work-period time { color: var(--muted); font: 400 10px/1.5 var(--mono); text-transform: uppercase; }
 .resume-work-item h3 { margin: 0 0 10px; font: 500 22px/1.3 var(--display); letter-spacing: -.03em; }.resume-work-item p:not(.organisation) { margin-top: 18px; color: var(--muted); line-height: 1.85; }.resume-work-item ul { margin-top: 22px; padding-left: 20px; color: var(--muted); }.resume-work-item li { margin-top: 11px; line-height: 1.75; }

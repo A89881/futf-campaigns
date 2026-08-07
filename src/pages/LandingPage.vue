@@ -89,7 +89,7 @@
                 <ul class="tags" :aria-label="`${project.title} technologies`">
                   <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
                 </ul>
-                <router-link v-if="project.href?.startsWith('/')" class="project-link" :to="project.href">{{ t(project.cta) }} <ArrowUpRight :size="15" /></router-link><a v-else-if="project.href" class="project-link" :href="project.href" target="_blank" rel="noopener noreferrer">{{ t(project.cta) }} <ArrowUpRight :size="15" /></a><a v-if="project.github" class="project-link" :href="project.github" target="_blank" rel="noopener noreferrer">{{ t('Source on GitHub') }} <ArrowUpRight :size="15" /></a>
+                <a v-if="isCampaignArchive(project.href)" class="project-link" href="/campaign/">{{ t(project.cta) }} <ArrowUpRight :size="15" /></a><router-link v-else-if="project.href?.startsWith('/')" class="project-link" :to="project.href">{{ t(project.cta) }} <ArrowUpRight :size="15" /></router-link><a v-else-if="project.href" class="project-link" :href="project.href" target="_blank" rel="noopener noreferrer">{{ t(project.cta) }} <ArrowUpRight :size="15" /></a><a v-if="project.github" class="project-link" :href="project.github" target="_blank" rel="noopener noreferrer">{{ t('Source on GitHub') }} <ArrowUpRight :size="15" /></a>
               </div>
               <div class="project-glyph" aria-hidden="true"><span></span><i></i></div>
             </article>
@@ -149,6 +149,7 @@ const AppendixGrid = defineAsyncComponent(() => import('../components/AppendixGr
 const WorkExperienceList = defineAsyncComponent(() => import('../components/WorkExperienceList.vue'))
 const { t } = useLocale()
 const { visibleProjects: projects } = useProjectStore()
+const isCampaignArchive = (href) => href === '/campaign' || href === '/campaign/'
 const isMobile = ref(false)
 let mediaQuery
 const updateMobile = () => { isMobile.value = mediaQuery.matches }

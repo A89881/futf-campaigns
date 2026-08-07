@@ -13,6 +13,7 @@
         </div>
         <button class="theme-toggle" type="button" :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`" @click="toggleTheme"><component :is="theme === 'dark' ? Sun : Moon" :size="16" /></button>
         <button class="language-toggle" type="button" :aria-label="locale === 'en' ? 'Byt till svenska' : 'Switch to English'" @click="toggleLocale">{{ locale === 'en' ? 'SV' : 'EN' }}</button>
+        <router-link class="admin-nav" to="/admin" @click="menuOpen = false"><ShieldCheck :size="15" /> Admin</router-link>
         <a class="nav-cv" :href="profile.cv" download>CV <Download :size="15" /></a>
       </div>
     </nav>
@@ -21,7 +22,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import { Download, Menu, Moon, Sun, X } from 'lucide-vue-next'
+import { Download, Menu, Moon, ShieldCheck, Sun, X } from 'lucide-vue-next'
 import { useTheme } from '../composables/useTheme'
 import { useLocale } from '../composables/useLocale'
 import { profile } from '../data/portfolio'

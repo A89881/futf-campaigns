@@ -9,7 +9,6 @@ const routes = [
   { path: '/experience', name: 'Experience', component: () => import('../pages/ExperiencePage.vue'), meta: { title: 'Experience - Abhay Mishra' } },
   { path: '/appendix', name: 'Appendix', component: () => import('../pages/AppendixPage.vue'), meta: { title: 'Appendix - Abhay Mishra' } },
   { path: '/contact', name: 'Contact', component: () => import('../pages/ContactPage.vue'), meta: { title: 'Contact - Abhay Mishra' } },
-  { path: '/campaign', name: 'Campaign', component: () => import('../pages/CampaignPage.vue'), meta: { title: 'Mishra 2025 Campaign Archive' } },
   { path: '/admin', name: 'Admin', component: () => import('../pages/AdminPage.vue'), meta: { title: 'Portfolio Administration' } },
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ]

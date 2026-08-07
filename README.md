@@ -29,6 +29,38 @@ A responsive personal portfolio for Abhay Mishra, built as a Vue single-page app
 
 Node.js 20 or newer is recommended. The deployment workflow uses Node.js 22.
 
+## Standard content update procedure
+
+Use this sequence for every ordinary portfolio update so repository content, translations, Firestore, and the deployed site do not drift apart:
+
+1. Start from the release branch and install the locked toolchain:
+
+   ```bash
+   git switch main
+   git pull --ff-only
+   npm ci
+   ```
+
+2. Edit the correct source of truth using the table below. Do not edit `dist/` or minified files in `public/campaign/assets/`.
+3. Update English and Swedish deliberately. Never replace an English field with Swedish text or rely on an automatic translation to become permanent copy.
+4. Run `npm run build`, then `npm run preview` and inspect the affected desktop route, the mobile landing page, both themes, and both languages.
+5. Review `git diff` and `git status --short`. Confirm that no private appendix file, credential, Firebase token, unredacted identity number, or unrelated local edit is staged.
+6. Commit only the intended files and push `main`. The Pages workflow builds and deploys the pushed commit. Confirm the Actions run succeeds and verify the live URL in a fresh/private browser window.
+
+| Content being changed | Source of truth | Deployment needed? |
+| --- | --- | --- |
+| Name, biography, education, skills, links, default projects | `src/data/portfolio.js` | Yes: build, commit, and push |
+| Navigation, labels, and other fixed EN/SV interface copy | `src/composables/useLocale.js` | Yes: build, commit, and push |
+| Live experience order, dates, descriptions, and translations | `/admin` → Experience editor | Firestore publishes immediately; also export JSON before large changes |
+| Permanent fallback experience content | `defaultExperiences` and `experienceTranslations.sv` in `src/data/portfolio.js` | Yes: build, commit, and push |
+| Public project visibility and significance order | `/admin` → Project curation | Firestore publishes immediately |
+| New project definition, GitHub link, tags, or default visibility | `projects` in `src/data/portfolio.js` | Yes: build, commit, and push |
+| Appendix PDF | Redacted file in `public/documents/`, then metadata in `/admin` | Commit/push the PDF first; metadata publishes through Firestore |
+| Contact, authentication, or authorization behaviour | Vue code plus `firestore.rules` where applicable | Build/push code; deploy rules separately when changed |
+| Historical Mishra 2025 campaign | Preserved snapshot in `public/campaign/`, sourced from Git commit `fae9dda` | Rebuild the snapshot deliberately; never hand-edit generated assets |
+
+Firestore edits are live configuration, while repository seed data is the recovery baseline. After an important admin edit, export the experience JSON and intentionally reconcile any change that should survive a Firestore reset back into `src/data/portfolio.js`.
+
 ## Local development
 
 ```bash
@@ -59,6 +91,7 @@ src/
   router.js               Route table and lazy loading
   style.css               Theme tokens and responsive design system
 public/
+  campaign/               Compiled, isolated snapshot of the original Mishra 2025 site
   documents/              Git-backed, safe-to-publish appendix PDFs
   AbhayMishraCV-English.pdf
   CNAME                   Custom GitHub Pages domain
@@ -84,13 +117,15 @@ firestore.rules
 | `/experience` | Professional, research, and community timeline |
 | `/appendix` | Supporting documents and publication guidance |
 | `/contact` | Email and social links, including Instagram |
-| `/campaign` | Fully interactive preservation of the original Mishra 2025 campaign site |
+| `/campaign/` | Isolated, fully interactive build of the original Mishra 2025 campaign site |
 | `/privacy` | Privacy and data-handling information |
 | `/admin` | Authenticated experience, project-curation, and appendix editor |
 
-The campaign is intentionally a normal subpage. There is no separate campaign deployment or maintenance branch.
+The campaign is an isolated static subsite within the same deployment, not a separate branch or a restyled portfolio component. `public/campaign/` was compiled from the last historical campaign commit, `fae9dda`, using a `/campaign/` base path. Its original pages, wording, navigation, imagery, blue/gold design, and responsive behaviour are preserved. The only source-level compatibility adjustment maps the original contact form to the current validated Firestore field names.
 
-GitHub Pages serves `public/404.html` for direct requests such as `/campaign`. The redirect/restore scripts preserve the original path through that fallback before Vue Router starts. Keep both scripts when adding or changing routes; otherwise direct links will fall back to `/` even though in-app navigation still works.
+Treat `public/campaign/assets/` as generated archival output. To revise the campaign intentionally, create a temporary worktree from `fae9dda`, make the smallest source change, build it with the current root dependency toolchain and `--base=/campaign/`, then replace the complete snapshot and test `/campaign/`, `/campaign/om-mig`, and `/campaign/kontakt`. Do not mix the portfolio stylesheet into the archive.
+
+GitHub Pages serves the archive directly from its directory index at `/campaign/`; the included `om-mig/` and `kontakt/` directory indexes preserve direct links to the two historical subpages. `public/404.html` remains the fallback for portfolio SPA routes. Keep the redirect/restore scripts when adding or changing portfolio routes, and keep the archive links on `/campaign/` with the trailing slash.
 
 ## Editing ordinary portfolio content
 
@@ -127,7 +162,7 @@ English is stored in the top-level `title`, `description`, and `highlights` fiel
 
 ## Administration
 
-Open `/admin` and authenticate with the verified administrator account. The Experience editor supports optional days with required month/year precision, ordering, import/export, deletion, and restoring repository seed data. Project curation lists the complete GitHub catalogue and lets the administrator show, hide, and reorder entries without deleting their source definitions. The same screen includes an Appendix metadata editor for Git-backed PDF paths and private placeholders. English and Swedish wording are independently editable. Export JSON before substantial experience edits so the current Firestore state can be versioned or recovered.
+Use the **Admin** button in the portfolio header or open `/admin`, then authenticate with the verified administrator account. The Experience editor supports optional days with required month/year precision, ordering, import/export, deletion, and restoring repository seed data. Project curation lists the complete GitHub catalogue and lets the administrator show, hide, and reorder entries without deleting their source definitions. The same screen includes an Appendix metadata editor for Git-backed PDF paths and private placeholders. English and Swedish wording are independently editable. Export JSON before substantial experience edits so the current Firestore state can be versioned or recovered.
 
 Firestore is the live source when available. The composable maintains a local cache so public content remains resilient if Firestore is temporarily unavailable. Repository seed data remains the final fallback.
 
@@ -144,9 +179,9 @@ In the Firebase console for project `futf-campaign-forms`:
 5. Authenticate once with the administrator Google account and confirm its email is verified.
 6. Deploy `firestore.rules` before using the editor.
 
-Google login currently uses Firebase's popup flow with an account chooser. This avoids redirect-flow storage limitations on browsers that partition cross-site storage. If login reports `auth/unauthorized-domain`, the hostname in the error must be added to the authorised-domain list. If it reports `auth/operation-not-allowed`, enable the Google provider. Popup blockers must allow a user-initiated window for the site.
+Google login uses Firebase's popup flow with an account chooser. The application waits for browser-session persistence to initialize before starting either Google or password authentication. If login reports `auth/unauthorized-domain` or `auth/internal-error`, confirm the exact live hostname is present in the authorised-domain list. If it reports `auth/operation-not-allowed`, enable the Google provider. Popup blockers must allow a user-initiated window for the site.
 
-At the time this README was prepared, the project's public Firebase configuration listed only `localhost`, `futf-campaign-forms.firebaseapp.com`, and `futf-campaign-forms.web.app` as authorised domains. Adding `www.mishra.se` is therefore a required console-side step; application code cannot safely grant that permission.
+The authorised-domain list must contain `www.mishra.se` and `mishra.se` in addition to Firebase's default domains and `localhost`. This is server-side Firebase configuration; application code cannot safely grant that permission.
 
 ## Firestore and authorization
 

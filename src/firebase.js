@@ -14,4 +14,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const db = getFirestore(app)
-setPersistence(auth, browserSessionPersistence).catch(() => {})
+export const authReady = setPersistence(auth, browserSessionPersistence).catch((error) => {
+  console.warn('Firebase session persistence could not be initialized.', error.code || error.message)
+})
