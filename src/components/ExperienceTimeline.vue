@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="experience-toolbar">
-      <div class="experience-filters" role="group" aria-label="Filter experiences">
+      <div class="experience-filters" role="group" :aria-label="t('Filter experiences')">
         <button v-for="option in filters" :key="option.value" type="button" :class="{ active: filter === option.value }" @click="filter = option.value">
           {{ t(option.label) }} <span>{{ count(option.value) }}</span>
         </button>
@@ -9,8 +9,8 @@
       <router-link class="manage-link" to="/admin">{{ t('Manage experience') }} <Settings :size="15" /></router-link>
     </div>
 
-    <div class="stacked-timeline" aria-label="Timeline showing overlapping experience periods">
-      <div class="timeline-summary"><span class="pulse-dot"></span><strong>{{ peakConcurrency }} parallel roles</strong> at the busiest point in this record.</div>
+    <div class="stacked-timeline" :aria-label="t('Timeline showing overlapping experience periods')">
+      <div class="timeline-summary"><span class="pulse-dot"></span><strong>{{ peakConcurrency }} {{ t('parallel roles') }}</strong> {{ t('at the busiest point in this record.') }}</div>
       <div class="timeline-axis"><span></span><div><i v-for="year in years" :key="year">{{ year }}</i></div></div>
       <div v-for="item in timelineItems" :key="`bar-${item.id}`" class="stack-row">
         <div class="stack-label"><strong>{{ localized(item, 'title') }}</strong><span>{{ item.organisation }}</span></div>
@@ -70,7 +70,7 @@ const toMonth = (value, useEnd = false) => {
   const month = match[1] ? Math.max(0, monthNames.indexOf(match[1])) : (useEnd ? 11 : 0)
   return Number(match[2]) * 12 + month
 }
-const formatExactDate = (value) => new Intl.DateTimeFormat('en-GB', { ...(value.length === 10 ? { day: 'numeric' } : {}), month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value.length === 7 ? `${value}-01` : value}T00:00:00Z`))
+const formatExactDate = (value) => new Intl.DateTimeFormat(locale.value === 'sv' ? 'sv-SE' : 'en-GB', { ...(value.length === 10 ? { day: 'numeric' } : {}), month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value.length === 7 ? `${value}-01` : value}T00:00:00Z`))
 const displayStart = (item) => item.startDate ? formatExactDate(item.startDate) : item.start
 const displayEnd = (item) => item.endDate ? formatExactDate(item.endDate) : item.end
 const timelineItems = computed(() => filteredExperiences.value.map((item) => {

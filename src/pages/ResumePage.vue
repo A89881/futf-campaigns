@@ -5,12 +5,12 @@
       <div class="about-grid">
         <div class="portrait-wrap">
           <img :src="resumePortrait" :alt="t('Professional portrait of Abhay Mishra')" />
-          <span class="image-caption">Uppsala, Sweden</span>
+          <span class="image-caption">{{ t('Uppsala, Sweden') }}</span>
         </div>
         <div class="about-copy">
-          <p class="lead">{{ profile.summary[0] }}</p>
-          <p>{{ profile.summary[1] }}</p>
-          <p>Away from work, I play sports, make admittedly questionable rap songs, and watch far too many nerdy physics videos. Technical range matters; being enjoyable to build with does too.</p>
+          <p class="lead">{{ t(profile.summary[0]) }}</p>
+          <p>{{ t(profile.summary[1]) }}</p>
+          <p>{{ t('Away from work, I play sports, make admittedly questionable rap songs, and watch far too many nerdy physics videos. Technical range matters; being enjoyable to build with does too.') }}</p>
           <div class="role-list"><span v-for="role in profile.roles" :key="role">{{ t(role) }}</span></div>
           <div class="resume-links">
             <a :href="profile.cv" download>{{ t('Download full CV') }} <Download :size="15" /></a>
@@ -26,9 +26,9 @@
             <article v-for="item in education" :key="item.degree" class="education-card">
               <div class="degree-icon"><Atom :size="28" /></div>
               <div>
-                <p class="kind">{{ item.period }}</p>
+                <p class="kind">{{ t(item.period) }}</p>
                 <h3>{{ t(item.degree) }}</h3>
-                <p><a class="school organisation-link" :href="item.schoolHref" target="_blank" rel="noopener noreferrer">{{ item.school }} <ArrowUpRight :size="12" /></a> · {{ item.location }}</p>
+                <p><a class="school organisation-link" :href="item.schoolHref" target="_blank" rel="noopener noreferrer">{{ item.school }} <ArrowUpRight :size="12" /></a> · {{ t(item.location) }}</p>
                 <p>{{ t(item.focus) }}</p>
               </div>
             </article>
@@ -38,7 +38,7 @@
           <h2 class="resume-subtitle">{{ t('Skills & tools') }}</h2>
           <div class="skills-list">
             <div v-for="group in skills" :key="group.category" class="skill-group">
-              <h3>{{ group.category }}</h3>
+              <h3>{{ t(group.category) }}</h3>
               <p>{{ group.items.join(' · ') }}</p>
             </div>
           </div>

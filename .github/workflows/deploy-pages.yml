@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - New-Design-2026
   pull_request:
     branches:
       - main

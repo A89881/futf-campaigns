@@ -174,16 +174,12 @@ The Firebase web configuration in `src/firebase.js` identifies the public client
 
 In the Firebase console for project `futf-campaign-forms`:
 
-1. Open **Authentication → Sign-in method** and enable **Google**. Select a project support email and save.
-2. Optionally enable **Email/Password** if password login is required.
-3. Open **Authentication → Settings → Authorised domains** and add every real hostname used by the site. At minimum add `www.mishra.se`; also add an apex domain or GitHub Pages hostname if visitors can use either directly.
-4. Ensure `localhost` remains authorised for local development.
-5. Authenticate once with the administrator Google account and confirm its email is verified.
-6. Deploy `firestore.rules` before using the editor.
+1. Open **Authentication → Sign-in method** and enable **Email/Password**.
+2. Create the administrator user with the email stored in `profile.email` and ensure that account is verified.
+3. Use a unique password stored in a password manager; never place it in this repository or a frontend environment variable.
+4. Deploy `firestore.rules` before using the editor.
 
-Google login uses Firebase's standard popup flow. The application waits for browser-session persistence to initialize before starting either Google or password authentication, and the SDK should be kept current within its supported major version. If login reports `auth/unauthorized-domain`, confirm the exact hostname is present in the authorised-domain list. If it reports `auth/operation-not-allowed`, enable the Google provider. An enabled provider alone is not sufficient: the hostname must also be authorised, and the browser must allow the user-initiated popup. After changing Firebase Authentication settings or deploying auth code, perform a hard refresh before retesting.
-
-The authorised-domain list must contain `www.mishra.se`, `mishra.se`, `localhost`, and `127.0.0.1` in addition to Firebase's default domains. This is server-side Firebase configuration; application code cannot safely grant that permission.
+The administration UI intentionally supports email/password authentication only. The application waits for browser-session persistence before signing in and clears the password field after every attempt. Firebase Authentication establishes identity, while Firestore rules independently enforce the exact verified administrator email for writes.
 
 ## Firestore and authorization
 
@@ -207,8 +203,8 @@ Changing an admin email requires changing the public profile configuration and `
 
 ## Security practices
 
-- Protect the administrator Google account with a passkey or multi-factor authentication.
-- Keep Email/Password disabled unless it is actively needed. If enabled, configure Firebase password policy and email-enumeration protection.
+- Protect the administrator email account and password manager with multi-factor authentication.
+- Configure a strong Firebase password policy and email-enumeration protection for the administrator account.
 - Never commit service-account JSON, refresh tokens, private documents, or `.env` files containing credentials.
 - Treat appendix files as public internet content. Redact personal identity numbers, signatures, addresses, QR codes, student identifiers, and private contact details before copying them into `public/documents/`.
 - The CSP in `index.html` is the fallback for GitHub Pages. `public/_headers` adds clickjacking, MIME-sniffing, referrer, and permissions policies on hosting platforms that process `_headers`; GitHub Pages itself does not apply that file.
@@ -272,7 +268,7 @@ The referenced service account needs only the permissions necessary to deploy Fi
 2. Preview the production build and inspect every desktop route.
 3. Test the landing page at a mobile width and verify section navigation.
 4. Test light and dark themes, keyboard focus, and reduced-motion behaviour.
-5. Test Google sign-in on the production hostname and confirm an unauthorized account cannot publish.
+5. Test administrator email/password sign-in and confirm an unauthorized account cannot publish.
 6. Add, edit, reorder, export, and remove a temporary experience entry.
 7. Hide/show and reorder a project, then confirm the public Projects page follows the saved curation.
 8. Verify the CV, appendix documents, LinkedIn, Instagram, email, and campaign archive links.
@@ -281,8 +277,8 @@ The referenced service account needs only the permissions necessary to deploy Fi
 ## Troubleshooting
 
 - **Blank page after navigation:** confirm the deployment serves `index.html` as the SPA fallback and that the custom-domain configuration is intact.
-- **Google login says unauthorized domain:** add the exact browser hostname in Firebase Authentication settings.
-- **Google provider disabled:** enable Google under Authentication → Sign-in method.
+- **Password sign-in is unavailable:** enable Email/Password under Authentication → Sign-in method and confirm the administrator user exists.
+- **Password sign-in fails:** verify the email, reset the password if necessary, and confirm the account email exactly matches `profile.email`.
 - **Sign-in succeeds but publishing fails:** deploy the current Firestore rules, verify the user's email, and confirm it exactly matches the administrator email in the rule.
 - **Contact form says the database is unavailable:** deploy `firestore.rules`; older live rules deny the contact collection.
 - **PDF preview is blank:** confirm the path starts with `/documents/`, verify the filename and capitalization, hard-refresh after deployment, and use **Open separately** if the browser forces PDF downloads.

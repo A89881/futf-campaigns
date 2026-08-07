@@ -4,24 +4,24 @@
     <main id="main">
       <section class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy reveal">
-          <p class="eyebrow"><span></span>{{ profile.eyebrow }}</p>
+          <p class="eyebrow"><span></span>{{ t(profile.eyebrow) }}</p>
           <h1 id="hero-title">Abhay<br /><em>Mishra.</em></h1>
-          <p class="hero-intro">{{ profile.intro }}</p>
+          <p class="hero-intro">{{ t(profile.intro) }}</p>
           <div class="hero-actions">
-            <a class="button primary" href="projects">Explore my work <ArrowDownRight :size="18" /></a>
-            <a class="button text-link" :href="profile.cv" download>Download CV <Download :size="17" /></a>
+            <a class="button primary" href="/projects">{{ t('Explore my work') }} <ArrowDownRight :size="18" /></a>
+            <a class="button text-link" :href="profile.cv" download>{{ t('Download CV') }} <Download :size="17" /></a>
             <a class="button text-link" :href="profile.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight :size="17" /></a>
           </div>
         </div>
         <div class="hero-visual reveal delay-1">
           <FieldCanvas />
-          <div class="visual-label top-label">FIELD / 01</div>
-          <div class="visual-label bottom-label">POINTER-REACTIVE SYSTEM</div>
+          <div class="visual-label top-label">{{ t('FIELD / 01') }}</div>
+          <div class="visual-label bottom-label">{{ t('POINTER-REACTIVE SYSTEM') }}</div>
           <div class="orbit-mark">AM</div>
         </div>
         <div class="hero-foot">
-          <span>{{ profile.location }}</span>
-          <span class="scroll-cue">Scroll to explore <ArrowDown :size="15" /></span>
+          <span>{{ t(profile.location) }}</span>
+          <span class="scroll-cue">{{ t('Scroll to explore') }} <ArrowDown :size="15" /></span>
         </div>
       </section>
 
@@ -32,17 +32,15 @@
         <div class="about-grid">
           <div class="portrait-wrap reveal">
             <img :src="resumePortrait" :alt="t('Professional portrait of Abhay Mishra')" />
-            <span class="image-caption">Uppsala, Sweden</span>
+            <span class="image-caption">{{ t('Uppsala, Sweden') }}</span>
           </div>
           <div class="about-copy reveal delay-1">
-            <p class="lead">{{ profile.summary[0] }}</p>
-            <p>{{ profile.summary[1] }}</p>
-            <p>Away from work, I play sports, goof around with friends, make admittedly questionable rap songs, and watch far too many nerdy physics videos.</p>
-            <div class="role-list" aria-label="Current roles">
-              <span v-for="role in profile.roles" :key="role">{{ role }}</span>
+            <p class="lead">{{ t('Across study, research, and software projects, I combine technical curiosity with initiative, clear communication, and responsibility.') }}</p>
+            <div class="role-list" :aria-label="t('Current roles')">
+              <span v-for="role in profile.roles" :key="role">{{ t(role) }}</span>
             </div>
             <div class="resume-links">
-              <a :href="profile.cv" download>Full CV <Download :size="15" /></a>
+              <a :href="profile.cv" download>{{ t('Full CV') }} <Download :size="15" /></a>
               <a :href="profile.github" target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRight :size="15" /></a>
             </div>
           </div>
@@ -50,30 +48,30 @@
 
         <div class="resume-grid">
           <div>
-            <h3 class="resume-subtitle">Education</h3>
+            <h3 class="resume-subtitle">{{ t('Education') }}</h3>
             <div class="education-list">
               <article v-for="item in education" :key="item.degree" class="education-card">
                 <div class="degree-icon"><Atom :size="28" /></div>
                 <div>
-                  <p class="kind">{{ item.period }}</p>
-                  <h3>{{ item.degree }}</h3>
-                  <p><a class="school organisation-link" :href="item.schoolHref" target="_blank" rel="noopener noreferrer">{{ item.school }} <ArrowUpRight :size="12" /></a> · {{ item.location }}</p>
-                  <p>{{ item.focus }}</p>
+                  <p class="kind">{{ t(item.period) }}</p>
+                  <h3>{{ t(item.degree) }}</h3>
+                  <p><a class="school organisation-link" :href="item.schoolHref" target="_blank" rel="noopener noreferrer">{{ item.school }} <ArrowUpRight :size="12" /></a> · {{ t(item.location) }}</p>
+                  <p>{{ t(item.focus) }}</p>
                 </div>
               </article>
             </div>
           </div>
           <div>
-            <h3 class="resume-subtitle">Skills & tools</h3>
+            <h3 class="resume-subtitle">{{ t('Skills & tools') }}</h3>
             <div class="skills-list">
               <div v-for="group in skills" :key="group.category" class="skill-group">
-                <h3>{{ group.category }}</h3>
+                <h3>{{ t(group.category) }}</h3>
                 <p>{{ group.items.join(' · ') }}</p>
               </div>
             </div>
           </div>
         </div>
-        <section class="resume-work"><div class="resume-section-title"><p class="kind">Employment and research only</p><h3>Work Experience</h3></div><WorkExperienceList /></section>
+        <section class="resume-work"><div class="resume-section-title"><p class="kind">{{ t('Employment and research only') }}</p><h3>{{ t('Work Experience') }}</h3></div><WorkExperienceList /></section>
       </section>
 
       <section id="projects" class="section work-section">
@@ -109,21 +107,21 @@
           <SectionHeading number="05" title="How I work" />
           <div class="principles-grid">
             <article v-for="principle in principles" :key="principle.number">
-              <span>{{ principle.number }}</span><h3>{{ principle.title }}</h3><p>{{ principle.text }}</p>
+              <span>{{ principle.number }}</span><h3>{{ t(principle.title) }}</h3><p>{{ t(principle.text) }}</p>
             </article>
           </div>
         </div>
       </section>
 
       <section id="contact" class="contact shell">
-        <p class="eyebrow"><span></span>Contact</p>
-        <h2>Let’s make something<br /><em>worthwhile.</em></h2>
+        <p class="eyebrow"><span></span>{{ t('Contact') }}</p>
+        <h2>{{ t('Let’s make something') }}<br /><em>{{ t('worthwhile.') }}</em></h2>
         <a class="contact-email" :href="`mailto:${profile.email}`">{{ profile.email }} <ArrowUpRight :size="28" /></a>
         <div class="contact-links">
           <a :href="profile.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight :size="15" /></a>
           <a :href="profile.github" target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRight :size="15" /></a>
           <a :href="profile.instagram" target="_blank" rel="noopener noreferrer">Instagram <ArrowUpRight :size="15" /></a>
-          <a :href="profile.cv" download>Download CV <Download :size="15" /></a>
+          <a :href="profile.cv" download>{{ t('Download CV') }} <Download :size="15" /></a>
           <a :href="`tel:${profile.phone.replaceAll(' ', '')}`">{{ profile.phone }}</a>
         </div>
       </section>

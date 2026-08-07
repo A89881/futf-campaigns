@@ -9,9 +9,7 @@
       <section v-if="!authenticated" class="admin-auth" aria-labelledby="admin-title">
         <p class="eyebrow"><span></span>Local portfolio administration</p>
         <h1 id="admin-title">Administrator sign-in.</h1>
-        <p>Sign in with the verified Firebase account assigned to this portfolio. Authentication persists only for this browser session.</p>
-        <button class="google-auth" type="button" :disabled="busy" @click="googleLogin"><ShieldCheck :size="17" /> Continue with Google</button>
-        <div class="auth-divider"><span>or use password</span></div>
+        <p>Sign in with the verified administrator email and password. Authentication persists only for this browser session.</p>
         <form @submit.prevent="submitAuth">
           <label for="admin-email">Administrator email</label>
           <input id="admin-email" v-model="email" type="email" autocomplete="username" required />
@@ -109,7 +107,7 @@ import { ArrowDown, ArrowLeft, ArrowUp, Download, Eye, EyeOff, Github, LogOut, P
 import { useExperienceStore } from '../composables/useExperienceStore'
 import { useAppendixStore } from '../composables/useAppendixStore'
 import { useProjectStore } from '../composables/useProjectStore'
-import { GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
+import { onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth, authReady } from '../firebase'
 import { profile } from '../data/portfolio'
 
@@ -157,34 +155,6 @@ const submitAuth = async () => {
     busy.value = false
     passphrase.value = ''
   }
-}
-
-const acceptCredential = async (user) => {
-  if (user.email?.toLowerCase() !== profile.email.toLowerCase() || !user.emailVerified) {
-    await signOut(auth)
-    throw new Error('This account is not the verified portfolio administrator.')
-  }
-  authenticated.value = true
-  await Promise.all([seedCloudIfEmpty(), seedProjectsIfEmpty()])
-}
-
-const googleLogin = async () => {
-  busy.value = true; authError.value = ''
-  try {
-    await authReady
-    const credential = await signInWithPopup(auth, new GoogleAuthProvider())
-    await acceptCredential(credential.user)
-  } catch (error) {
-    const messages = {
-      'auth/popup-closed-by-user': 'Google sign-in was cancelled.',
-      'auth/popup-blocked': 'The browser blocked the Google sign-in window. Allow pop-ups for this site and try again.',
-      'auth/unauthorized-domain': `Google sign-in is not authorised for ${window.location.hostname}. Add this hostname under Firebase Authentication > Settings > Authorised domains.`,
-      'auth/operation-not-allowed': 'Google sign-in is disabled in Firebase. Enable the Google provider under Authentication > Sign-in method.',
-      'auth/internal-error': `Firebase could not start Google sign-in for ${window.location.hostname}. Reload the page once, allow pop-ups, and try again; password sign-in remains available.`
-    }
-    authError.value = messages[error.code] || error.message || 'Google sign-in failed.'
-  }
-  finally { busy.value = false }
 }
 
 const resetPassword = async () => {

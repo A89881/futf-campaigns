@@ -1,9 +1,9 @@
 <template>
   <header class="site-header" :class="{ scrolled: isScrolled }">
-    <a href="#main" class="skip-link">Skip to content</a>
-    <nav class="nav shell" aria-label="Main navigation">
+    <a href="#main" class="skip-link">{{ t('Skip to content') }}</a>
+    <nav class="nav shell" :aria-label="t('Main navigation')">
       <router-link class="wordmark" to="/" aria-label="Abhay Mishra, home"><span>AM</span><i></i></router-link>
-      <button class="menu-button" type="button" :aria-expanded="menuOpen" aria-controls="nav-links" @click="menuOpen = !menuOpen"><span>{{ menuOpen ? 'Close' : 'Menu' }}</span><component :is="menuOpen ? X : Menu" :size="20" /></button>
+      <button class="menu-button" type="button" :aria-expanded="menuOpen" aria-controls="nav-links" @click="menuOpen = !menuOpen"><span>{{ t(menuOpen ? 'Close' : 'Menu') }}</span><component :is="menuOpen ? X : Menu" :size="20" /></button>
       <div id="nav-links" class="nav-links" :class="{ open: menuOpen }">
         <div class="desktop-navigation">
           <router-link v-for="link in links" :key="link.to" :to="link.to" @click="menuOpen = false">{{ t(link.label) }}</router-link>
