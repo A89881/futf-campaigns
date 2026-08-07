@@ -29,7 +29,7 @@ import { profile } from '../data/portfolio'
 const menuOpen = ref(false); const isScrolled = ref(false); const { theme, toggleTheme } = useTheme()
 const { locale, t, toggleLocale } = useLocale()
 const links = [{ label: 'About', to: '/about' }, { label: 'Resume', to: '/resume' }, { label: 'Projects', to: '/projects' }, { label: 'Experience', to: '/experience' }, { label: 'Appendix', to: '/appendix' }, { label: 'Contact', to: '/contact' }]
-const mobileLinks = [{ label: 'About', to: '/#about' }, { label: 'Resume', to: '/#resume' }, { label: 'Projects', to: '/#projects' }, { label: 'Experience', to: '/#experience' }, { label: 'Appendix', to: '/#appendix' }, { label: 'Contact', to: '/#contact' }]
+const mobileLinks = [{ label: 'Resume', to: '/#resume' }, { label: 'Projects', to: '/#projects' }, { label: 'Experience', to: '/#experience' }, { label: 'About', to: '/#about' }, { label: 'Appendix', to: '/#appendix' }, { label: 'Contact', to: '/#contact' }]
 const onScroll = () => { isScrolled.value = window.scrollY > 24 }
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true })); onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>

@@ -5,11 +5,11 @@ A responsive personal portfolio for Abhay Mishra, built as a Vue single-page app
 ## What the site includes
 
 - Separate desktop routes for the landing page, resume, projects, experience, appendix, contact, campaign archive, privacy information, and administration.
-- A unified, scrollable portfolio on mobile while retaining direct route URLs.
+- A condensed, resume-first mobile landing page with selected work, projects, leadership, biography, documents, and direct links to every full route.
 - A resume-only **Work Experience** section that includes employment and research, never volunteering or community roles.
 - A filterable experience timeline and a stacked date view for overlapping commitments.
 - Optional exact start and end dates in addition to human-readable date labels.
-- A light theme with a white base, pink primary accent, and blue secondary accent.
+- Light mode is the first-visit default, with a white base, pink primary accent, and blue secondary accent; an explicit saved theme choice is preserved.
 - A dark theme with a near-black base, blue primary accent, and pink secondary accent.
 - Firebase Authentication and Firestore-backed experience editing.
 - A private appendix for redacted or safe-to-publish supporting documents.
@@ -52,7 +52,7 @@ Use this sequence for every ordinary portfolio update so repository content, tra
 | Name, biography, education, skills, links, default projects | `src/data/portfolio.js` | Yes: build, commit, and push |
 | About-page narrative and its independently translated EN/SV wording | `src/components/AboutStory.vue` | Yes: build, commit, and push |
 | “How I work” principles shown inside About on desktop and mobile | `principles` in `src/data/portfolio.js`; Swedish wording in `src/composables/useLocale.js` | Yes: build, commit, and push |
-| About and resume portraits | `src/assets/img/`; imports in `AboutStory.vue`, `ResumePage.vue`, and `LandingPage.vue` | Yes: build, commit, and push |
+| About and resume portraits | `src/assets/img/`; imports in `AboutStory.vue`, `ResumePage.vue`, and `MobilePortfolio.vue` | Yes: build, commit, and push |
 | Navigation, labels, and other fixed EN/SV interface copy | `src/composables/useLocale.js` | Yes: build, commit, and push |
 | Live experience order, dates, descriptions, and translations | `/admin` → Experience editor | Firestore publishes immediately; also export JSON before large changes |
 | Permanent fallback experience content | `defaultExperiences` and `experienceTranslations.sv` in `src/data/portfolio.js` | Yes: build, commit, and push |
@@ -86,7 +86,7 @@ npm audit
 ```text
 src/
   assets/                 Images bundled by Vite
-  components/             Shared navigation, sections, timeline, and resume UI
+  components/             Shared navigation, sections, timeline, resume UI, and compact mobile landing page
   composables/            Theme and Firestore-backed experience state
   data/portfolio.js       Canonical profile, project, education, and seed content
   pages/                  Route-level views
@@ -113,7 +113,7 @@ firestore.rules
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Landing page; also renders the complete scrollable portfolio at mobile widths |
+| `/` | Desktop hero; at mobile widths, a condensed resume-first index linking to the complete routes |
 | `/about` | Personal background, origins, accelerated education, and life beyond the CV |
 | `/resume` | Profile, education, skills, and jobs/research-only Work Experience |
 | `/projects` | Selected technical and community projects |
