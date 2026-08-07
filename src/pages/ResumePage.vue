@@ -1,7 +1,7 @@
 <template>
   <PageFrame>
     <PageIntro eyebrow="Profile / 01" title="Resume" accent="." intro="The academic, technical, and human context behind the work." />
-    <section class="page-section shell">
+    <section class="page-section shell resume-profile-section">
       <div class="about-grid">
         <div class="portrait-wrap">
           <img :src="resumePortrait" :alt="t('Professional portrait of Abhay Mishra')" />

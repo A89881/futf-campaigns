@@ -90,6 +90,9 @@ img { display: block; max-width: 100%; }
 .about-copy { max-width: 620px; }
 .about-copy p { color: var(--muted); font-size: 16px; }
 .about-copy .lead { color: var(--ink); font: 400 clamp(23px, 2.5vw, 34px)/1.45 var(--display); letter-spacing: -.025em; }
+.resume-profile-section .about-grid { align-items: start; }
+.resume-profile-section .about-copy > p { margin: 0; line-height: 1.8; }
+.resume-profile-section .about-copy > p + p { margin-top: clamp(28px, 2.6vw, 40px); }
 .role-list { margin-top: 38px; display: flex; flex-wrap: wrap; gap: 8px; }
 .role-list span, .tags li { padding: 8px 11px; border: 1px solid var(--line); color: var(--muted); font: 400 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
 .resume-links { display: flex; gap: 24px; margin-top: 27px; }
