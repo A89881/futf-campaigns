@@ -11,12 +11,11 @@ A responsive personal portfolio for Abhay Mishra, built as a Vue single-page app
 - Optional exact start and end dates in addition to human-readable date labels.
 - Light mode is the first-visit default, with a white base, pink primary accent, and blue secondary accent; an explicit saved theme choice is preserved.
 - A dark theme with a near-black base, blue primary accent, and pink secondary accent.
-- Firebase Authentication and a Firestore-backed admin CMS for experiences, appendix metadata, bilingual site copy, and page blocks.
+- Firebase Authentication and a Firestore-backed admin CMS for experiences, appendix metadata, and bilingual site copy.
 - A private appendix for redacted or safe-to-publish supporting documents.
 - An EN/SV language switch backed by one shared localization layer rather than duplicate pages.
 - Verified project-source and organisation links, plus in-page PDF previews for local appendix files.
 - Firestore-backed project curation: all catalogue entries remain in admin while public visibility and significance order are configurable.
-- Custom pages and ordered content blocks can be created from Admin without writing Vue code.
 - Automated GitHub Pages builds and an independent Firestore-rules deployment workflow.
 
 ## Technology
@@ -61,11 +60,10 @@ Use this sequence for every ordinary portfolio update so repository content, tra
 | Public project visibility and significance order | `/admin` → Project curation | Firestore publishes immediately |
 | New project definition, GitHub/organisation link, or default visibility | `projects` and `organisationLinks` in `src/data/portfolio.js` | Yes: build, commit, and push |
 | Appendix PDF | Redacted file in `public/documents/`, then metadata/order in `/admin` | Commit/push the PDF first; metadata publishes through Firestore |
-| New page or additional block on About, Resume, Projects, Experience, Appendix, or Contact | `/admin` → Page builder | Firestore publishes immediately |
 | Contact, authentication, or authorization behaviour | Vue code plus `firestore.rules` where applicable | Build/push code; deploy rules separately when changed |
 | Historical Mishra 2025 campaign | Preserved snapshot in `public/campaign/`, sourced from Git commit `fae9dda` | Rebuild the snapshot deliberately; never hand-edit generated assets |
 
-Firestore edits are live configuration, while repository seed data is the recovery baseline. Export an Experience JSON or complete CMS backup before a large change. Reconcile wording that must survive a Firestore reset into the appropriate repository fallback during planned maintenance.
+Firestore edits are live configuration, while repository seed data is the recovery baseline. Export an Experience JSON or site-text backup before a large change. Reconcile wording that must survive a Firestore reset into the appropriate repository fallback during planned maintenance.
 
 ## Local development
 
@@ -89,7 +87,7 @@ npm audit
 ```text
 src/
   assets/                 Images bundled by Vite
-  components/             Shared UI plus AdminContentManager and ManagedBlocks
+  components/             Shared UI plus the authenticated site-text editor
   composables/            Theme, locale, authentication, and Firestore-backed stores
   data/aboutStory.js      Bilingual repository fallback for the About narrative
   data/portfolio.js       Canonical profile, project, education, and seed content
@@ -126,8 +124,7 @@ firestore.rules
 | `/contact` | Email and social links, including Instagram |
 | `/campaign/` | Isolated, fully interactive build of the original Mishra 2025 campaign site |
 | `/privacy` | Privacy and data-handling information |
-| `/pages/:slug` | Public custom pages created in Admin |
-| `/admin` | Authenticated experience, project, appendix, text, page, and block editor |
+| `/admin` | Authenticated experience, project, appendix, and site-text editor |
 
 The campaign is an isolated static subsite within the same deployment, not a separate branch or a restyled portfolio component. `public/campaign/` was compiled from the last historical campaign commit, `fae9dda`, using a `/campaign/` base path. Its original pages, wording, navigation, imagery, blue/gold design, and responsive behaviour are preserved. The only source-level compatibility adjustment maps the original contact form to the current validated Firestore field names.
 
@@ -192,7 +189,7 @@ English is stored in the top-level `title`, `description`, and `highlights` fiel
 
 Use the **Admin** button in the header or open `/admin`. Sign in with the verified email/password Firebase account. There is no Google sign-in path. Authentication uses browser-session persistence, so closing the browser session requires signing in again.
 
-The admin page is a lightweight content-management system. It manages five kinds of live configuration:
+The admin page is a lightweight content-management system. It manages four kinds of live configuration:
 
 | Admin area | What it changes | What it does not change |
 | --- | --- | --- |
@@ -200,7 +197,6 @@ The admin page is a lightweight content-management system. It manages five kinds
 | Project curation | Public visibility and significance order for known projects | New project IDs, destinations, or source definitions |
 | Appendix editor | Document metadata, order, public/private status, path, and independent EN/SV wording | The PDF file itself |
 | Site text editor | Live EN/SV overrides for catalogued headings, paragraphs, biography, About narrative, education, skills, projects, and interface copy | Repository fallback files or HTML structure |
-| Page builder | Ordered blocks on built-in pages and complete custom pages under `/pages/:slug` | Arbitrary Vue, HTML, JavaScript, authentication, routes outside `/pages/`, or campaign archive files |
 
 ### Add an experience
 
@@ -255,19 +251,9 @@ Disable **Publicly available** to create a private placeholder without exposing 
 3. Select **Publish wording**. The override is saved in `portfolio/content` and appears without a Git deployment.
 4. Select **Use repository fallback** to remove only that segment's override. This does not delete or rewrite source code.
 
-The stable source key is the original English repository string. It identifies an override even when the displayed English wording has been customized. Do not create two repository phrases with the same English source text when they need different live wording: the shared key intentionally makes them share one override.
+Most stable keys are the original English repository string. Reused text therefore intentionally shares an override. Where identical visible wording has different meanings, the site uses a semantic key instead. For example, `profile.location`, `resume.photoCaption`, and the education-location keys are independent: changing the resume photograph credit does not change location labels elsewhere.
 
-### Add pages, sections, and blocks
-
-- Select a built-in page to append managed blocks below its existing Vue content. Built-in routes and original layout remain protected.
-- Select **Add page** to create a custom page. Its public URL is `/pages/<slug>`; it can be published or hidden and optionally placed in navigation.
-- Custom-page navigation order follows the page order controlled by the page up/down buttons.
-- A block may be a text section, callout, quote, or list. Blank lines create paragraphs; a list uses one item per line.
-- Every page and block has separate English and Swedish fields. Blank Swedish fields fall back to English; saving one language never rewrites the other.
-- Blocks can be edited, reordered, hidden, shown, or deleted. Deleting a custom page removes all its blocks after confirmation.
-- Select **Export CMS backup** before structural work. **Import CMS backup** is a full replacement of site-copy overrides and page-builder data, not a merge.
-
-The page builder deliberately accepts plain text, HTTPS links, and root-relative links only. It does not accept raw HTML or scripts. This keeps the editor suitable for routine content work without turning the public site into a code execution surface.
+Use **Export text backup** before a broad wording revision. **Import text backup** replaces the complete set of live text overrides; it is not a merge.
 
 ### What still requires code or Git
 
@@ -288,7 +274,7 @@ The administration UI intentionally supports email/password authentication only.
 
 ## Firestore and authorization
 
-The site stores experience entries, project visibility/order settings, appendix metadata, copy overrides, and page-builder records in Cloud Firestore. `firestore.rules` permits public reads of those portfolio documents but allows portfolio writes only when all of these are true:
+The site stores experience entries, project visibility/order settings, appendix metadata, and copy overrides in Cloud Firestore. `firestore.rules` permits public reads of those portfolio documents but allows portfolio writes only when all of these are true:
 
 | Firestore path | Stored shape | Public behavior |
 | --- | --- | --- |
@@ -296,7 +282,6 @@ The site stores experience entries, project visibility/order settings, appendix 
 | `portfolio/appendix` | `{ documents: [...], updatedAt }` | Replaces the complete appendix metadata list |
 | `portfolio/projects` | `{ order: [...ids], hidden: [...ids], updatedAt }` | Applies order/visibility to the source project catalogue |
 | `portfolio/content` | `{ entries: [{ key, en, sv }], updatedAt }` | Applies per-segment live copy overrides; maximum 600 entries |
-| `portfolio/pages` | `{ pages: [...], updatedAt }` | Stores six protected built-in page records plus custom pages and blocks; maximum 30 pages |
 | `contactSubmissions/{generatedId}` | `{ name, email, subject, message, createdAt }` | Create-only public form target; never publicly readable |
 
 Admin saves use `setDoc`, so each editor publishes its complete sanitized payload rather than one nested record at a time. Reorder, delete, reset, and backup-import actions therefore replace the corresponding document payload. Avoid editing the same area in two admin tabs simultaneously because the last successful write wins.
@@ -309,7 +294,7 @@ The effective source order is:
 2. a previously sanitized browser cache while Firestore connects or is unavailable;
 3. repository defaults from `src/data/portfolio.js`, `src/data/aboutStory.js`, and `src/composables/useLocale.js`.
 
-Use Admin’s Experience JSON export and complete CMS backup for recoverable snapshots. Appendix and project settings are separate Firestore documents and should be reviewed manually or exported from Firebase before destructive maintenance. Firestore edits are not automatically committed back into Git, so important long-lived changes should also be reconciled into repository seed data.
+Use Admin’s Experience JSON export and site-text backup for recoverable snapshots. Appendix and project settings are separate Firestore documents and should be reviewed manually or exported from Firebase before destructive maintenance. Firestore edits are not automatically committed back into Git, so important long-lived changes should also be reconciled into repository seed data.
 
 Authorization requirements for portfolio writes are:
 
@@ -356,15 +341,15 @@ The site uses a deliberately small custom localization layer rather than the `vu
 - the saved browser preference uses local-storage key `abhay-portfolio-locale`;
 - a missing or invalid saved value defaults to English;
 - changing locale updates `document.documentElement.lang` for assistive technology;
-- `t(text)` and `copy(text, swedishFallback)` first look for an entry in `portfolio/content` whose stable key equals the original English source string;
+- `t(text)` and `copy(text, swedishFallback, optionalSemanticKey)` first look for an entry in `portfolio/content`; the key is normally the original English source string but may be an explicit semantic key when identical text needs independent editing;
 - English mode returns the live `en` override when present, otherwise the repository English source;
 - Swedish mode returns the live `sv` override, then an explicit component/data fallback, then `swedish[text]`, then the live English override, then the repository English source.
 
-All override and dictionary lookups are exact and case-sensitive. The stable key remains the repository English phrase even if its live English display is changed in Admin. If the repository key later changes, migrate or recreate its Firestore override. A visible English phrase in Swedish mode normally means the Swedish override/fallback is blank, the phrase was not passed through `t(...)`/`copy(...)`, or the key differs.
+All override and dictionary lookups are exact and case-sensitive. A stable key remains unchanged even if its live English display is edited in Admin. If a repository-string key later changes, migrate or recreate its Firestore override; semantic keys such as `resume.photoCaption` avoid that coupling. A visible English phrase in Swedish mode normally means the Swedish override/fallback is blank, the phrase was not passed through `t(...)`/`copy(...)`, or the key differs.
 
-### Four localization patterns
+### Three localization patterns
 
-The project has four intentional patterns because not all content has the same editing lifecycle.
+The project has three intentional patterns because not all content has the same editing lifecycle.
 
 #### 1. CMS-overridable fixed interface and project copy
 
@@ -407,10 +392,6 @@ Experience and Appendix records keep English at the top level and Swedish under 
 
 Saving Swedish text does not replace English text, and saving English text does not automatically rewrite Swedish. There is no machine-translation call during save. To revise only Swedish, open the entry, leave the English fields unchanged, edit the Swedish fields, and save.
 
-#### 4. Page-builder records
-
-Custom page metadata and every managed block use top-level English fields plus `translations.sv`. The same independence and blank-Swedish fallback rule applies. Page-builder data is stored in `portfolio/pages`; it is not mixed into `portfolio/content`.
-
 ### Experience fallback rules
 
 When rendering an experience, the public components resolve content as follows:
@@ -440,7 +421,7 @@ The current data model is intentionally EN/SV-specific. Adding a third language 
 2. add a fixed-copy dictionary or replace the custom helper with a scalable message structure;
 3. add a new translation object such as `translations.de` to record sanitizers and Admin forms;
 4. update every `localized(...)` helper and date formatter;
-5. extend `aboutStories`, content overrides, page-builder forms, and page/block sanitizers with the new language;
+5. extend `aboutStories` and content overrides with the new language;
 6. update Firestore payload validation if stricter nested schemas are added later;
 7. test all desktop routes and the unified mobile page.
 
@@ -499,10 +480,9 @@ The referenced service account needs only the permissions necessary to deploy Fi
 6. Add, edit, reorder, export, and remove a temporary experience entry.
 7. Hide/show and reorder a project, then confirm the public Projects page follows the saved curation.
 8. Reorder a temporary Appendix record and verify its preview/open behavior.
-9. Override one bilingual text segment, verify both languages, reset it to repository fallback, and test a CMS export.
-10. Add, reorder, hide/show, and remove a temporary block and custom page.
-11. Verify the CV, appendix documents, LinkedIn, Instagram, email, and campaign archive links.
-12. Check that no private documents, credentials, or service-account files are staged.
+9. Override one bilingual text segment, verify both languages, reset it to repository fallback, and test a text export.
+10. Verify the CV, appendix documents, LinkedIn, Instagram, email, and campaign archive links.
+11. Check that no private documents, credentials, or service-account files are staged.
 
 ## Troubleshooting
 
@@ -510,7 +490,7 @@ The referenced service account needs only the permissions necessary to deploy Fi
 - **Password sign-in is unavailable:** enable Email/Password under Authentication → Sign-in method and confirm the administrator user exists.
 - **Password sign-in fails:** verify the email, reset the password if necessary, and confirm the account email exactly matches `profile.email`.
 - **Sign-in succeeds but publishing fails:** deploy the current Firestore rules, verify the user's email, and confirm it exactly matches the administrator email in the rule.
-- **Site text or page publishing is rejected:** the live rules predate `portfolio/content` or `portfolio/pages`; deploy the current `firestore.rules` and retry after the workflow completes.
+- **Site-text publishing is rejected:** the live rules predate `portfolio/content`; deploy the current `firestore.rules` and retry after the workflow completes.
 - **Contact form says the database is unavailable:** deploy `firestore.rules`; older live rules deny the contact collection.
 - **PDF preview is blank:** confirm the path starts with `/documents/`, verify the filename and capitalization, hard-refresh after deployment, and use **Open separately** if the browser forces PDF downloads.
 - **Old experience content appears:** inspect Firestore first, then clear the site's local storage/cache or use **Restore source data** intentionally.
@@ -519,7 +499,6 @@ The referenced service account needs only the permissions necessary to deploy Fi
 - **An admin change appears locally but not elsewhere:** verify the save confirmation, inspect the relevant `portfolio/*` Firestore document, and check `cloudStatus`; browser cache is only a temporary fallback.
 - **Project order or visibility does not save:** deploy `firestore.rules`, confirm the signed-in verified email matches the administrator, and use **Restore defaults** if the saved ID list is stale.
 - **A live text edit does not affect a phrase:** confirm the public component passes that exact repository phrase through `t(...)` or `copy(...)`. Search the Site text editor by the stable source key, not only the customized display value.
-- **A custom page is missing from navigation:** confirm that both **Page is public** and **Show in navigation** are enabled. Its direct route is `/pages/<slug>`.
 - **A new document returns 404:** ensure it is under `public/`, use a root-relative URL, preserve filename case, and rebuild.
 - **No GitHub Actions run appears at all:** confirm the workflow is present on the pushed branch and that the push was user-authenticated rather than made with `GITHUB_TOKEN`. The repository default branch is `main`, so merge the workflow there to make the manual **Run workflow** control consistently available.
 - **A Pages run starts but does not deploy:** inspect the Actions run, confirm **Settings → Pages → Build and deployment → Source** is set to **GitHub Actions**, and confirm the `github-pages` environment allows the pushed release branch.

@@ -41,7 +41,7 @@ export const swedish = {
   'Created Python tools to compare genomic datasets and extract statistical differences across samples. Implemented visualisation pipelines and automated comparison routines to improve reproducibility.': 'Skapade Python-verktyg för att jämföra genomiska dataset och identifiera statistiska skillnader samt automatiserade visualiserings- och jämförelseflöden.',
   'Developed an interactive graphing calculator for plotting, differentiation, and intersection analysis, combining a desktop GUI with numerical computation and mathematical visualisation.': 'Utvecklade en interaktiv grafräknare för plottning, derivering och skärningsanalys med grafiskt gränssnitt och numeriska beräkningar.',
   'Developed a responsive campaign platform for the Engineering Physics Guild, integrating dynamic frontend components and Git-based version-control workflows.': 'Utvecklade en responsiv kampanjplattform för teknisk fysik-sektionen med dynamiska frontendkomponenter och Git-baserade arbetsflöden.',
-  'Quick navigation': 'Snabbnavigering', 'Related link': 'Relaterad länk', 'Read more': 'Läs mer', 'Additional page sections': 'Ytterligare sidavsnitt', 'Custom page': 'Egen sida', 'Page not found': 'Sidan hittades inte', 'Return home': 'Till startsidan', 'Resume snapshot': 'CV i korthet', 'Engineering physics · software · research': 'Teknisk fysik · mjukvara · forskning', 'Current focus': 'Nuvarande fokus',
+  'Quick navigation': 'Snabbnavigering', 'Related link': 'Relaterad länk', 'Resume snapshot': 'CV i korthet', 'Engineering physics · software · research': 'Teknisk fysik · mjukvara · forskning', 'Current focus': 'Nuvarande fokus',
   'Technical range across computational physics, software systems, and embedded engineering—with the initiative to turn ideas into working systems.': 'Teknisk bredd inom beräkningsfysik, mjukvarusystem och inbyggd teknik—med initiativförmågan att omvandla idéer till fungerande system.',
   'Core toolkit': 'Kärnverktyg', 'Numerical methods': 'Numeriska metoder', 'Selected work': 'Utvalda roller', 'Employment & research': 'Anställning och forskning', 'Full resume': 'Fullständigt CV',
   'Featured projects': 'Utvalda projekt', 'A small, significant selection': 'Ett litet men betydelsefullt urval', 'View all projects': 'Visa alla projekt',
@@ -54,9 +54,9 @@ export const swedish = {
 export const fixedCopyCatalogue = Object.entries(swedish).map(([key, sv]) => ({ key, en: key, sv }))
 export const useLocale = () => {
   const { contentMap } = useContentStore()
-  const copy = (text, svFallback = '') => {
+  const copy = (text, svFallback = '', key = text) => {
     const source = String(text ?? '')
-    const override = contentMap.value[source]
+    const override = contentMap.value[String(key ?? source)]
     return locale.value === 'sv'
       ? (override?.sv || svFallback || swedish[source] || override?.en || source)
       : (override?.en || source)

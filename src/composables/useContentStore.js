@@ -17,7 +17,14 @@ const sanitise = (entry) => ({
 })
 const apply = (items) => {
   if (!Array.isArray(items)) return
-  entries.value = items.map(sanitise).filter((entry) => entry.key && (entry.en || entry.sv)).slice(0, 600)
+  const safe = items.map(sanitise).filter((entry) => entry.key && (entry.en || entry.sv)).slice(0, 600)
+  const oldLocationOverride = safe.find((entry) => entry.key === 'Uppsala, Sweden')
+  const looksLikePhotoCredit = /\bcred(?:it)?\b|\bfoto\b|@/i.test(`${oldLocationOverride?.en || ''} ${oldLocationOverride?.sv || ''}`)
+  if (oldLocationOverride && looksLikePhotoCredit && !safe.some((entry) => entry.key === 'resume.photoCaption')) {
+    safe.push({ ...oldLocationOverride, key: 'resume.photoCaption' })
+    safe.splice(safe.indexOf(oldLocationOverride), 1)
+  }
+  entries.value = safe
   if (typeof localStorage !== 'undefined') localStorage.setItem(CACHE_KEY, JSON.stringify(entries.value))
 }
 const initialise = () => {

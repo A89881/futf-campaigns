@@ -35,18 +35,15 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { Download, Menu, Moon, ShieldCheck, Sun, X } from 'lucide-vue-next'
 import { useTheme } from '../composables/useTheme'
 import { useLocale } from '../composables/useLocale'
-import { usePageStore } from '../composables/usePageStore'
 import { profile } from '../data/portfolio'
 const menuOpen = ref(false); const isScrolled = ref(false); const { theme, toggleTheme } = useTheme()
 const { locale, t, toggleLocale } = useLocale()
-const { navigationPages } = usePageStore()
-const customLinks = computed(() => navigationPages.value.map((page) => ({ label: locale.value === 'sv' ? (page.translations?.sv?.navLabel || page.navLabel) : page.navLabel, to: `/pages/${page.slug}` })))
-const links = computed(() => [{ label: 'About', to: '/about' }, { label: 'Resume', to: '/resume' }, { label: 'Projects', to: '/projects' }, { label: 'Experience', to: '/experience' }, { label: 'Appendix', to: '/appendix' }, { label: 'Contact', to: '/contact' }, ...customLinks.value])
-const mobileLinks = computed(() => [{ label: 'Resume', to: '/#resume' }, { label: 'Projects', to: '/#projects' }, { label: 'Experience', to: '/#experience' }, { label: 'About', to: '/#about' }, { label: 'Appendix', to: '/#appendix' }, { label: 'Contact', to: '/#contact' }, ...customLinks.value])
+const links = [{ label: 'About', to: '/about' }, { label: 'Resume', to: '/resume' }, { label: 'Projects', to: '/projects' }, { label: 'Experience', to: '/experience' }, { label: 'Appendix', to: '/appendix' }, { label: 'Contact', to: '/contact' }]
+const mobileLinks = [{ label: 'Resume', to: '/#resume' }, { label: 'Projects', to: '/#projects' }, { label: 'Experience', to: '/#experience' }, { label: 'About', to: '/#about' }, { label: 'Appendix', to: '/#appendix' }, { label: 'Contact', to: '/#contact' }]
 const onScroll = () => { isScrolled.value = window.scrollY > 24 }
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true })); onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>

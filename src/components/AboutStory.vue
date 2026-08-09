@@ -65,7 +65,7 @@ const content = computed(() => {
     placesLabel: value('placesLabel'),
     places: en.places.map((place, index) => ({
       period: copy(place.period, sv.places[index].period),
-      name: copy(place.name, sv.places[index].name),
+      name: copy(place.name, sv.places[index].name, index === 3 ? 'about.places.3.name' : place.name),
       description: copy(place.description, sv.places[index].description),
     })),
     beyondLabel: value('beyondLabel'),

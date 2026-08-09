@@ -25,7 +25,7 @@
           <div class="orbit-mark">AM</div>
         </div>
         <div class="hero-foot">
-          <span>{{ t(profile.location) }}</span>
+          <span>{{ copy(profile.location, '', 'profile.location') }}</span>
         </div>
       </section>
 
@@ -45,7 +45,7 @@ import Navbar from '../components/Navbar.vue'
 import { useLocale } from '../composables/useLocale'
 import { profile } from '../data/portfolio'
 
-const { t } = useLocale()
+const { t, copy } = useLocale()
 const isMobile = ref(false)
 let mediaQuery
 const updateMobile = () => { isMobile.value = mediaQuery.matches }

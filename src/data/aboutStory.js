@@ -40,6 +40,9 @@ export const aboutStories = {
 const pairs = []
 const add = (en, sv) => { if (en && !pairs.some((entry) => entry.key === en)) pairs.push({ key: en, en, sv }) }
 for (const field of ['lead', 'background', 'education', 'placesLabel', 'beyondLabel', 'life', 'workStyle', 'photoAlt', 'photoCaption']) add(aboutStories.en[field], aboutStories.sv[field])
-aboutStories.en.places.forEach((place, index) => Object.keys(place).forEach((field) => add(place[field], aboutStories.sv.places[index][field])))
+aboutStories.en.places.forEach((place, index) => Object.keys(place).forEach((field) => {
+  if (index === 3 && field === 'name') pairs.push({ key: 'about.places.3.name', en: place[field], sv: aboutStories.sv.places[index][field] })
+  else add(place[field], aboutStories.sv.places[index][field])
+}))
 aboutStories.en.beyondTitle.forEach((value, index) => add(value, aboutStories.sv.beyondTitle[index]))
 export const aboutStoryCatalogue = pairs

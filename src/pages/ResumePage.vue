@@ -6,7 +6,7 @@
       <div class="about-grid">
         <div class="portrait-wrap">
           <img :src="resumePortrait" :alt="t('Resume portrait of Abhay Mishra')" />
-          <span class="image-caption">{{ t('Uppsala, Sweden') }}</span>
+          <span class="image-caption">{{ copy('Uppsala, Sweden · Credit: @arvid_westberg_', 'Uppsala, Sverige · Foto: @arvid_westberg_', 'resume.photoCaption') }}</span>
         </div>
         <div class="about-copy">
           <p class="lead">{{ t(profile.summary[0]) }}</p>
@@ -28,7 +28,7 @@
         <div>
           <h2 class="resume-subtitle">{{ t('Education') }}</h2>
           <div class="education-list">
-            <article v-for="item in education" :key="item.degree" class="education-card">
+            <article v-for="(item, index) in education" :key="item.degree" class="education-card">
               <div class="degree-icon">
                 <Atom :size="28" />
               </div>
@@ -38,7 +38,7 @@
                 <p><a class="school organisation-link" :href="item.schoolHref" target="_blank"
                     rel="noopener noreferrer">{{ item.school }}
                     <ArrowUpRight :size="12" />
-                  </a> · {{ t(item.location) }}</p>
+                  </a> · {{ copy(item.location, '', `education.${index}.location`) }}</p>
                 <p>{{ t(item.focus) }}</p>
               </div>
             </article>
@@ -76,5 +76,5 @@ import WorkExperienceList from '../components/WorkExperienceList.vue'
 import { education, profile, skills } from '../data/portfolio'
 import { useLocale } from '../composables/useLocale'
 
-const { t } = useLocale()
+const { t, copy } = useLocale()
 </script>
