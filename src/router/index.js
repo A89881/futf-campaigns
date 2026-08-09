@@ -10,6 +10,7 @@ const routes = [
   { path: '/appendix', name: 'Appendix', component: () => import('../pages/AppendixPage.vue'), meta: { title: 'Appendix - Abhay Mishra' } },
   { path: '/contact', name: 'Contact', component: () => import('../pages/ContactPage.vue'), meta: { title: 'Contact - Abhay Mishra' } },
   { path: '/admin', name: 'Admin', component: () => import('../pages/AdminPage.vue'), meta: { title: 'Portfolio Administration' } },
+  { path: '/pages/:slug', name: 'CustomPage', component: () => import('../pages/CustomPage.vue'), meta: { title: 'Abhay Mishra' } },
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 

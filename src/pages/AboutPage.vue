@@ -1,2 +1,11 @@
-<template><PageFrame><PageIntro eyebrow="Story / 01" title="About me" accent="." intro="The places, choices, and slightly unusual route that shaped how I learn, work, and show up for a community." /><section class="page-section shell"><AboutStory /></section></PageFrame></template>
-<script setup>import PageFrame from '../components/PageFrame.vue'; import PageIntro from '../components/PageIntro.vue'; import AboutStory from '../components/AboutStory.vue'</script>
+<template>
+    <PageFrame>
+        <PageIntro eyebrow="Story / 01" title="About me" accent="."
+            intro="The places, choices, and slightly unusual route that shaped how I learn, work, and show up for a community." />
+        <section class="page-section shell">
+            <AboutStory />
+        </section>
+    </PageFrame>
+</template>
+<script
+    setup>    import PageFrame from '../components/PageFrame.vue'; import PageIntro from '../components/PageIntro.vue'; import AboutStory from '../components/AboutStory.vue'</script>

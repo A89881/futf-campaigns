@@ -2,33 +2,246 @@
   <div class="campaign-original">
     <header class="fixed top-0 left-0 w-full z-50 bg-white shadow-lg py-3">
       <nav class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-        <button class="campaign-wordmark text-futf-blue" @click="show('home')">Mishra <span class="text-futf-gold">2025</span></button>
-        <div class="hidden md:flex items-center gap-8 font-bold text-futf-gold"><button class="flex items-center gap-2 hover-orange" @click="show('home')"><Home class="w-5 h-5" /> Hem</button><button class="flex items-center gap-2 hover-orange" @click="show('about')"><User class="w-5 h-5" /> Om mig</button><button class="flex items-center gap-2 bg-futf-blue text-futf-gold px-4 py-2 rounded-md" @click="show('contact')"><Mail class="w-5 h-5" /> Kontakta mig</button></div>
-        <button class="md:hidden text-futf-blue" aria-label="Meny" @click="menuOpen = !menuOpen"><component :is="menuOpen ? X : Menu" class="w-6 h-6" /></button>
+        <button class="campaign-wordmark text-futf-blue" @click="show('home')">Mishra <span
+            class="text-futf-gold">2025</span></button>
+        <div class="hidden md:flex items-center gap-8 font-bold text-futf-gold"><button
+            class="flex items-center gap-2 hover-orange" @click="show('home')">
+            <Home class="w-5 h-5" /> Hem
+          </button><button class="flex items-center gap-2 hover-orange" @click="show('about')">
+            <User class="w-5 h-5" /> Om mig
+          </button><button class="flex items-center gap-2 bg-futf-blue text-futf-gold px-4 py-2 rounded-md"
+            @click="show('contact')">
+            <Mail class="w-5 h-5" /> Kontakta mig
+          </button></div>
+        <button class="md:hidden text-futf-blue" aria-label="Meny" @click="menuOpen = !menuOpen">
+          <component :is="menuOpen ? X : Menu" class="w-6 h-6" />
+        </button>
       </nav>
-      <div v-if="menuOpen" class="md:hidden bg-white border-t border-gray-200 px-4 py-4 font-bold"><button class="block w-full text-left py-2 text-futf-blue" @click="show('home')"><Home class="inline w-5 h-5 mr-2" /> Hem</button><button class="block w-full text-left py-2 text-futf-blue" @click="show('about')"><User class="inline w-5 h-5 mr-2" /> Om mig</button><button class="block w-full py-2 mt-2 bg-futf-blue text-futf-gold rounded-md" @click="show('contact')"><Mail class="inline w-5 h-5 mr-2" /> Kontakta mig</button></div>
+      <div v-if="menuOpen" class="md:hidden bg-white border-t border-gray-200 px-4 py-4 font-bold"><button
+          class="block w-full text-left py-2 text-futf-blue" @click="show('home')">
+          <Home class="inline w-5 h-5 mr-2" /> Hem
+        </button><button class="block w-full text-left py-2 text-futf-blue" @click="show('about')">
+          <User class="inline w-5 h-5 mr-2" /> Om mig
+        </button><button class="block w-full py-2 mt-2 bg-futf-blue text-futf-gold rounded-md" @click="show('contact')">
+          <Mail class="inline w-5 h-5 mr-2" /> Kontakta mig
+        </button></div>
     </header>
 
     <main class="pt-20">
       <template v-if="view === 'home'">
         <section class="h-screen flex items-center justify-center overflow-hidden relative">
-          <div class="absolute inset-0 bg-futf-blue"><div class="absolute inset-0 bg-gradient-to-r from-[#1b4b7b]/90 to-[#1b4b7b]/70"></div><img src="../assets/img/bizzness.jpg" alt="Kandidat" class="w-full h-full object-cover opacity-30" /></div>
-          <div class="container mx-auto px-4 z-10 text-center"><h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 italic">En röst för tydlighet. <span class="text-futf-gold">Ett utskott för framtiden.</span></h1><p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10">Jag kandiderar till rollen som informationsansvarig för FUTF - för att skapa struktur, synlighet och engagemang genom tydlig kommunikation och strategisk marknadsföring.</p><button class="bg-futf-gold hover:bg-white text-futf-blue font-bold px-8 py-3 rounded-md transition-colors cursor-pointer" @click="scrollToVision">Läs mer</button></div>
-          <button class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/80" aria-label="Scroll down" @click="scrollToVision"><ChevronDown class="w-8 h-8" /></button>
+          <div class="absolute inset-0 bg-futf-blue">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#1b4b7b]/90 to-[#1b4b7b]/70"></div><img
+              src="../assets/img/bizzness.jpg" alt="Kandidat" class="w-full h-full object-cover opacity-30" />
+          </div>
+          <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 italic">En röst för tydlighet.
+              <span class="text-futf-gold">Ett utskott för framtiden.</span></h1>
+            <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10">Jag kandiderar till rollen som
+              informationsansvarig för FUTF - för att skapa struktur, synlighet och engagemang genom tydlig
+              kommunikation och strategisk marknadsföring.</p><button
+              class="bg-futf-gold hover:bg-white text-futf-blue font-bold px-8 py-3 rounded-md transition-colors cursor-pointer"
+              @click="scrollToVision">Läs mer</button>
+          </div>
+          <button class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/80"
+            aria-label="Scroll down" @click="scrollToVision">
+            <ChevronDown class="w-8 h-8" />
+          </button>
         </section>
-        <section id="campaign-vision" class="py-16 bg-gray-50"><div class="max-w-6xl mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl font-bold text-futf-blue mb-4">Mina Vitkigaste Visioner</h2><div class="w-20 h-1 bg-futf-gold mx-auto"></div><p class="mt-4 text-futf-blue font-semibold text-lg max-w-2xl mx-auto">Som informationsansvarig vill jag arbeta för att stärka FUTF:s kommunikation och synlighet. Här är mina huvudsakliga fokusområden (det finns flera men kontakta mig om du undrar över de):</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><article v-for="vision in visions" :key="vision.title" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"><div class="flex items-center mb-4"><CheckCircle class="w-6 h-6 text-futf-gold mr-3 flex-shrink-0" /><h3 class="text-xl font-bold text-futf-blue leading-tight">{{ vision.title }}</h3></div><p class="text-gray-700 mt-2">{{ vision.description }}</p></article></div></div></section>
-        <section class="py-16 bg-white"><div class="container mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl font-bold text-futf-blue mb-4">Relevanta erfarenheter</h2><div class="w-20 h-1 bg-futf-gold mx-auto"></div></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"><article v-for="item in experience" :key="item.title" class="text-center p-6 hover:bg-gray-50 rounded-xl transition-all"><div class="bg-[rgba(255,215,0,0.1)] rounded-full p-4 mx-auto mb-4 w-20 h-20 flex items-center justify-center"><component :is="item.icon" class="h-8 w-8 text-futf-blue" /></div><h3 class="text-xl font-bold text-futf-blue mb-3">{{ item.title }}</h3><p class="text-gray-700">{{ item.description }}</p></article></div><div class="text-center mt-10"><button class="inline-flex items-center text-futf-blue font-bold group" @click="show('about')">Se alla mina erfarenheter <ArrowRight class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" /></button></div></div></section>
+        <section id="campaign-vision" class="py-16 bg-gray-50">
+          <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+              <h2 class="text-3xl font-bold text-futf-blue mb-4">Mina Vitkigaste Visioner</h2>
+              <div class="w-20 h-1 bg-futf-gold mx-auto"></div>
+              <p class="mt-4 text-futf-blue font-semibold text-lg max-w-2xl mx-auto">Som informationsansvarig vill jag
+                arbeta för att stärka FUTF:s kommunikation och synlighet. Här är mina huvudsakliga fokusområden (det
+                finns flera men kontakta mig om du undrar över de):</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <article v-for="vision in visions" :key="vision.title"
+                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <div class="flex items-center mb-4">
+                  <CheckCircle class="w-6 h-6 text-futf-gold mr-3 flex-shrink-0" />
+                  <h3 class="text-xl font-bold text-futf-blue leading-tight">{{ vision.title }}</h3>
+                </div>
+                <p class="text-gray-700 mt-2">{{ vision.description }}</p>
+              </article>
+            </div>
+          </div>
+        </section>
+        <section class="py-16 bg-white">
+          <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+              <h2 class="text-3xl font-bold text-futf-blue mb-4">Relevanta erfarenheter</h2>
+              <div class="w-20 h-1 bg-futf-gold mx-auto"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              <article v-for="item in experience" :key="item.title"
+                class="text-center p-6 hover:bg-gray-50 rounded-xl transition-all">
+                <div
+                  class="bg-[rgba(255,215,0,0.1)] rounded-full p-4 mx-auto mb-4 w-20 h-20 flex items-center justify-center">
+                  <component :is="item.icon" class="h-8 w-8 text-futf-blue" />
+                </div>
+                <h3 class="text-xl font-bold text-futf-blue mb-3">{{ item.title }}</h3>
+                <p class="text-gray-700">{{ item.description }}</p>
+              </article>
+            </div>
+            <div class="text-center mt-10"><button class="inline-flex items-center text-futf-blue font-bold group"
+                @click="show('about')">Se alla mina erfarenheter
+                <ArrowRight class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button></div>
+          </div>
+        </section>
       </template>
 
-      <section v-else-if="view === 'about'" class="min-h-screen pt-24 pb-16 bg-white"><div class="container mx-auto px-4"><div class="text-center mb-16"><h1 class="text-4xl font-bold text-futf-blue">Om mig</h1><div class="w-50 h-1 bg-futf-gold mx-auto mt-4"></div></div><div class="max-w-4xl mx-auto"><div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16"><div><h2 class="text-2xl font-bold text-futf-blue mb-4">Min bakgrund</h2><p class="text-gray-700 mb-4">Tja! Jag heter Abhay, är från Uppsala och troligtvis den yngsta här (brodern fick dricka för en månad sen). Trots det har jag redan hunnit dyka djupt in i föreningslivet och hittat hem i FUTF. På fritiden gillar jag att spela sport, chilla och goofa med mina polare - ofta genom att spela in dåliga raplåtar eller kolla på alldeles för många nördiga fysikvideos (get a load of this guy).</p><p class="text-gray-700">Jag söker rollen som informationsansvarig för att jag verkligen bryr mig om föreningen och vet hur mycket bra kommunikation kan göra. Med erfarenhet från grafisk design, marknadsföring och föreningsliv vill jag bidra med struktur, driv och engagemang – och samtidigt bygga ett utskott som gör jobbet både proffsigt och kul.</p></div><div class="bg-gray-100 rounded-lg overflow-hidden"><img src="../assets/img/smiley.jpg" alt="Kandidat" class="w-full h-80 object-cover" /></div></div>
-        <div class="text-center mb-8"><h2 class="text-2xl font-bold text-futf-blue">Mina Erfarenheter</h2><div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div></div><div class="mb-16"><div class="flex gap-2 mb-8 overflow-x-auto pb-2"><button v-for="year in years" :key="year" class="px-4 py-2 rounded-lg border-2 whitespace-nowrap font-bold" :class="selectedYear === year ? 'bg-futf-gold text-futf-blue border-[#f2b705]' : 'bg-white text-gray-700 border-gray-200'" @click="selectedYear = year">{{ year }}</button></div><div class="border-l-4 border-[#1b4b7b] pl-7 space-y-8"><article v-for="item in filteredTimeline" :key="item.title" class="relative bg-white p-6 rounded-lg shadow-sm border border-gray-100 before:absolute before:w-4 before:h-4 before:bg-[#f2b705] before:rounded-full before:-left-[38px] before:top-8 before:border-2 before:border-white"><h4 class="text-futf-blue text-lg font-bold mb-1">{{ item.displayYear || item.year }}</h4><h3 class="text-lg font-bold text-gray-900 mb-2">{{ item.title }}</h3><p class="text-gray-600">{{ item.description }}</p></article></div></div>
-        <div class="text-center mb-8"><h2 class="text-2xl font-bold text-futf-blue">Mina Värdeord</h2><div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"><article v-for="value in values" :key="value.title" class="p-6 rounded-lg border border-gray-200 text-center"><component :is="value.icon" class="w-8 h-8 text-futf-gold mx-auto mb-4" /><h3 class="font-bold text-futf-blue">{{ value.title }}</h3><p class="text-gray-600 mt-2">{{ value.text }}</p></article></div><div class="p-8 rounded-lg border-2 border-[#1b4b7b] mb-16"><h2 class="text-2xl font-bold text-futf-blue mb-4">Varför engagemanget är viktigt !!!</h2><p class="text-gray-900 mb-4">För mig är föreningslivet en central del av studentupplevelsen. Det är där vi skapar minnen, bygger relationer och utvecklar viktiga färdigheter vid sidan av studierna.</p><p class="text-gray-900">Som informationsansvarig vill jag arbeta för att FUTF ska nå ut bredare, kommunicera tydligare och stärka gemenskapen bland våra medlemmar.</p></div></div></div></section>
+      <section v-else-if="view === 'about'" class="min-h-screen pt-24 pb-16 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-16">
+            <h1 class="text-4xl font-bold text-futf-blue">Om mig</h1>
+            <div class="w-50 h-1 bg-futf-gold mx-auto mt-4"></div>
+          </div>
+          <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <h2 class="text-2xl font-bold text-futf-blue mb-4">Min bakgrund</h2>
+                <p class="text-gray-700 mb-4">Tja! Jag heter Abhay, är från Uppsala och troligtvis den yngsta här
+                  (brodern
+                  fick dricka för en månad sen). Trots det har jag redan hunnit dyka djupt in i föreningslivet och
+                  hittat hem
+                  i FUTF. På fritiden gillar jag att spela sport, chilla och goofa med mina polare - ofta genom att
+                  spela in
+                  dåliga raplåtar eller kolla på alldeles för många nördiga fysikvideos (get a load of this guy).</p>
+                <p class="text-gray-700">Jag söker rollen som informationsansvarig för att jag verkligen bryr mig om
+                  föreningen och vet hur mycket bra kommunikation kan göra. Med erfarenhet från grafisk design,
+                  marknadsföring
+                  och föreningsliv vill jag bidra med struktur, driv och engagemang – och samtidigt bygga ett utskott
+                  som gör
+                  jobbet både proffsigt och kul.</p>
+              </div>
+              <div class="bg-gray-100 rounded-lg overflow-hidden"><img src="../assets/img/smiley.jpg" alt="Kandidat"
+                  class="w-full h-80 object-cover" /></div>
+            </div>
+            <div class="text-center mb-8">
+              <h2 class="text-2xl font-bold text-futf-blue">Mina Erfarenheter</h2>
+              <div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div>
+            </div>
+            <div class="mb-16">
+              <div class="flex gap-2 mb-8 overflow-x-auto pb-2"><button v-for="year in years" :key="year"
+                  class="px-4 py-2 rounded-lg border-2 whitespace-nowrap font-bold"
+                  :class="selectedYear === year ? 'bg-futf-gold text-futf-blue border-[#f2b705]' : 'bg-white text-gray-700 border-gray-200'"
+                  @click="selectedYear = year">{{ year }}</button></div>
+              <div class="border-l-4 border-[#1b4b7b] pl-7 space-y-8">
+                <article v-for="item in filteredTimeline" :key="item.title"
+                  class="relative bg-white p-6 rounded-lg shadow-sm border border-gray-100 before:absolute before:w-4 before:h-4 before:bg-[#f2b705] before:rounded-full before:-left-[38px] before:top-8 before:border-2 before:border-white">
+                  <h4 class="text-futf-blue text-lg font-bold mb-1">{{ item.displayYear || item.year }}</h4>
+                  <h3 class="text-lg font-bold text-gray-900 mb-2">{{ item.title }}</h3>
+                  <p class="text-gray-600">{{ item.description }}</p>
+                </article>
+              </div>
+            </div>
+            <div class="text-center mb-8">
+              <h2 class="text-2xl font-bold text-futf-blue">Mina Värdeord</h2>
+              <div class="w-20 h-1 bg-futf-gold mx-auto mt-4"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              <article v-for="value in values" :key="value.title"
+                class="p-6 rounded-lg border border-gray-200 text-center">
+                <component :is="value.icon" class="w-8 h-8 text-futf-gold mx-auto mb-4" />
+                <h3 class="font-bold text-futf-blue">{{ value.title }}</h3>
+                <p class="text-gray-600 mt-2">{{ value.text }}</p>
+              </article>
+            </div>
+            <div class="p-8 rounded-lg border-2 border-[#1b4b7b] mb-16">
+              <h2 class="text-2xl font-bold text-futf-blue mb-4">Varför engagemanget är viktigt !!!</h2>
+              <p class="text-gray-900 mb-4">För mig är föreningslivet en central del av studentupplevelsen. Det är där
+                vi
+                skapar minnen, bygger relationer och utvecklar viktiga färdigheter vid sidan av studierna.</p>
+              <p class="text-gray-900">Som informationsansvarig vill jag arbeta för att FUTF ska nå ut bredare,
+                kommunicera
+                tydligare och stärka gemenskapen bland våra medlemmar.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section v-else class="min-h-screen pt-14 pb-20 bg-white"><div class="container mx-auto px-4"><div class="text-center mb-12"><h1 class="text-4xl font-bold text-futf-blue">Kontakta mig</h1><div class="w-50 h-1 bg-futf-gold mx-auto mt-4"></div><p class="mt-6 text-gray-700 max-w-2xl mx-auto font-medium text-xl">Har du frågor eller idéer? Jag uppskattar alla tankar och förslag!</p></div><div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12"><div class="bg-futf-blue rounded-lg shadow-md p-8 text-white"><h2 class="text-2xl font-bold text-futf-gold mb-6">Skicka ett meddelande</h2><form class="space-y-6" @submit.prevent="sendCampaignMail"><label class="block text-sm font-medium text-futf-gold">Namn<input v-model="form.name" required class="mt-1 w-full border border-white/20 bg-white/10 text-white rounded-md p-2" /></label><label class="block text-sm font-medium text-futf-gold">E-post<input v-model="form.email" type="email" required class="mt-1 w-full border border-white/20 bg-white/10 text-white rounded-md p-2" /></label><label class="block text-sm font-medium text-futf-gold">Meddelande<textarea v-model="form.message" rows="5" required class="mt-1 w-full border border-white/20 bg-white/10 text-white rounded-md p-2"></textarea></label><button class="w-full bg-futf-gold hover:bg-white text-futf-blue px-4 py-2 rounded-md"><Send class="inline w-4 h-4 mr-2" />Skicka meddelande</button></form></div><div class="bg-futf-blue text-white rounded-lg shadow-md p-8 self-start"><h2 class="text-2xl font-bold text-futf-gold mb-6">Kontaktuppgifter</h2><p class="mb-4"><Mail class="inline w-5 h-5 text-futf-gold mr-2" /><a href="mailto:bakwert0123@gmail.com">bakwert0123@gmail.com</a></p><p class="mb-4"><Phone class="inline w-5 h-5 text-futf-gold mr-2" />076-134 56 96</p><div class="flex gap-4 mt-8"><a href="https://www.instagram.com/abbebabbe07/" target="_blank" rel="noopener noreferrer"><Instagram /></a><a href="https://www.linkedin.com/in/abhay-mishra-5aa78319a/" target="_blank" rel="noopener noreferrer"><Linkedin /></a></div></div></div></div></section>
+      <section v-else class="min-h-screen pt-14 pb-20 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-futf-blue">Kontakta mig</h1>
+            <div class="w-50 h-1 bg-futf-gold mx-auto mt-4"></div>
+            <p class="mt-6 text-gray-700 max-w-2xl mx-auto font-medium text-xl">Har du frågor eller idéer? Jag
+              uppskattar alla
+              tankar och förslag!</p>
+          </div>
+          <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="bg-futf-blue rounded-lg shadow-md p-8 text-white">
+              <h2 class="text-2xl font-bold text-futf-gold mb-6">Skicka ett meddelande</h2>
+              <form class="space-y-6" @submit.prevent="sendCampaignMail"><label
+                  class="block text-sm font-medium text-futf-gold">Namn<input v-model="form.name" required
+                    class="mt-1 w-full border border-white/20 bg-white/10 text-white rounded-md p-2" /></label><label
+                  class="block text-sm font-medium text-futf-gold">E-post<input v-model="form.email" type="email"
+                    required
+                    class="mt-1 w-full border border-white/20 bg-white/10 text-white rounded-md p-2" /></label><label
+                  class="block text-sm font-medium text-futf-gold">Meddelande<textarea v-model="form.message" rows="5"
+                    required
+                    class="mt-1 w-full border border-white/20 bg-white/10 text-white rounded-md p-2"></textarea></label><button
+                  class="w-full bg-futf-gold hover:bg-white text-futf-blue px-4 py-2 rounded-md">
+                  <Send class="inline w-4 h-4 mr-2" />Skicka meddelande
+                </button></form>
+            </div>
+            <div class="bg-futf-blue text-white rounded-lg shadow-md p-8 self-start">
+              <h2 class="text-2xl font-bold text-futf-gold mb-6">Kontaktuppgifter</h2>
+              <p class="mb-4">
+                <Mail class="inline w-5 h-5 text-futf-gold mr-2" /><a
+                  href="mailto:bakwert0123@gmail.com">bakwert0123@gmail.com</a>
+              </p>
+              <p class="mb-4">
+                <Phone class="inline w-5 h-5 text-futf-gold mr-2" />076-134 56 96
+              </p>
+              <div class="flex gap-4 mt-8"><a href="https://www.instagram.com/abbebabbe07/" target="_blank"
+                  rel="noopener noreferrer">
+                  <Instagram />
+                </a><a href="https://www.linkedin.com/in/abhay-mishra-5aa78319a/" target="_blank"
+                  rel="noopener noreferrer">
+                  <Linkedin />
+                </a></div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <section class="py-16 bg-[#2d6aa0] text-white text-center"><h2 class="text-3xl md:text-5xl font-bold mb-6">Rösta på Mishra <span class="text-futf-gold">2025</span> för ett starkare FUTF.</h2><p class="max-w-2xl mx-auto text-lg mb-8 opacity-90">Tillsammans kan vi skapa en mer strukturerad, synlig och engagerande förening.<br />Din röst gör skillnad!</p><button class="bg-futf-gold hover:bg-white text-futf-blue font-bold px-8 py-3 rounded-md" @click="show('contact')">Kontakta mig</button></section>
-    <footer class="bg-futf-blue text-white py-8 px-4"><div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-8"><div><button class="text-3xl font-bold" @click="show('home')">Mishra <span class="text-futf-gold">2025</span></button><p class="mt-2 text-white/90 text-lg font-medium">Kandidat till Informationsansvarig 2025</p><p class="mt-1 text-2xl font-semibold italic">En röst för tydlighet.<span class="block text-futf-gold">Ett utskott för framtiden.</span></p></div><div><h3 class="font-semibold mb-2 text-futf-gold">Navigering</h3><button class="block text-white/80" @click="show('home')">Hem</button><button class="block text-white/80" @click="show('about')">Om mig</button><button class="block text-white/80" @click="show('contact')">Kontakta mig</button><router-link class="block text-futf-gold mt-3" to="/">Till portfolio</router-link></div></div><div class="border-t border-white/20 mt-8 pt-4 text-center text-sm text-white/60"><p>© 2025 Abhay Mishra. Alla rättigheter förbehållna.</p><p>FUTF Informationsansvarig Kampanj - Mishra 2025</p><p>Designad av Abhay Mishra</p></div></footer>
+    <section class="py-16 bg-[#2d6aa0] text-white text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">Rösta på Mishra <span class="text-futf-gold">2025</span> för ett
+        starkare FUTF.</h2>
+      <p class="max-w-2xl mx-auto text-lg mb-8 opacity-90">Tillsammans kan vi skapa en mer strukturerad, synlig och
+        engagerande förening.<br />Din röst gör skillnad!</p><button
+        class="bg-futf-gold hover:bg-white text-futf-blue font-bold px-8 py-3 rounded-md"
+        @click="show('contact')">Kontakta
+        mig</button>
+    </section>
+    <footer class="bg-futf-blue text-white py-8 px-4">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-8">
+        <div><button class="text-3xl font-bold" @click="show('home')">Mishra <span
+              class="text-futf-gold">2025</span></button>
+          <p class="mt-2 text-white/90 text-lg font-medium">Kandidat till Informationsansvarig 2025</p>
+          <p class="mt-1 text-2xl font-semibold italic">En röst för tydlighet.<span class="block text-futf-gold">Ett
+              utskott
+              för framtiden.</span></p>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2 text-futf-gold">Navigering</h3><button class="block text-white/80"
+            @click="show('home')">Hem</button><button class="block text-white/80" @click="show('about')">Om
+            mig</button><button class="block text-white/80" @click="show('contact')">Kontakta mig</button><router-link
+            class="block text-futf-gold mt-3" to="/">Till portfolio</router-link>
+        </div>
+      </div>
+      <div class="border-t border-white/20 mt-8 pt-4 text-center text-sm text-white/60">
+        <p>© 2025 Abhay Mishra. Alla rättigheter förbehållna.</p>
+        <p>FUTF Informationsansvarig Kampanj - Mishra 2025</p>
+        <p>Designad av Abhay Mishra</p>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -46,5 +259,49 @@ const years = ['Pre-2021', '2021', '2022', '2023', '2024', '2025']; const select
 </script>
 
 <style scoped>
-.campaign-original { color-scheme: light; color: #111827; background: white; font-family: Arial, sans-serif; }.campaign-original > main { font-weight: 500; }.campaign-original > header nav button { font-weight: 700; }.campaign-original button { cursor: pointer; }.campaign-wordmark { font-size: 30px; font-weight: 700; line-height: 1; letter-spacing: -.02em; }.bg-futf-blue { background-color: #1b4b7b; }.bg-futf-gold { background-color: #f2b705; }.text-futf-blue { color: #1b4b7b; }.text-futf-gold { color: #f2b705; }.hover-orange:hover { color: #ef6c00; }
+.campaign-original {
+  color-scheme: light;
+  color: #111827;
+  background: white;
+  font-family: Arial, sans-serif;
+}
+
+.campaign-original>main {
+  font-weight: 500;
+}
+
+.campaign-original>header nav button {
+  font-weight: 700;
+}
+
+.campaign-original button {
+  cursor: pointer;
+}
+
+.campaign-wordmark {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.bg-futf-blue {
+  background-color: #1b4b7b;
+}
+
+.bg-futf-gold {
+  background-color: #f2b705;
+}
+
+.text-futf-blue {
+  color: #1b4b7b;
+}
+
+.text-futf-gold {
+  color: #f2b705;
+}
+
+.hover-orange:hover {
+  color: #ef6c00;
+}
 </style>

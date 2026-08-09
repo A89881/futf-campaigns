@@ -14,7 +14,7 @@
       <MobileHeading number="01" title="Resume snapshot" eyebrow="Engineering physics · software · research" />
 
       <div class="mobile-profile-card">
-        <img :src="resumePortrait" :alt="t('Professional portrait of Abhay Mishra')" />
+        <img :src="resumePortrait" :alt="t('Resume portrait of Abhay Mishra')" />
         <div>
           <p class="kind">{{ t('Current focus') }}</p>
           <h3>{{ t('Engineering Physics student') }}</h3>
@@ -23,9 +23,15 @@
       </div>
 
       <div class="mobile-action-row">
-        <a :href="profile.cv" download>{{ t('Download CV') }} <Download :size="14" /></a>
-        <a :href="profile.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight :size="14" /></a>
-        <a :href="profile.github" target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRight :size="14" /></a>
+        <a :href="profile.cv" download>{{ t('Download CV') }}
+          <Download :size="14" />
+        </a>
+        <a :href="profile.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn
+          <ArrowUpRight :size="14" />
+        </a>
+        <a :href="profile.github" target="_blank" rel="noopener noreferrer">GitHub
+          <ArrowUpRight :size="14" />
+        </a>
       </div>
 
       <div class="mobile-resume-facts">
@@ -36,23 +42,34 @@
         </article>
         <article>
           <p class="kind">{{ t('Core toolkit') }}</p>
-          <p>{{ coreSkills.join(' · ') }}</p>
+          <p>{{ coreSkills.map(t).join(' · ') }}</p>
         </article>
       </div>
 
       <div class="mobile-subhead">
-        <div><p class="kind">{{ t('Selected work') }}</p><h3>{{ t('Professional & research') }}</h3></div>
-        <router-link to="/resume">{{ t('Full resume') }} <ArrowRight :size="14" /></router-link>
+        <div>
+          <p class="kind">{{ t('Selected work') }}</p>
+          <h3>{{ t('Employment & research') }}</h3>
+        </div>
+        <router-link to="/resume">{{ t('Full resume') }}
+          <ArrowRight :size="14" />
+        </router-link>
       </div>
       <div class="mobile-entry-list">
         <article v-for="item in selectedWork" :key="item.id" class="mobile-entry">
           <time>{{ displayRange(item) }}</time>
           <div>
             <h4>{{ localized(item, 'title') }}</h4>
-            <a v-if="organisationUrl(item)" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ArrowUpRight :size="11" /></a>
+            <a v-if="organisationUrl(item)" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{
+              item.organisation }}
+              <ArrowUpRight :size="11" />
+            </a>
             <span v-else>{{ item.organisation }}</span>
             <p>{{ localized(item, 'description') }}</p>
-            <a v-if="item.linkHref" class="mobile-reference-link" :href="item.linkHref" target="_blank" rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }} <ArrowUpRight :size="11" /></a>
+            <a v-if="item.linkHref" class="mobile-reference-link" :href="item.linkHref" target="_blank"
+              rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }}
+              <ArrowUpRight :size="11" />
+            </a>
           </div>
         </article>
       </div>
@@ -62,19 +79,28 @@
       <div class="shell">
         <MobileHeading number="02" title="Featured projects" eyebrow="A small, significant selection" />
         <div class="mobile-project-list">
-          <article v-for="project in featuredProjects" :key="project.id || project.title" class="mobile-project" :class="project.accent">
+          <article v-for="project in featuredProjects" :key="project.id || project.title" class="mobile-project"
+            :class="project.accent">
             <div class="mobile-project-number">{{ project.index }}</div>
             <div>
-              <p class="kind">{{ t(project.type) }} · {{ project.period }}</p>
+              <p class="kind">{{ t(project.type) }} · {{ t(project.period) }}</p>
               <h3>{{ t(project.title) }}</h3>
               <p>{{ t(project.description) }}</p>
-              <ul><li v-for="tag in project.tags.slice(0, 3)" :key="tag">{{ tag }}</li></ul>
-              <router-link v-if="project.href?.startsWith('/')" :to="project.href">{{ t(project.cta) }} <ArrowUpRight :size="13" /></router-link>
-              <a v-else :href="project.href" target="_blank" rel="noopener noreferrer">{{ t(project.cta) }} <ArrowUpRight :size="13" /></a>
+              <ul>
+                <li v-for="tag in project.tags.slice(0, 3)" :key="tag">{{ t(tag) }}</li>
+              </ul>
+              <router-link v-if="project.href?.startsWith('/')" :to="project.href">{{ t(project.cta) }}
+                <ArrowUpRight :size="13" />
+              </router-link>
+              <a v-else :href="project.href" target="_blank" rel="noopener noreferrer">{{ t(project.cta) }}
+                <ArrowUpRight :size="13" />
+              </a>
             </div>
           </article>
         </div>
-        <router-link class="mobile-route-link" to="/projects">{{ t('View all projects') }} <ArrowRight :size="15" /></router-link>
+        <router-link class="mobile-route-link" to="/projects">{{ t('View all projects') }}
+          <ArrowRight :size="15" />
+        </router-link>
       </div>
     </section>
 
@@ -89,13 +115,21 @@
           <time>{{ displayRange(item) }}</time>
           <div>
             <h4>{{ localized(item, 'title') }}</h4>
-            <a v-if="organisationUrl(item)" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ArrowUpRight :size="11" /></a>
+            <a v-if="organisationUrl(item)" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{
+              item.organisation }}
+              <ArrowUpRight :size="11" />
+            </a>
             <span v-else>{{ item.organisation }}</span>
-            <a v-if="item.linkHref" class="mobile-reference-link" :href="item.linkHref" target="_blank" rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }} <ArrowUpRight :size="11" /></a>
+            <a v-if="item.linkHref" class="mobile-reference-link" :href="item.linkHref" target="_blank"
+              rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }}
+              <ArrowUpRight :size="11" />
+            </a>
           </div>
         </article>
       </div>
-      <router-link class="mobile-route-link" to="/experience">{{ t('Open the full timeline') }} <ArrowRight :size="15" /></router-link>
+      <router-link class="mobile-route-link" to="/experience">{{ t('Open the full timeline') }}
+        <ArrowRight :size="15" />
+      </router-link>
     </section>
 
     <section id="about" class="mobile-section mobile-surface">
@@ -113,7 +147,9 @@
             <span>{{ principle.number }}</span><strong>{{ t(principle.title) }}</strong>
           </article>
         </div>
-        <router-link class="mobile-route-link" to="/about">{{ t('Read the full story') }} <ArrowRight :size="15" /></router-link>
+        <router-link class="mobile-route-link" to="/about">{{ t('Read the full story') }}
+          <ArrowRight :size="15" />
+        </router-link>
       </div>
     </section>
 
@@ -122,17 +158,27 @@
       <div class="mobile-document-list">
         <article v-for="document in selectedDocuments" :key="document.id">
           <FileText :size="20" />
-          <div><p class="kind">{{ localizedDocument(document, 'type') }} · {{ localizedDocument(document, 'date') }}</p><h3>{{ localizedDocument(document, 'title') }}</h3></div>
-          <a :href="document.href" target="_blank" rel="noopener noreferrer" :aria-label="`${t('Open PDF')}: ${localizedDocument(document, 'title')}`"><ArrowUpRight :size="17" /></a>
+          <div>
+            <p class="kind">{{ localizedDocument(document, 'type') }} · {{ localizedDocument(document, 'date') }}</p>
+            <h3>{{ localizedDocument(document, 'title') }}</h3>
+          </div>
+          <a :href="document.href" target="_blank" rel="noopener noreferrer"
+            :aria-label="`${t('Open PDF')}: ${localizedDocument(document, 'title')}`">
+            <ArrowUpRight :size="17" />
+          </a>
         </article>
       </div>
-      <router-link class="mobile-route-link" to="/appendix">{{ t('View all documents') }} <ArrowRight :size="15" /></router-link>
+      <router-link class="mobile-route-link" to="/appendix">{{ t('View all documents') }}
+        <ArrowRight :size="15" />
+      </router-link>
     </section>
 
     <section id="contact" class="mobile-contact shell">
       <p class="kind">06 / {{ t('Contact') }}</p>
       <h2>{{ t('Let’s make something') }}<br /><em>{{ t('worthwhile.') }}</em></h2>
-      <a class="mobile-email" :href="`mailto:${profile.email}`">{{ profile.email }} <ArrowUpRight :size="20" /></a>
+      <a class="mobile-email" :href="`mailto:${profile.email}`">{{ profile.email }}
+        <ArrowUpRight :size="20" />
+      </a>
       <div class="mobile-contact-links">
         <a :href="profile.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a :href="profile.github" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -161,7 +207,7 @@ const { visibleProjects } = useProjectStore()
 const { documents } = useAppendixStore()
 
 const coreSkills = ['Python', 'C++', 'Vue.js', 'Kubernetes', 'Numerical methods', 'Git']
-const workItems = computed(() => experiences.value.filter((item) => item.category === 'professional' || item.category === 'research'))
+const workItems = computed(() => experiences.value.filter((item) => item.category === 'employment' || item.category === 'research'))
 const communityItems = computed(() => experiences.value.filter((item) => item.category === 'community'))
 const selectedWork = computed(() => workItems.value.slice(0, 4))
 const selectedCommunity = computed(() => communityItems.value.slice(0, 3))

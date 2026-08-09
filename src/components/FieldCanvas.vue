@@ -7,7 +7,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 const canvas = ref(null)
 let frame = 0
-let cleanup = () => {}
+let cleanup = () => { }
 
 onMounted(() => {
   const el = canvas.value

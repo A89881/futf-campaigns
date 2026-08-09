@@ -2,19 +2,29 @@
   <div>
     <div class="experience-toolbar">
       <div class="experience-filters" role="group" :aria-label="t('Filter experiences')">
-        <button v-for="option in filters" :key="option.value" type="button" :class="{ active: filter === option.value }" @click="filter = option.value">
+        <button v-for="option in filters" :key="option.value" type="button" :class="{ active: filter === option.value }"
+          @click="filter = option.value">
           {{ t(option.label) }} <span>{{ count(option.value) }}</span>
         </button>
       </div>
-      <router-link class="manage-link" to="/admin">{{ t('Manage experience') }} <Settings :size="15" /></router-link>
+      <router-link class="manage-link" to="/admin">{{ t('Manage experience') }}
+        <Settings :size="15" />
+      </router-link>
     </div>
 
     <div class="stacked-timeline" :aria-label="t('Timeline showing overlapping experience periods')">
-      <div class="timeline-summary"><span class="pulse-dot"></span><strong>{{ peakConcurrency }} {{ t('parallel roles') }}</strong> {{ t('at the busiest point in this record.') }}</div>
-      <div class="timeline-axis"><span></span><div><i v-for="year in years" :key="year">{{ year }}</i></div></div>
+      <div class="timeline-summary"><span class="pulse-dot"></span><strong>{{ peakConcurrency }} {{ t('parallel roles')}}
+      </strong> {{ t('at the busiest point in this record.') }}</div>
+      <div class="timeline-axis"><span></span>
+        <div><i v-for="year in years" :key="year">{{ year }}</i></div>
+      </div>
       <div v-for="item in timelineItems" :key="`bar-${item.id}`" class="stack-row">
-        <div class="stack-label"><strong>{{ localized(item, 'title') }}</strong><span>{{ item.organisation }}</span></div>
-        <div class="stack-track"><a :href="`#experience-${item.id}`" class="stack-bar" :class="item.category" :style="item.barStyle" :aria-label="`${localized(item, 'title')}, ${displayStart(item)} to ${displayEnd(item)}`"><span>{{ displayStart(item) }} - {{ displayEnd(item) }}</span></a></div>
+        <div class="stack-label"><strong>{{ localized(item, 'title') }}</strong><span>{{ item.organisation }}</span>
+        </div>
+        <div class="stack-track"><a :href="`#experience-${item.id}`" class="stack-bar" :class="item.category"
+            :style="item.barStyle"
+            :aria-label="`${localized(item, 'title')}, ${displayStart(item)} to ${displayEnd(item)}`"><span>{{
+              displayStart(item) }} - {{ displayEnd(item) }}</span></a></div>
       </div>
     </div>
 
@@ -26,7 +36,11 @@
         </div>
         <div class="experience-title">
           <h3>{{ localized(item, 'title') }}</h3>
-          <a v-if="organisationUrl(item)" class="organisation organisation-link" :href="organisationUrl(item)" target="_blank" rel="noopener noreferrer">{{ item.organisation }} <ExternalLink :size="12" /></a><p v-else class="organisation">{{ item.organisation }}</p>
+          <a v-if="organisationUrl(item)" class="organisation organisation-link" :href="organisationUrl(item)"
+            target="_blank" rel="noopener noreferrer">{{ item.organisation }}
+            <ExternalLink :size="12" />
+          </a>
+          <p v-else class="organisation">{{ item.organisation }}</p>
           <p class="location">{{ item.location }}</p>
         </div>
         <div class="experience-details">
@@ -34,7 +48,10 @@
           <ul v-if="localizedHighlights(item).length">
             <li v-for="highlight in localizedHighlights(item)" :key="highlight">{{ highlight }}</li>
           </ul>
-          <a v-if="item.linkHref" class="experience-reference-link" :href="item.linkHref" target="_blank" rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }} <ExternalLink :size="13" /></a>
+          <a v-if="item.linkHref" class="experience-reference-link" :href="item.linkHref" target="_blank"
+            rel="noopener noreferrer">{{ localized(item, 'linkLabel') || t('Related link') }}
+            <ExternalLink :size="13" />
+          </a>
         </div>
       </article>
     </div>
@@ -55,7 +72,7 @@ const localizedHighlights = (item) => locale.value === 'sv' && item.translations
 const filter = ref('all')
 const filters = [
   { label: 'All', value: 'all' },
-  { label: 'Professional', value: 'professional' },
+  { label: 'Employment', value: 'employment' },
   { label: 'Research', value: 'research' },
   { label: 'Community', value: 'community' },
 ]
@@ -86,6 +103,6 @@ const peakConcurrency = computed(() => {
 })
 const years = [2022, 2023, 2024, 2025, 2026]
 const count = (category) => category === 'all' ? experiences.value.length : experiences.value.filter((item) => item.category === category).length
-const label = (category) => t({ professional: 'Professional', research: 'Research', community: 'Community' }[category])
+const label = (category) => t({ employment: 'Employment', research: 'Research', community: 'Community'}[category])
 const organisationUrl = (item) => item.organisationHref || organisationLinks[item.organisation]
 </script>

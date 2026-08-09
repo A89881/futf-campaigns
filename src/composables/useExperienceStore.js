@@ -19,9 +19,10 @@ const sourceTranslation = (entry) => experienceTranslations.sv[cleanText(entry.i
 const sanitiseEntry = (entry) => {
   const fallback = sourceTranslation(entry)
   const translatedHighlights = cleanHighlights(entry.translations?.sv?.highlights)
+  const legacyCategory = { professional: 'employment', industry: 'employment' }[entry.category] || entry.category
   return {
     id: cleanText(entry.id, 100) || crypto.randomUUID(),
-    category: ['professional', 'research', 'community'].includes(entry.category) ? entry.category : 'professional',
+    category: ['employment', 'research', 'community'].includes(legacyCategory) ? legacyCategory : 'employment',
     title: cleanText(entry.title, 180), organisation: cleanText(entry.organisation, 180),
     organisationHref: cleanText(entry.organisationHref, 1000),
     linkHref: cleanLink(entry.linkHref), linkLabel: cleanText(entry.linkLabel, 120),

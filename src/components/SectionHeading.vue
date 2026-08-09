@@ -1,6 +1,8 @@
 <template>
   <header class="section-heading">
-    <div><span class="section-number">{{ number }}</span><h2>{{ t(title) }}</h2></div>
+    <div><span class="section-number">{{ number }}</span>
+      <h2>{{ t(title) }}</h2>
+    </div>
     <p v-if="intro">{{ t(intro) }}</p>
   </header>
 </template>

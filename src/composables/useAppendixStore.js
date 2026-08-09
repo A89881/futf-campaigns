@@ -11,4 +11,21 @@ const sanitise = (item) => { const href = cleanHref(item.href); return { id: cle
 const apply = (items) => { if (Array.isArray(items) && items.length) documents.value = items.map(sanitise).filter((item) => item.title).slice(0, 50) }
 const initialise = () => { if (initialised) return; initialised = true; onSnapshot(documentRef, (snapshot) => { if (snapshot.exists()) apply(snapshot.data().documents) }, () => {}) }
 const publish = async (items) => { const user = auth.currentUser; if (!user?.emailVerified || user.email?.toLowerCase() !== profile.email.toLowerCase()) throw new Error('A verified administrator session is required.'); const safe = items.map(sanitise).filter((item) => item.title).slice(0, 50); try { await setDoc(documentRef, { documents: safe, updatedAt: serverTimestamp() }); apply(safe) } catch (error) { if (error.code === 'permission-denied') throw new Error('Firestore rejected the appendix update. Deploy the current firestore.rules first.'); throw error } }
-export const useAppendixStore = () => { initialise(); return { documents: readonly(documents), addDocument: (item) => publish([...documents.value, { ...item, id: crypto.randomUUID() }]), updateDocument: (id, item) => publish(documents.value.map((current) => current.id === id ? { ...item, id } : current)), removeDocument: (id) => publish(documents.value.filter((item) => item.id !== id)) } }
+export const useAppendixStore = () => {
+  initialise()
+  const moveDocument = (id, direction) => {
+    const index = documents.value.findIndex((item) => item.id === id)
+    const target = index + direction
+    if (index < 0 || target < 0 || target >= documents.value.length) return Promise.resolve()
+    const next = [...documents.value]
+    ;[next[index], next[target]] = [next[target], next[index]]
+    return publish(next)
+  }
+  return {
+    documents: readonly(documents),
+    addDocument: (item) => publish([...documents.value, { ...item, id: crypto.randomUUID() }]),
+    updateDocument: (id, item) => publish(documents.value.map((current) => current.id === id ? { ...item, id } : current)),
+    removeDocument: (id) => publish(documents.value.filter((item) => item.id !== id)),
+    moveDocument,
+  }
+}

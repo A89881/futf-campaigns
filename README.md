@@ -11,11 +11,12 @@ A responsive personal portfolio for Abhay Mishra, built as a Vue single-page app
 - Optional exact start and end dates in addition to human-readable date labels.
 - Light mode is the first-visit default, with a white base, pink primary accent, and blue secondary accent; an explicit saved theme choice is preserved.
 - A dark theme with a near-black base, blue primary accent, and pink secondary accent.
-- Firebase Authentication and Firestore-backed experience editing.
+- Firebase Authentication and a Firestore-backed admin CMS for experiences, appendix metadata, bilingual site copy, and page blocks.
 - A private appendix for redacted or safe-to-publish supporting documents.
 - An EN/SV language switch backed by one shared localization layer rather than duplicate pages.
 - Verified project-source and organisation links, plus in-page PDF previews for local appendix files.
 - Firestore-backed project curation: all catalogue entries remain in admin while public visibility and significance order are configurable.
+- Custom pages and ordered content blocks can be created from Admin without writing Vue code.
 - Automated GitHub Pages builds and an independent Firestore-rules deployment workflow.
 
 ## Technology
@@ -49,20 +50,22 @@ Use this sequence for every ordinary portfolio update so repository content, tra
 
 | Content being changed | Source of truth | Deployment needed? |
 | --- | --- | --- |
-| Name, biography, education, skills, links, default projects | `src/data/portfolio.js` | Yes: build, commit, and push |
-| About-page narrative and its independently translated EN/SV wording | `src/components/AboutStory.vue` | Yes: build, commit, and push |
-| “How I work” principles shown inside About on desktop and mobile | `principles` in `src/data/portfolio.js`; Swedish wording in `src/composables/useLocale.js` | Yes: build, commit, and push |
+| Existing public wording, biography, education, skills, project copy, and interface labels | `/admin` → Site text editor | Firestore publishes immediately; each language is independent |
+| Repository fallback for profile, education, skills, links, and default projects | `src/data/portfolio.js` | Yes: build, commit, and push |
+| Repository fallback for the About narrative | `src/data/aboutStory.js` | Yes: build, commit, and push |
+| “How I work” repository fallback | `principles` in `src/data/portfolio.js`; Swedish fallback in `src/composables/useLocale.js` | Yes: build, commit, and push |
 | About and resume portraits | `src/assets/img/`; imports in `AboutStory.vue`, `ResumePage.vue`, and `MobilePortfolio.vue` | Yes: build, commit, and push |
-| Navigation, labels, and other fixed EN/SV interface copy | `src/composables/useLocale.js` | Yes: build, commit, and push |
+| Navigation, labels, and other fixed EN/SV fallback copy | `src/composables/useLocale.js` | Yes: build, commit, and push |
 | Live experience order, dates, descriptions, and translations | `/admin` → Experience editor | Firestore publishes immediately; also export JSON before large changes |
 | Permanent fallback experience content | `defaultExperiences` and `experienceTranslations.sv` in `src/data/portfolio.js` | Yes: build, commit, and push |
 | Public project visibility and significance order | `/admin` → Project curation | Firestore publishes immediately |
-| New project definition, GitHub link, tags, or default visibility | `projects` in `src/data/portfolio.js` | Yes: build, commit, and push |
-| Appendix PDF | Redacted file in `public/documents/`, then metadata in `/admin` | Commit/push the PDF first; metadata publishes through Firestore |
+| New project definition, GitHub/organisation link, or default visibility | `projects` and `organisationLinks` in `src/data/portfolio.js` | Yes: build, commit, and push |
+| Appendix PDF | Redacted file in `public/documents/`, then metadata/order in `/admin` | Commit/push the PDF first; metadata publishes through Firestore |
+| New page or additional block on About, Resume, Projects, Experience, Appendix, or Contact | `/admin` → Page builder | Firestore publishes immediately |
 | Contact, authentication, or authorization behaviour | Vue code plus `firestore.rules` where applicable | Build/push code; deploy rules separately when changed |
 | Historical Mishra 2025 campaign | Preserved snapshot in `public/campaign/`, sourced from Git commit `fae9dda` | Rebuild the snapshot deliberately; never hand-edit generated assets |
 
-Firestore edits are live configuration, while repository seed data is the recovery baseline. After an important admin edit, export the experience JSON and intentionally reconcile any change that should survive a Firestore reset back into `src/data/portfolio.js`.
+Firestore edits are live configuration, while repository seed data is the recovery baseline. Export an Experience JSON or complete CMS backup before a large change. Reconcile wording that must survive a Firestore reset into the appropriate repository fallback during planned maintenance.
 
 ## Local development
 
@@ -86,8 +89,9 @@ npm audit
 ```text
 src/
   assets/                 Images bundled by Vite
-  components/             Shared navigation, sections, timeline, resume UI, and compact mobile landing page
-  composables/            Theme and Firestore-backed experience state
+  components/             Shared UI plus AdminContentManager and ManagedBlocks
+  composables/            Theme, locale, authentication, and Firestore-backed stores
+  data/aboutStory.js      Bilingual repository fallback for the About narrative
   data/portfolio.js       Canonical profile, project, education, and seed content
   pages/                  Route-level views
   firebase.js             Public Firebase client configuration
@@ -117,12 +121,13 @@ firestore.rules
 | `/about` | Personal background, origins, accelerated education, and life beyond the CV |
 | `/resume` | Profile, education, skills, and jobs/research-only Work Experience |
 | `/projects` | Selected technical and community projects |
-| `/experience` | Professional, research, and community timeline |
+| `/experience` | Employment, research, and community timeline |
 | `/appendix` | Supporting documents and publication guidance |
 | `/contact` | Email and social links, including Instagram |
 | `/campaign/` | Isolated, fully interactive build of the original Mishra 2025 campaign site |
 | `/privacy` | Privacy and data-handling information |
-| `/admin` | Authenticated experience, project-curation, and appendix editor |
+| `/pages/:slug` | Public custom pages created in Admin |
+| `/admin` | Authenticated experience, project, appendix, text, page, and block editor |
 
 The campaign is an isolated static subsite within the same deployment, not a separate branch or a restyled portfolio component. `public/campaign/` was compiled from the last historical campaign commit, `fae9dda`, using a `/campaign/` base path. Its original pages, wording, navigation, imagery, blue/gold design, and responsive behaviour are preserved. The only source-level compatibility adjustment maps the original contact form to the current validated Firestore field names.
 
@@ -139,7 +144,7 @@ Experience entries use this shape:
 ```js
 {
   id: 'stable-entry-id',
-  category: 'professional', // professional, research, or community
+  category: 'employment', // employment, research, or community
   title: 'Role title',
   organisation: 'Organisation',
   organisationHref: 'https://organisation.example/', // optional
@@ -166,7 +171,7 @@ Experience entries use this shape:
 | Field | Required | Meaning |
 | --- | --- | --- |
 | `id` | Yes after first save | Stable identity used for editing, timeline anchors, imports, and repository Swedish fallbacks |
-| `category` | Yes | `professional`, `research`, or `community` |
+| `category` | Yes | `employment`, `research`, or `community`; older category labels are migrated automatically |
 | `title` | Yes | English role title |
 | `organisation` | Yes | Shared proper name; used to resolve configured organisation links |
 | `organisationHref` | No | Per-entry HTTPS link when supplied in source/imported JSON |
@@ -179,7 +184,7 @@ Experience entries use this shape:
 | `highlights` | No | English bullet array; Admin accepts one item per line |
 | `translations.sv` | No but recommended | Independent Swedish title, related-link label, description, and highlights |
 
-Use `YYYY-MM` when only month and year are known, or `YYYY-MM-DD` when the exact day is known. Month and year are required for a starting date; the day is optional. Ongoing entries may leave the ending date blank. The public UI displays dates in day/month/year order when a day exists and month/year otherwise. Only `professional` and `research` categories appear under Resume → Work Experience; `community` remains on the complete Experience page.
+Use `YYYY-MM` when only month and year are known, or `YYYY-MM-DD` when the exact day is known. Month and year are required for a starting date; the day is optional. Ongoing entries may leave the ending date blank. The public UI displays dates in day/month/year order when a day exists and month/year otherwise. Only `employment` and `research` categories appear under Resume → Work Experience; `community` remains on the complete Experience page.
 
 English is stored in the top-level `title`, `description`, and `highlights` fields. Swedish is stored separately under `translations.sv`; neither language is generated from or written over the other. Repository-owned Swedish fallbacks for every seed entry live in `experienceTranslations.sv` in `src/data/portfolio.js`. Firestore overrides take priority one field at a time, so an administrator can tune one Swedish description without changing its English counterpart or the other Swedish entries.
 
@@ -187,19 +192,21 @@ English is stored in the top-level `title`, `description`, and `highlights` fiel
 
 Use the **Admin** button in the header or open `/admin`. Sign in with the verified email/password Firebase account. There is no Google sign-in path. Authentication uses browser-session persistence, so closing the browser session requires signing in again.
 
-The admin page manages three different kinds of live configuration:
+The admin page is a lightweight content-management system. It manages five kinds of live configuration:
 
 | Admin area | What it changes | What it does not change |
 | --- | --- | --- |
-| Experience editor | Complete experience list, order, dates, categories, English copy, and Swedish copy | Static About/Resume prose, project definitions, or PDFs |
-| Project curation | Public visibility and significance order for known projects | Project titles, descriptions, links, tags, or source definitions |
-| Appendix editor | Document metadata, public/private status, path, and EN/SV wording | The PDF file itself |
+| Experience editor | Complete experience list, order, dates, category, optional related link, and independent EN/SV copy | Repository seed data or uploaded files |
+| Project curation | Public visibility and significance order for known projects | New project IDs, destinations, or source definitions |
+| Appendix editor | Document metadata, order, public/private status, path, and independent EN/SV wording | The PDF file itself |
+| Site text editor | Live EN/SV overrides for catalogued headings, paragraphs, biography, About narrative, education, skills, projects, and interface copy | Repository fallback files or HTML structure |
+| Page builder | Ordered blocks on built-in pages and complete custom pages under `/pages/:slug` | Arbitrary Vue, HTML, JavaScript, authentication, routes outside `/pages/`, or campaign archive files |
 
 ### Add an experience
 
 1. Select **Add experience**.
 2. Choose the category:
-   - `professional` appears on the full Experience timeline and Resume → Work Experience;
+   - `employment` appears on the full Experience timeline and Resume → Work Experience;
    - `research` appears in both places;
    - `community` appears only on the full Experience timeline.
 3. Enter the English title, organisation, location, description, and optional highlights. Put one highlight on each line.
@@ -224,7 +231,7 @@ Experience data is capped at 50 entries. Titles and organisations are required a
 
 ### Curate projects
 
-Project definitions remain version-controlled in `src/data/portfolio.js`. Admin curation stores only two arrays: ordered project IDs and hidden project IDs. Use the visibility control to show/hide a project and the arrow controls to rank projects by significance. **Restore defaults** returns to the source-defined order and `visible` values. Adding a new GitHub project, changing its wording, or changing its links still requires a source edit, build, commit, and deployment.
+Project definitions remain version-controlled in `src/data/portfolio.js`. Admin curation stores only two arrays: ordered project IDs and hidden project IDs. Use the visibility control to show/hide a project and the arrow controls to rank projects by significance. **Restore defaults** returns to the source-defined order and `visible` values. Project wording can be overridden in the Site text editor. Adding a new project ID or changing its destination links still requires a source edit, build, commit, and deployment.
 
 ### Add an appendix item
 
@@ -237,12 +244,34 @@ The Appendix editor publishes metadata, not binary files:
 5. For a public document, keep **Publicly available** enabled and enter a root-relative path such as `/documents/course-certificate-2026.pdf` or an `https://` URL.
 6. Enter any independently written Swedish metadata. A blank Swedish field falls back to its English counterpart.
 7. Save and verify both **Preview** and **Open PDF**. Only root-relative files receive the embedded preview button; external HTTPS files still open separately.
+8. Use the up/down controls in the Appendix list to place the tabs/documents in the desired public order.
 
 Disable **Publicly available** to create a private placeholder without exposing a file. The sanitizer sets an item to unavailable when it has no valid path, even if the checkbox was selected.
 
-### What Admin cannot edit
+### Edit site wording
 
-The admin panel does not edit the landing hero, About narrative, Resume biography, education, skills, “How I work,” project copy, navigation labels, or contact-page copy. Those are repository-owned static content. Follow the source-of-truth table above, update each language deliberately, run the build, and deploy through Git.
+1. Open **Site text editor** and search for a recognizable phrase. The list labels each entry as repository text or a live override.
+2. Open the segment and edit English and Swedish independently. A blank Swedish override falls back to the repository Swedish wording and then English.
+3. Select **Publish wording**. The override is saved in `portfolio/content` and appears without a Git deployment.
+4. Select **Use repository fallback** to remove only that segment's override. This does not delete or rewrite source code.
+
+The stable source key is the original English repository string. It identifies an override even when the displayed English wording has been customized. Do not create two repository phrases with the same English source text when they need different live wording: the shared key intentionally makes them share one override.
+
+### Add pages, sections, and blocks
+
+- Select a built-in page to append managed blocks below its existing Vue content. Built-in routes and original layout remain protected.
+- Select **Add page** to create a custom page. Its public URL is `/pages/<slug>`; it can be published or hidden and optionally placed in navigation.
+- Custom-page navigation order follows the page order controlled by the page up/down buttons.
+- A block may be a text section, callout, quote, or list. Blank lines create paragraphs; a list uses one item per line.
+- Every page and block has separate English and Swedish fields. Blank Swedish fields fall back to English; saving one language never rewrites the other.
+- Blocks can be edited, reordered, hidden, shown, or deleted. Deleting a custom page removes all its blocks after confirmation.
+- Select **Export CMS backup** before structural work. **Import CMS backup** is a full replacement of site-copy overrides and page-builder data, not a merge.
+
+The page builder deliberately accepts plain text, HTTPS links, and root-relative links only. It does not accept raw HTML or scripts. This keeps the editor suitable for routine content work without turning the public site into a code execution surface.
+
+### What still requires code or Git
+
+Admin does not upload files, create a new project definition, change image imports, alter route/component layouts, edit security rules, or modify the preserved campaign archive. Those operations remain repository changes and require review, build, commit, and deployment. Keep source fallbacks current for disaster recovery even when Admin owns the live wording.
 
 ## Firebase Authentication setup
 
@@ -259,26 +288,28 @@ The administration UI intentionally supports email/password authentication only.
 
 ## Firestore and authorization
 
-The site stores experience entries, project visibility/order settings, and appendix metadata in Cloud Firestore. `firestore.rules` permits public reads of those portfolio documents but allows portfolio writes only when all of these are true:
+The site stores experience entries, project visibility/order settings, appendix metadata, copy overrides, and page-builder records in Cloud Firestore. `firestore.rules` permits public reads of those portfolio documents but allows portfolio writes only when all of these are true:
 
 | Firestore path | Stored shape | Public behavior |
 | --- | --- | --- |
 | `portfolio/experience` | `{ entries: [...], updatedAt }` | Replaces the complete experience list |
 | `portfolio/appendix` | `{ documents: [...], updatedAt }` | Replaces the complete appendix metadata list |
 | `portfolio/projects` | `{ order: [...ids], hidden: [...ids], updatedAt }` | Applies order/visibility to the source project catalogue |
+| `portfolio/content` | `{ entries: [{ key, en, sv }], updatedAt }` | Applies per-segment live copy overrides; maximum 600 entries |
+| `portfolio/pages` | `{ pages: [...], updatedAt }` | Stores six protected built-in page records plus custom pages and blocks; maximum 30 pages |
 | `contactSubmissions/{generatedId}` | `{ name, email, subject, message, createdAt }` | Create-only public form target; never publicly readable |
 
-Admin saves use `setDoc`, so Experience and Appendix updates publish the entire sanitized array, not one nested record at a time. Reorder and delete actions therefore also replace the corresponding document payload. Avoid editing the same area in two admin tabs simultaneously because the last successful write wins.
+Admin saves use `setDoc`, so each editor publishes its complete sanitized payload rather than one nested record at a time. Reorder, delete, reset, and backup-import actions therefore replace the corresponding document payload. Avoid editing the same area in two admin tabs simultaneously because the last successful write wins.
 
-Public clients subscribe with Firestore `onSnapshot`, so successful admin writes appear without a site rebuild. Experience and project stores first try their browser cache, then accept Firestore as authoritative when the snapshot arrives, and retain repository data as the final baseline. The Appendix store starts from repository metadata and replaces it when the Firestore snapshot exists. Browser caches improve resilience but are not authoritative backups.
+Public clients subscribe with Firestore `onSnapshot`, so successful admin writes appear without a site rebuild. Stores first try sanitized browser cache where supported, then accept Firestore as authoritative when its snapshot arrives, and retain repository data as the final baseline. Browser caches improve resilience but are not authoritative backups.
 
 The effective source order is:
 
 1. live Firestore data, when the relevant document exists and can be read;
-2. a previously sanitized browser cache for Experience and Project settings while Firestore connects or is unavailable;
-3. repository defaults from `src/data/portfolio.js`.
+2. a previously sanitized browser cache while Firestore connects or is unavailable;
+3. repository defaults from `src/data/portfolio.js`, `src/data/aboutStory.js`, and `src/composables/useLocale.js`.
 
-Use Admin’s Experience JSON export for recoverable snapshots. Firestore edits are not automatically committed back into Git, so important long-lived changes should also be reconciled into repository seed data during maintenance.
+Use Admin’s Experience JSON export and complete CMS backup for recoverable snapshots. Appendix and project settings are separate Firestore documents and should be reviewed manually or exported from Firebase before destructive maintenance. Firestore edits are not automatically committed back into Git, so important long-lived changes should also be reconciled into repository seed data.
 
 Authorization requirements for portfolio writes are:
 
@@ -325,16 +356,17 @@ The site uses a deliberately small custom localization layer rather than the `vu
 - the saved browser preference uses local-storage key `abhay-portfolio-locale`;
 - a missing or invalid saved value defaults to English;
 - changing locale updates `document.documentElement.lang` for assistive technology;
-- `t(text)` returns the original text in English mode;
-- in Swedish mode, `t(text)` returns `swedish[text]` when an exact dictionary key exists, otherwise it returns the original English text.
+- `t(text)` and `copy(text, swedishFallback)` first look for an entry in `portfolio/content` whose stable key equals the original English source string;
+- English mode returns the live `en` override when present, otherwise the repository English source;
+- Swedish mode returns the live `sv` override, then an explicit component/data fallback, then `swedish[text]`, then the live English override, then the repository English source.
 
-The dictionary lookup is exact and case-sensitive. If fixed English copy changes from `How I work` to `How I usually work`, the old Swedish key no longer matches. Update the component text and dictionary key together. A visible English phrase in Swedish mode normally means the phrase was not passed through `t(...)`, the dictionary key differs, or the content uses an entry-specific fallback described below.
+All override and dictionary lookups are exact and case-sensitive. The stable key remains the repository English phrase even if its live English display is changed in Admin. If the repository key later changes, migrate or recreate its Firestore override. A visible English phrase in Swedish mode normally means the Swedish override/fallback is blank, the phrase was not passed through `t(...)`/`copy(...)`, or the key differs.
 
-### Three localization patterns
+### Four localization patterns
 
-The project has three intentional patterns because not all content has the same editing lifecycle.
+The project has four intentional patterns because not all content has the same editing lifecycle.
 
-#### 1. Fixed interface and project copy
+#### 1. CMS-overridable fixed interface and project copy
 
 Navigation labels, headings, buttons, short descriptions, project titles, project descriptions, and “How I work” copy use English source strings plus the `swedish` dictionary in `src/composables/useLocale.js`:
 
@@ -348,11 +380,11 @@ const swedish = {
 }
 ```
 
-Changing the Swedish dictionary value changes only Swedish output. Changing the English component/data string changes only English output, but the Swedish dictionary key must be renamed to keep the lookup connected. These changes require a build and deployment.
+The Site text editor can override either language live. If no override exists, changing the Swedish dictionary value changes only Swedish fallback output. Changing the English component/data source changes the repository English fallback and the stable key, so the Swedish dictionary key and any intended Firestore override must be migrated. Source changes require a build and deployment; Admin overrides do not.
 
-#### 2. Complete page-level language objects
+#### 2. Complete About-story language objects
 
-The personal About narrative in `src/components/AboutStory.vue` stores complete `stories.en` and `stories.sv` objects. This is preferable for longer prose because Swedish can be rewritten naturally instead of following English sentence structure. Edit only the object for the language that should change. The shared component selects `stories[locale.value]`.
+The personal About narrative fallback lives in `src/data/aboutStory.js` as complete `aboutStories.en` and `aboutStories.sv` objects. `AboutStory.vue` passes every field through `copy(english, swedishFallback)`, so Swedish can be rewritten naturally and either language can also receive a live Admin override. Editing only one live language does not change the other.
 
 #### 3. Firestore-managed bilingual records
 
@@ -374,6 +406,10 @@ Experience and Appendix records keep English at the top level and Swedish under 
 ```
 
 Saving Swedish text does not replace English text, and saving English text does not automatically rewrite Swedish. There is no machine-translation call during save. To revise only Swedish, open the entry, leave the English fields unchanged, edit the Swedish fields, and save.
+
+#### 4. Page-builder records
+
+Custom page metadata and every managed block use top-level English fields plus `translations.sv`. The same independence and blank-Swedish fallback rule applies. Page-builder data is stored in `portfolio/pages`; it is not mixed into `portfolio/content`.
 
 ### Experience fallback rules
 
@@ -404,7 +440,7 @@ The current data model is intentionally EN/SV-specific. Adding a third language 
 2. add a fixed-copy dictionary or replace the custom helper with a scalable message structure;
 3. add a new translation object such as `translations.de` to record sanitizers and Admin forms;
 4. update every `localized(...)` helper and date formatter;
-5. extend AboutStory with the new full-language object;
+5. extend `aboutStories`, content overrides, page-builder forms, and page/block sanitizers with the new language;
 6. update Firestore payload validation if stricter nested schemas are added later;
 7. test all desktop routes and the unified mobile page.
 
@@ -418,6 +454,7 @@ Appendix PDFs are intentionally Git-backed; Firebase Storage and a Blaze billing
 2. Copy it into `public/documents/`.
 3. Commit and push the file, then wait for the GitHub Pages deployment.
 4. In `/admin`, choose **Add document**, enter its metadata and the root-relative path `/documents/course-certificate-2026.pdf`, and optionally add independent Swedish wording.
+5. Use the Appendix up/down controls to set its position. Ordering publishes immediately with the complete metadata list.
 
 Private placeholders have no path and do not publish a file. Root-relative PDFs can be previewed in-page, while the toolbar always includes an open-separately fallback for browsers configured to download PDFs. Replacing a document is a normal Git change: replace the file without changing its name, or add a newly named file and update the admin path.
 
@@ -427,7 +464,7 @@ For documents that should exist without relying on Firestore, add their metadata
 
 The complete project catalogue lives in the `projects` array in `src/data/portfolio.js`; public visibility does not remove entries from that catalogue. Use `href` for the primary destination. For a playable web project, point `href` to the live deployment and add a separate `github` property for its source repository. Set `visible: false` for a new entry that should initially be available only in admin.
 
-The administrator can then show/hide projects and reorder them by significance from `/admin`. Firestore stores only the ordered IDs and hidden IDs, so repository content remains version-controlled and newly added catalogue entries automatically appear in the admin list. Add each new fixed English phrase to `src/composables/useLocale.js` so Swedish remains complete.
+The administrator can then show/hide projects and reorder them by significance from `/admin`. Firestore stores only the ordered IDs and hidden IDs, so repository definitions remain version-controlled and newly added catalogue entries automatically appear in the admin list. Project title, period, type, description, CTA, and tags enter the Site text editor catalogue automatically. Add repository Swedish fallbacks to `src/composables/useLocale.js`; alternatively publish independent EN/SV live wording in Admin.
 
 ## Contact submissions
 
@@ -461,8 +498,11 @@ The referenced service account needs only the permissions necessary to deploy Fi
 5. Test administrator email/password sign-in and confirm an unauthorized account cannot publish.
 6. Add, edit, reorder, export, and remove a temporary experience entry.
 7. Hide/show and reorder a project, then confirm the public Projects page follows the saved curation.
-8. Verify the CV, appendix documents, LinkedIn, Instagram, email, and campaign archive links.
-9. Check that no private documents, credentials, or service-account files are staged.
+8. Reorder a temporary Appendix record and verify its preview/open behavior.
+9. Override one bilingual text segment, verify both languages, reset it to repository fallback, and test a CMS export.
+10. Add, reorder, hide/show, and remove a temporary block and custom page.
+11. Verify the CV, appendix documents, LinkedIn, Instagram, email, and campaign archive links.
+12. Check that no private documents, credentials, or service-account files are staged.
 
 ## Troubleshooting
 
@@ -470,6 +510,7 @@ The referenced service account needs only the permissions necessary to deploy Fi
 - **Password sign-in is unavailable:** enable Email/Password under Authentication → Sign-in method and confirm the administrator user exists.
 - **Password sign-in fails:** verify the email, reset the password if necessary, and confirm the account email exactly matches `profile.email`.
 - **Sign-in succeeds but publishing fails:** deploy the current Firestore rules, verify the user's email, and confirm it exactly matches the administrator email in the rule.
+- **Site text or page publishing is rejected:** the live rules predate `portfolio/content` or `portfolio/pages`; deploy the current `firestore.rules` and retry after the workflow completes.
 - **Contact form says the database is unavailable:** deploy `firestore.rules`; older live rules deny the contact collection.
 - **PDF preview is blank:** confirm the path starts with `/documents/`, verify the filename and capitalization, hard-refresh after deployment, and use **Open separately** if the browser forces PDF downloads.
 - **Old experience content appears:** inspect Firestore first, then clear the site's local storage/cache or use **Restore source data** intentionally.
@@ -477,6 +518,8 @@ The referenced service account needs only the permissions necessary to deploy Fi
 - **A cleared Swedish seed translation comes back:** known seed IDs are repopulated from `experienceTranslations.sv` during sanitization. Edit that repository fallback or publish an explicit Swedish override.
 - **An admin change appears locally but not elsewhere:** verify the save confirmation, inspect the relevant `portfolio/*` Firestore document, and check `cloudStatus`; browser cache is only a temporary fallback.
 - **Project order or visibility does not save:** deploy `firestore.rules`, confirm the signed-in verified email matches the administrator, and use **Restore defaults** if the saved ID list is stale.
+- **A live text edit does not affect a phrase:** confirm the public component passes that exact repository phrase through `t(...)` or `copy(...)`. Search the Site text editor by the stable source key, not only the customized display value.
+- **A custom page is missing from navigation:** confirm that both **Page is public** and **Show in navigation** are enabled. Its direct route is `/pages/<slug>`.
 - **A new document returns 404:** ensure it is under `public/`, use a root-relative URL, preserve filename case, and rebuild.
 - **No GitHub Actions run appears at all:** confirm the workflow is present on the pushed branch and that the push was user-authenticated rather than made with `GITHUB_TOKEN`. The repository default branch is `main`, so merge the workflow there to make the manual **Run workflow** control consistently available.
 - **A Pages run starts but does not deploy:** inspect the Actions run, confirm **Settings → Pages → Build and deployment → Source** is set to **GitHub Actions**, and confirm the `github-pages` environment allows the pushed release branch.

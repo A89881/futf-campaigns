@@ -1,2 +1,20 @@
-<template><PageFrame><PageIntro eyebrow="Evidence / 04" title="Appendix" accent="." intro="Supporting documents, certifications, and records - shared publicly only where appropriate." /><section class="page-section shell"><AppendixGrid /><aside class="privacy-callout"><ShieldCheck :size="19" /><p><strong>{{ t('Privacy by design.') }}</strong> {{ t('Sensitive identifiers are redacted, and academic records or references are shared directly when a legitimate context calls for them.') }}</p></aside></section></PageFrame></template>
-<script setup>import { ShieldCheck } from 'lucide-vue-next'; import AppendixGrid from '../components/AppendixGrid.vue'; import PageFrame from '../components/PageFrame.vue'; import PageIntro from '../components/PageIntro.vue'; import { useLocale } from '../composables/useLocale'; const { t } = useLocale()</script>
+<template>
+    <PageFrame>
+        <PageIntro eyebrow="Evidence / 04" title="Appendix" accent="."
+            intro="Supporting documents, certifications, and records - shared publicly only where appropriate." />
+        <section class="page-section shell">
+            <AppendixGrid />
+            <aside class="privacy-callout">
+                <ShieldCheck :size="19" />
+                <p><strong>{{ t('Privacy by design.') }}</strong> {{ t('Sensitive identifiers are redacted, and academic records or references are shared directly when a legitimate context calls for them.') }}</p>
+            </aside>
+        </section>
+    </PageFrame>
+</template>
+<script setup>
+import { ShieldCheck } from 'lucide-vue-next';
+import AppendixGrid from '../components/AppendixGrid.vue';
+import PageFrame from '../components/PageFrame.vue';
+import PageIntro from '../components/PageIntro.vue';
+import { useLocale } from '../composables/useLocale';
+const { t } = useLocale()</script>

@@ -8,9 +8,15 @@
           <h1 id="hero-title">Abhay<br /><em>Mishra.</em></h1>
           <p class="hero-intro">{{ t(profile.intro) }}</p>
           <div class="hero-actions">
-            <a class="button primary" href="/projects">{{ t('Explore my work') }} <ArrowDownRight :size="18" /></a>
-            <a class="button text-link" :href="profile.cv" download>{{ t('Download CV') }} <Download :size="17" /></a>
-            <a class="button text-link" :href="profile.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight :size="17" /></a>
+            <a class="button primary" href="/projects">{{ t('Explore my work') }}
+              <ArrowDownRight :size="18" />
+            </a>
+            <a class="button text-link" :href="profile.cv" download>{{ t('Download CV') }}
+              <Download :size="17" />
+            </a>
+            <a class="button text-link" :href="profile.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn
+              <ArrowUpRight :size="17" />
+            </a>
           </div>
         </div>
         <div class="hero-visual reveal delay-1">
