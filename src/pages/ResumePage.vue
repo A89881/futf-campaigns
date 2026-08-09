@@ -33,7 +33,7 @@
                 <Atom :size="28" />
               </div>
               <div>
-                <p class="kind">{{ t(item.period) }}</p>
+                <p class="kind">{{ displayDate(t(item.period)) }}</p>
                 <h3>{{ t(item.degree) }}</h3>
                 <p><a class="school organisation-link" :href="item.schoolHref" target="_blank"
                     rel="noopener noreferrer">{{ item.school }}
@@ -75,6 +75,8 @@ import PageIntro from '../components/PageIntro.vue'
 import WorkExperienceList from '../components/WorkExperienceList.vue'
 import { education, profile, skills } from '../data/portfolio'
 import { useLocale } from '../composables/useLocale'
+import { formatDisplayDate } from '../utils/date'
 
-const { t, copy } = useLocale()
+const { locale, t, copy } = useLocale()
+const displayDate = (value) => formatDisplayDate(value, locale.value)
 </script>

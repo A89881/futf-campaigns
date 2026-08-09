@@ -21,6 +21,18 @@
     </div>
 </template>
 <script setup>
-import { computed } from 'vue'; import { ExternalLink } from 'lucide-vue-next'; import { useExperienceStore } from '../composables/useExperienceStore'; import { organisationLinks } from '../data/portfolio'; import { useLocale } from '../composables/useLocale'
-const { experiences } = useExperienceStore(); const { locale, t } = useLocale(); const localized = (item, field) => locale.value === 'sv' ? (item.translations?.sv?.[field] || t(item[field])) : item[field]; const localizedHighlights = (item) => locale.value === 'sv' && item.translations?.sv?.highlights?.length ? item.translations.sv.highlights : item.highlights; const workExperience = computed(() => experiences.value.filter((item) => item.category === 'employment' || item.category === 'research')); const formatDate = (value) => new Intl.DateTimeFormat(locale.value === 'sv' ? 'sv-SE' : 'en-GB', { ...(value.length === 10 ? { day: 'numeric' } : {}), month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value.length === 7 ? `${value}-01` : value}T00:00:00Z`)); const displayRange = (item) => `${item.startDate ? formatDate(item.startDate) : item.start} - ${item.endDate ? formatDate(item.endDate) : t(item.end)}`; const organisationUrl = (item) => item.organisationHref || organisationLinks[item.organisation]
+import { computed } from 'vue'
+import { ExternalLink } from 'lucide-vue-next'
+import { useExperienceStore } from '../composables/useExperienceStore'
+import { organisationLinks } from '../data/portfolio'
+import { useLocale } from '../composables/useLocale'
+import { formatDatePart } from '../utils/date'
+
+const { experiences } = useExperienceStore()
+const { locale, t } = useLocale()
+const localized = (item, field) => locale.value === 'sv' ? (item.translations?.sv?.[field] || t(item[field])) : item[field]
+const localizedHighlights = (item) => locale.value === 'sv' && item.translations?.sv?.highlights?.length ? item.translations.sv.highlights : item.highlights
+const workExperience = computed(() => experiences.value.filter((item) => item.category === 'employment' || item.category === 'research'))
+const displayRange = (item) => `${formatDatePart(item.startDate || item.start, locale.value)} – ${formatDatePart(item.endDate || item.end, locale.value)}`
+const organisationUrl = (item) => item.organisationHref || organisationLinks[item.organisation]
 </script>

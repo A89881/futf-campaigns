@@ -158,7 +158,7 @@
               :class="{ 'is-hidden': !project.visible }">
               <div><span class="kind">{{ project.visible ? 'Shown publicly' : 'Hidden' }} · {{ project.type }}</span>
                 <h2>{{ project.title }}</h2>
-                <p>{{ project.period }} · {{ project.tags.join(' · ') }}</p>
+                <p>{{ formatDisplayDate(project.period) }} · {{ project.tags.join(' · ') }}</p>
               </div>
               <div class="entry-actions">
                 <a :href="project.github || project.href" target="_blank" rel="noopener noreferrer"
@@ -203,7 +203,7 @@
             <div class="form-grid"><label>Title<input v-model="appendixForm.title" required
                   maxlength="180" /></label><label>Type<input v-model="appendixForm.type" required maxlength="80"
                   placeholder="Certification" /></label><label>Date<input v-model="appendixForm.date" required
-                  maxlength="80" placeholder="April 2025" /></label><label class="full">Public PDF path <span>Commit the
+                  maxlength="80" placeholder="Apr 2025" /></label><label class="full">Public PDF path <span>Commit the
                   file first, for example /documents/certificate.pdf</span><input v-model="appendixForm.href"
                   type="text" maxlength="1000" :required="appendixForm.available"
                   placeholder="/documents/certificate.pdf" /></label>
@@ -227,7 +227,7 @@
             <article v-for="(document, index) in appendixDocumentsAdmin" :key="document.id" class="admin-entry">
               <div><span class="kind">{{ document.type }}</span>
                 <h2>{{ document.title }}</h2>
-                <p>{{ document.available ? 'Public with preview' : 'Private placeholder' }} · {{ document.date }}</p>
+                <p>{{ document.available ? 'Public with preview' : 'Private placeholder' }} · {{ formatDisplayDate(document.date) }}</p>
               </div>
               <div class="entry-actions"><button type="button" :disabled="index === 0" aria-label="Move document up" @click="reorderAppendixDocument(document.id, -1)"><ArrowUp :size="16" /></button><button type="button" :disabled="index === appendixDocumentsAdmin.length - 1" aria-label="Move document down" @click="reorderAppendixDocument(document.id, 1)"><ArrowDown :size="16" /></button><button type="button" aria-label="Edit document"
                   @click="editAppendixDocument(document)">
@@ -255,6 +255,7 @@ import AdminContentManager from '../components/AdminContentManager.vue'
 import { onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth, authReady } from '../firebase'
 import { profile } from '../data/portfolio'
+import { formatDisplayDate } from '../utils/date'
 
 const { experiences, add, update, remove, move, importEntries, reset, seedCloudIfEmpty } = useExperienceStore()
 const { documents: appendixDocumentsAdmin, addDocument, updateDocument, removeDocument, moveDocument: moveAppendixDocument } = useAppendixStore()
@@ -308,11 +309,16 @@ const resetPassword = async () => {
   catch { authError.value = 'Password reset is unavailable. Check the email and Firebase Authentication configuration.' }
 }
 
-const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const monthAliases = [
+  ['jan'], ['feb'], ['mar'], ['apr'], ['may', 'maj'], ['jun'],
+  ['jul'], ['aug'], ['sep'], ['oct', 'okt'], ['nov'], ['dec'],
+]
 const parseMonth = (date, label) => {
   if (/^\d{4}-\d{2}/.test(date || '')) return date.slice(0, 7)
   const match = String(label || '').match(/([A-Za-z]+)\s+(\d{4})/)
-  const month = match ? monthNames.findIndex((name) => name.toLowerCase() === match[1].toLowerCase()) + 1 : 0
+  const monthText = match?.[1].toLowerCase().replaceAll('.', '') || ''
+  const month = match ? monthAliases.findIndex((aliases) => aliases.some((name) => monthText.startsWith(name))) + 1 : 0
   return month ? `${match[2]}-${String(month).padStart(2, '0')}` : ''
 }
 const parseDay = (date) => /^\d{4}-\d{2}-\d{2}$/.test(date || '') ? Number(date.slice(8, 10)) : ''

@@ -148,7 +148,7 @@ Experience entries use this shape:
   linkHref: 'https://example.com/supporting-page',    // optional related link
   linkLabel: 'Read the project report',               // optional English label
   location: 'City, Country',
-  start: 'September 2025',  // readable fallback label
+  start: 'Sep 2025',        // readable fallback label
   end: 'Present',
   startDate: '2025-09',     // required month/year; optional day: 2025-09-01
   endDate: '',              // month/year or exact date; blank means ongoing
@@ -164,6 +164,12 @@ Experience entries use this shape:
   }
 }
 ```
+
+Public dates are normalized automatically in both languages. Use structured values such as
+`2025-09` or `2025-09-01` whenever possible; the site renders locale-aware abbreviated month
+names (for example `Sep 2025` / `sep. 2025` and `May 2025` / `maj 2025`). Days remain optional,
+and date ranges use an en dash. Older full-month fallback labels are accepted and normalized at
+display time, so existing Firestore records do not need a manual migration.
 
 | Field | Required | Meaning |
 | --- | --- | --- |

@@ -24,7 +24,7 @@
         <div class="stack-track"><a :href="`#experience-${item.id}`" class="stack-bar" :class="item.category"
             :style="item.barStyle"
             :aria-label="`${localized(item, 'title')}, ${displayStart(item)} to ${displayEnd(item)}`"><span>{{
-              displayStart(item) }} - {{ displayEnd(item) }}</span></a></div>
+              displayStart(item) }} – {{ displayEnd(item) }}</span></a></div>
       </div>
     </div>
 
@@ -64,6 +64,7 @@ import { ExternalLink, Settings } from 'lucide-vue-next'
 import { useExperienceStore } from '../composables/useExperienceStore'
 import { organisationLinks } from '../data/portfolio'
 import { useLocale } from '../composables/useLocale'
+import { formatDatePart, monthNumberFromLabel } from '../utils/date'
 
 const { experiences } = useExperienceStore()
 const { locale, t } = useLocale()
@@ -79,18 +80,11 @@ const filters = [
 const filteredExperiences = computed(() => filter.value === 'all' ? experiences.value : experiences.value.filter((item) => item.category === filter.value))
 const startMonth = 2022 * 12
 const endMonth = 2027 * 12
-const monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 const toMonth = (value, useEnd = false) => {
-  if (/^\d{4}-\d{2}(?:-\d{2})?$/.test(value)) { const [year, month] = value.split('-').map(Number); return year * 12 + month - 1 }
-  if (value.toLowerCase() === 'present') return new Date().getFullYear() * 12 + new Date().getMonth()
-  const match = value.toLowerCase().match(/([a-z]+)?\s*(\d{4})/)
-  if (!match) return useEnd ? endMonth - 1 : startMonth
-  const month = match[1] ? Math.max(0, monthNames.indexOf(match[1])) : (useEnd ? 11 : 0)
-  return Number(match[2]) * 12 + month
+  return monthNumberFromLabel(value, useEnd) ?? (useEnd ? endMonth - 1 : startMonth)
 }
-const formatExactDate = (value) => new Intl.DateTimeFormat(locale.value === 'sv' ? 'sv-SE' : 'en-GB', { ...(value.length === 10 ? { day: 'numeric' } : {}), month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value.length === 7 ? `${value}-01` : value}T00:00:00Z`))
-const displayStart = (item) => item.startDate ? formatExactDate(item.startDate) : item.start
-const displayEnd = (item) => item.endDate ? formatExactDate(item.endDate) : item.end
+const displayStart = (item) => formatDatePart(item.startDate || item.start, locale.value)
+const displayEnd = (item) => formatDatePart(item.endDate || item.end, locale.value)
 const timelineItems = computed(() => filteredExperiences.value.map((item) => {
   const startValue = Math.max(startMonth, toMonth(item.startDate || item.start))
   const endValue = Math.min(endMonth - 1, toMonth(item.endDate || item.end, true))

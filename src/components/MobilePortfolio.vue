@@ -38,7 +38,7 @@
         <article>
           <p class="kind">{{ t('Education') }}</p>
           <strong>{{ t(education[0].degree) }}</strong>
-          <span>{{ education[0].school }} · {{ t(education[0].period) }}</span>
+          <span>{{ education[0].school }} · {{ displayDate(t(education[0].period)) }}</span>
         </article>
         <article>
           <p class="kind">{{ t('Core toolkit') }}</p>
@@ -83,7 +83,7 @@
             :class="project.accent">
             <div class="mobile-project-number">{{ project.index }}</div>
             <div>
-              <p class="kind">{{ t(project.type) }} · {{ t(project.period) }}</p>
+              <p class="kind">{{ t(project.type) }} · {{ displayDate(t(project.period)) }}</p>
               <h3>{{ t(project.title) }}</h3>
               <p>{{ t(project.description) }}</p>
               <ul>
@@ -159,7 +159,7 @@
         <article v-for="document in selectedDocuments" :key="document.id">
           <FileText :size="20" />
           <div>
-            <p class="kind">{{ localizedDocument(document, 'type') }} · {{ localizedDocument(document, 'date') }}</p>
+            <p class="kind">{{ localizedDocument(document, 'type') }} · {{ displayDate(localizedDocument(document, 'date')) }}</p>
             <h3>{{ localizedDocument(document, 'title') }}</h3>
           </div>
           <a :href="document.href" target="_blank" rel="noopener noreferrer"
@@ -199,6 +199,7 @@ import { useExperienceStore } from '../composables/useExperienceStore'
 import { useLocale } from '../composables/useLocale'
 import { useProjectStore } from '../composables/useProjectStore'
 import { education, organisationLinks, principles, profile } from '../data/portfolio'
+import { formatDatePart, formatDisplayDate } from '../utils/date'
 import MobileHeading from './MobileHeading.vue'
 
 const { locale, t } = useLocale()
@@ -219,15 +220,6 @@ const communityCount = computed(() => communityItems.value.length)
 const localized = (item, field) => locale.value === 'sv' ? (item.translations?.sv?.[field] || t(item[field])) : item[field]
 const localizedDocument = (item, field) => locale.value === 'sv' ? (item.translations?.sv?.[field] || t(item[field])) : item[field]
 const organisationUrl = (item) => item.organisationHref || organisationLinks[item.organisation]
-const formatDate = (value) => new Intl.DateTimeFormat(locale.value === 'sv' ? 'sv-SE' : 'en-GB', {
-  ...(value.length === 10 ? { day: 'numeric' } : {}), month: 'short', year: 'numeric', timeZone: 'UTC',
-}).format(new Date(`${value.length === 7 ? `${value}-01` : value}T00:00:00Z`))
-const formatReadableDate = (value) => {
-  if (!value || value === 'Present') return t(value)
-  const parsed = new Date(`${value} 1`)
-  return Number.isNaN(parsed.getTime())
-    ? t(value)
-    : new Intl.DateTimeFormat(locale.value === 'sv' ? 'sv-SE' : 'en-GB', { month: 'short', year: 'numeric' }).format(parsed)
-}
-const displayRange = (item) => `${item.startDate ? formatDate(item.startDate) : formatReadableDate(item.start)} – ${item.endDate ? formatDate(item.endDate) : formatReadableDate(item.end)}`
+const displayDate = (value) => formatDisplayDate(value, locale.value)
+const displayRange = (item) => `${formatDatePart(item.startDate || item.start, locale.value)} – ${formatDatePart(item.endDate || item.end, locale.value)}`
 </script>

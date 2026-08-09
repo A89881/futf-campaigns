@@ -8,7 +8,7 @@
                     <div class="project-index">{{ project.index }}</div>
                     <div class="project-main">
                         <div class="project-kicker">
-                            <p class="project-type">{{ t(project.type) }}</p><time>{{ t(project.period) }}</time>
+                            <p class="project-type">{{ t(project.type) }}</p><time>{{ displayDate(t(project.period)) }}</time>
                         </div>
                         <h3>{{ t(project.title) }}</h3>
                         <p>{{ t(project.description) }}</p>
@@ -35,4 +35,4 @@
     </PageFrame>
 </template>
 <script
-    setup>    import { ArrowUpRight, Github } from 'lucide-vue-next'; import PageFrame from '../components/PageFrame.vue'; import PageIntro from '../components/PageIntro.vue'; import { useProjectStore } from '../composables/useProjectStore'; import { useLocale } from '../composables/useLocale'; const { visibleProjects: projects } = useProjectStore(); const { t } = useLocale(); const isCampaignArchive = (href) => href === '/campaign' || href === '/campaign/'</script>
+    setup>    import { ArrowUpRight, Github } from 'lucide-vue-next'; import PageFrame from '../components/PageFrame.vue'; import PageIntro from '../components/PageIntro.vue'; import { useProjectStore } from '../composables/useProjectStore'; import { useLocale } from '../composables/useLocale'; import { formatDisplayDate } from '../utils/date'; const { visibleProjects: projects } = useProjectStore(); const { locale, t } = useLocale(); const displayDate = (value) => formatDisplayDate(value, locale.value); const isCampaignArchive = (href) => href === '/campaign' || href === '/campaign/'</script>
