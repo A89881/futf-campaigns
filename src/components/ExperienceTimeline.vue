@@ -23,7 +23,7 @@
         </div>
         <div class="stack-track"><a :href="`#experience-${item.id}`" class="stack-bar" :class="item.category"
             :style="item.barStyle"
-            :aria-label="`${localized(item, 'title')}, ${displayStart(item)} to ${displayEnd(item)}`"><span>{{
+            :aria-label="`${localized(item, 'title')}, ${displayStart(item)} ${locale === 'sv' ? 'till' : 'to'} ${displayEnd(item)}`"><span>{{
               displayStart(item) }} – {{ displayEnd(item) }}</span></a></div>
       </div>
     </div>
