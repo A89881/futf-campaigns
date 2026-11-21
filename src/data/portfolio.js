@@ -3,14 +3,14 @@ export const profile = {
   eyebrow: "Applied computational engineering · software systems",
   roles: [
     "Engineering Physics student",
-    "Junior Software Engineer",
     "Computational physics researcher",
-    "Engaged community contributor",
+    "Software engineer · aerospace and Earth observation",
+    "Applied machine learning and computer vision",
   ],
   intro:
-    "I explore where theory meets application: scientific computing, cloud-native software, embedded systems, and hands-on engineering.",
+    "I combine applied mathematics and scientific computing with professional software engineering across cloud systems, DevOps, machine learning, and Earth-observation applications.",
   summary: [
-    "I'm an ambitious and curious Engineering Physics student at Uppsala University with a deep interest in computational physics, embedded systems, and software engineering. I graduated high school two years early, at 17, and currently pursuing a MSc in Engineering Physics at an accelerated pace (150%)  - a decision that reflects my drive to learn and challenge myself academically and technically.",
+    "Engineering Physics student at Uppsala University specializing in Applied Computational Engineering, combining numerical analysis, scientific computing, AI and machine learning, and computational modelling with professional experience in software engineering, DevOps, and cloud-native systems. I completed upper-secondary education two years early and follow an accelerated university study plan, targeting graduation in 2028, about one year ahead of the standard programme timeline.",
     "I enjoy taking initiative, learning quickly, and contributing to student and community activities that foster collaboration and creativity. I want to grow as an engineer who bridges curiosity, precision, and innovation in everything I do.",
   ],
   email: "bakwert0123@gmail.com",
@@ -110,7 +110,7 @@ export const projects = [
   {
     index: "08",
     title: "DataComparisonBio",
-    period: "Feb 2024 - Apr 2024",
+    period: "Oct 2024",
     type: "Bioinformatics analysis project",
     description:
       "Created Python tools to compare genomic datasets and extract statistical differences across samples. Implemented visualisation pipelines and automated comparison routines to improve reproducibility.",
@@ -228,19 +228,39 @@ export const defaultExperiences = [
   {
     id: "bruhnbruhn-jse",
     category: "employment",
-    title: "Junior Software Engineer",
+    title: "Junior Software Engineer - Space Computing & Cloud Systems",
     organisation: "BruhnBruhn Innovation",
     organisationHref: "https://bruhnbruhn.com/about-us/",
     location: "Uppsala, Sweden",
-    start: "September 2025",
-    end: "Present",
+    start: "October 2025",
+    end: "August 2026",
+    startDate: "2025-10",
+    endDate: "2026-08",
     description:
-      "Developing cloud-native software systems, distributed microservice architectures, and AI-enabled demonstration platforms across the DacreoOS and SpaceStack ecosystems for aerospace and Earth-observation applications.",
+      "Developed software for cloud-native aerospace and Earth-observation platforms, spanning distributed backend services, DevOps, data engineering, and image-analysis workflows.",
     highlights: [
-      "Designing and maintaining containerised microservices, scalable backend services, and platform integrations.",
-      "Supporting Kubernetes deployments, GitLab CI/CD workflows, observability, heartbeat monitoring, and system-status services.",
-      "Creating automated testing and validation frameworks and integrating Earth-observation data processing.",
-      "Developing and evaluating machine-learning and computer-vision models for image analysis and real-time video analytics.",
+      "Developed and maintained containerised microservices and backend services for aerospace and Earth-observation platforms.",
+      "Supported Kubernetes deployments, container orchestration, GitLab CI/CD, and software-lifecycle workflows across distributed environments.",
+      "Built platform observability, heartbeat monitoring, system-status services, and automated testing and validation infrastructure.",
+      "Developed and evaluated machine-learning and computer-vision workflows, including image analysis, object detection, classification, GPU-based model training, and model validation.",
+      "Worked across backend implementation, platform integration, deployment infrastructure, data processing, and operational validation.",
+    ],
+  },
+  {
+    id: "uu-scientific-computing-ta-2027",
+    category: "employment",
+    title: "Teaching Assistant - Introduction to Scientific Computing",
+    organisation: "Uppsala University",
+    organisationHref: "https://www.uu.se/en/department/information-technology",
+    location: "Uppsala, Sweden",
+    start: "January 2027",
+    end: "June 2027",
+    startDate: "2027-01",
+    endDate: "2027-06",
+    description:
+      "Scheduled teaching appointment supporting numerical methods, scientific programming, and computational problem-solving.",
+    highlights: [
+      "Lead exercise sessions, grade course projects, and provide teaching support.",
     ],
   },
   {
@@ -279,10 +299,12 @@ export const defaultExperiences = [
     start: "June 2025",
     end: "September 2025",
     description:
-      "Worked in Olle Eriksson’s Materials Theory group under Rohit Pathak, Vladislav Borisov, and Olle Eriksson, using computational physics, data processing, and numerical methods to simulate and visualise solution data.",
+      "Developed computational software and reusable numerical-processing, data-analysis, and visualisation pipelines for Materials Theory simulations at Uppsala University.",
+    linkHref: "https://arxiv.org/abs/2611.08894",
+    linkLabel: "Read the paper on arXiv",
     highlights: [
-      "Created generalised software for determining longitudinal spin susceptibility using Dyson equations.",
-      "Solved coupled linear equations involving static bare and interacting susceptibility based on ADA-DFT models in LSDA.",
+      "Developed a Python RPA Dyson solver for longitudinal spin susceptibility using static bare and interacting susceptibility data derived from LSDA/DFT calculations.",
+      "Second author of A Real-Space Framework for the Bare and Interacting Longitudinal Susceptibility of Solids (2026).",
     ],
   },
   {
@@ -327,37 +349,57 @@ export const defaultExperiences = [
   {
     id: "utnarm-2026-pr",
     category: "community",
-    title: "Committee Member and PR Manager - UTNARM 2026",
+    title: "Marketing and Public Relations Manager - UTNARM 2026",
     organisation: "Uppsala Union of Engineering and Science Students (UTN)",
     location: "Uppsala, Sweden",
     start: "March 2026",
-    end: "November 2026",
+    end: "December 2026",
+    startDate: "2026-03",
+    endDate: "2026-12",
     description:
-      "Committee member responsible for executing UTNARM 2026’s marketing and engagement strategy across corporate and student audiences. Serious strategy, ambitious delivery - and genuinely a lot of fun.",
+      "Lead marketing, corporate engagement, and student outreach for the Uppsala Union of Engineering and Science Students’ engineering and science career fair.",
     highlights: [],
   },
   {
     id: "utn-council-2026",
     category: "community",
-    title: "Convening Representative - UTN Council (FUM)",
+    title: "Convening Representative (FUTF) - UTN Council (FUM)",
     organisation: "Uppsala Union of Engineering and Science Students (UTN)",
     location: "Uppsala, Sweden",
-    start: "January 2026",
-    end: "December 2026",
+    start: "August 2024",
+    end: "September 2027",
+    startDate: "2024-08",
+    endDate: "2027-09",
     description:
-      "Convening representative for FUTF in the student union council, coordinating representation, voicing the guild’s positions in UTN policy discussions, and managing the documents and preparation behind that work.",
+      "Represent the Engineering Physics Student Guild (FUTF) in the Uppsala Union of Engineering and Science Students Council, contributing to student-union governance and decision-making.",
+    highlights: [],
+  },
+  {
+    id: "tefat-coordinator-2026",
+    category: "community",
+    title: "TeFAT Coordinator and Corporate Liaison",
+    organisation: "FUTF - Uppsala Engineering Physics Guild",
+    location: "Uppsala, Sweden",
+    start: "September 2026",
+    end: "June 2027",
+    startDate: "2026-09",
+    endDate: "2027-06",
+    description:
+      "Coordinate TeFAT and industry partnerships through the Engineering Physics Student Guild (FUTF), including corporate outreach and engagement.",
     highlights: [],
   },
   {
     id: "first-community",
     category: "community",
-    title: "Board Member and Head of Community",
+    title: "Vice President",
     organisation: "F1RST - Uppsala",
     location: "Uppsala, Sweden",
-    start: "May 2025",
-    end: "May 2026",
+    start: "August 2026",
+    end: "June 2027",
+    startDate: "2026-08",
+    endDate: "2027-06",
     description:
-      "Board member for the newly established Uppsala University branch, working with marketing and outreach, maintaining the ambassador network, and developing the local organisation.",
+      "Support board coordination and student initiatives connecting young talent from underrepresented backgrounds with educational opportunities, professional networks, and employers.",
     highlights: [],
   },
   {
@@ -446,14 +488,20 @@ export const defaultExperiences = [
 export const experienceTranslations = {
   sv: {
     "bruhnbruhn-jse": {
-      title: "Junior mjukvaruutvecklare",
-      description: "Utvecklar molnbaserade mjukvarusystem, distribuerade mikrotjänstarkitekturer och AI-baserade demonstrationsplattformar inom ekosystemen DacreoOS och SpaceStack för tillämpningar inom rymdteknik och jordobservation.",
+      title: "Junior mjukvaruutvecklare – rymddatorteknik och molnsystem",
+      description: "Utvecklade programvara för molnbaserade plattformar inom rymdteknik och jordobservation, med arbete inom distribuerade backendtjänster, DevOps, data engineering och bildanalys.",
       highlights: [
-        "Utformar och underhåller containerbaserade mikrotjänster, skalbara backendtjänster och plattformsintegrationer.",
-        "Arbetar med Kubernetes-distributioner, GitLab CI/CD-flöden, observabilitet, heartbeat-övervakning och tjänster för systemstatus.",
-        "Skapar automatiserade ramverk för testning och validering samt integrerar behandling av jordobservationsdata.",
-        "Utvecklar och utvärderar maskininlärnings- och datorseendemodeller för bildanalys och videoanalys i realtid.",
+        "Utvecklade och underhöll containerbaserade mikrotjänster och backendtjänster för plattformar inom rymdteknik och jordobservation.",
+        "Arbetade med Kubernetes-distributioner, containerorkestrering, GitLab CI/CD och livscykelflöden för programvara i distribuerade miljöer.",
+        "Byggde lösningar för plattformsobservabilitet, heartbeat-övervakning, systemstatus samt automatiserad testning och validering.",
+        "Utvecklade och utvärderade arbetsflöden för maskininlärning och datorseende, bland annat bildanalys, objektdetektering, klassificering, GPU-baserad modellträning och modellvalidering.",
+        "Arbetade med backendutveckling, plattformsintegration, driftsinfrastruktur, databehandling och operativ validering.",
       ],
+    },
+    "uu-scientific-computing-ta-2027": {
+      title: "Lärarassistent – introduktion till scientific computing",
+      description: "Planerad lärarassistenttjänst med stöd inom numeriska metoder, vetenskaplig programmering och beräkningsproblem.",
+      highlights: ["Leda övningar, bedöma kursprojekt och ge undervisningsstöd."],
     },
     "uu-student-ambassador": {
       title: "Studentambassadör – teknisk-naturvetenskapliga fakulteten",
@@ -466,11 +514,12 @@ export const experienceTranslations = {
       highlights: [],
     },
     "materials-theory-research": {
-      title: "Sommarforskningspraktikant – avdelningen för materialteori",
-      description: "Arbetade i Olle Erikssons forskargrupp för materialteori under handledning av Rohit Pathak, Vladislav Borisov och Olle Eriksson. Använde beräkningsfysik, databehandling och numeriska metoder för att simulera och visualisera lösningsdata.",
+      title: "Sommarforskningspraktikant – materialteori",
+      description: "Utvecklade beräkningsprogramvara och återanvändbara arbetsflöden för numerisk bearbetning, dataanalys och visualisering av simuleringar inom materialteori vid Uppsala universitet.",
+      linkLabel: "Läs artikeln på arXiv",
       highlights: [
-        "Utvecklade generaliserad programvara för att bestämma longitudinell spinnsusceptibilitet med hjälp av Dyson-ekvationer.",
-        "Löste kopplade linjära ekvationer för statisk bar och växelverkande susceptibilitet baserat på ADA-DFT-modeller inom LSDA.",
+        "Utvecklade en Python-baserad RPA-Dysonlösare för longitudinell spinnsusceptibilitet med statiska data för bare och växelverkande susceptibilitet från LSDA/DFT-beräkningar.",
+        "Andra författare till A Real-Space Framework for the Bare and Interacting Longitudinal Susceptibility of Solids (2026).",
       ],
     },
     "nti-substitute-teacher": {
@@ -489,18 +538,23 @@ export const experienceTranslations = {
       highlights: [],
     },
     "utnarm-2026-pr": {
-      title: "Kommittémedlem och PR-ansvarig – UTNARM 2026",
-      description: "Kommittémedlem med ansvar för att genomföra UTNARM 2026:s marknadsförings- och engagemangsstrategi för både företag och studenter. Seriös strategi, ambitiöst genomförande – och genuint väldigt roligt.",
+      title: "Marknadsförings- och PR-ansvarig – UTNARM 2026",
+      description: "Leder marknadsföring, företagskontakter och studentkommunikation för Uppsala teknolog- och naturvetarkårs arbetsmarknadsmässa inom teknik och naturvetenskap.",
       highlights: [],
     },
     "utn-council-2026": {
-      title: "Sammankallande representant – UTN:s fullmäktige (FUM)",
-      description: "Sammankallande representant för FUTF i studentkårens fullmäktige. Samordnar representationen, för fram sektionens ståndpunkter i UTN:s policydiskussioner och ansvarar för dokumentationen och förberedelserna bakom arbetet.",
+      title: "Sammankallande representant (FUTF) – UTN:s fullmäktige (FUM)",
+      description: "Representerar teknisk fysik-sektionen FUTF i Uppsala teknolog- och naturvetarkårs fullmäktige och bidrar till studentkårens styrning och beslutsfattande.",
+      highlights: [],
+    },
+    "tefat-coordinator-2026": {
+      title: "TeFAT-samordnare och företagskontakt",
+      description: "Samordnar TeFAT och branschpartnerskap genom teknisk fysik-sektionen FUTF, inklusive företagskontakter och engagemang.",
       highlights: [],
     },
     "first-community": {
-      title: "Styrelseledamot och communityansvarig",
-      description: "Styrelseledamot i den nystartade lokalavdelningen vid Uppsala universitet med ansvar för marknadsföring och utåtriktat arbete, ambassadörsnätverket och den lokala organisationens utveckling.",
+      title: "Vice ordförande",
+      description: "Stödjer styrelsens samordning och studentinitiativ som kopplar samman unga talanger från underrepresenterade grupper med utbildningsmöjligheter, professionella nätverk och arbetsgivare.",
       highlights: [],
     },
     "utnarm-2025-corporate-host": {
@@ -585,11 +639,11 @@ export const education = [
 ]
 
 export const skills = [
-  { category: "Programming", items: ["Python", "C++", "C#", "Arduino", "JavaScript", "HTML/CSS", "MATLAB"] },
-  { category: "Frameworks & libraries", items: ["Vue.js", "React", "NumPy", "SciPy", "Matplotlib", "Tkinter", "Unity", "Flutter"] },
-  { category: "Scientific computing", items: ["Numerical methods", "Mathematical modelling", "Data processing", "Simulation analysis", "Data visualisation"] },
-  { category: "Cloud & systems", items: ["Containerised microservices", "Kubernetes", "GitLab CI/CD", "Platform observability", "Automated testing"] },
-  { category: "Software & design", items: ["Git", "LaTeX", "Figma", "Microsoft Office", "Slack"] },
+  { category: "Programming", items: ["Python", "C++", "C#", "JavaScript", "MATLAB", "Linux", "Bash", "Git", "Arduino"] },
+  { category: "AI & computer vision", items: ["PyTorch", "CUDA", "YOLO", "OpenCV", "scikit-learn"] },
+  { category: "Scientific computing & data", items: ["NumPy", "SciPy", "pandas", "Matplotlib", "Jupyter", "Tkinter", "Numerical methods", "Computational modelling", "Data analysis"] },
+  { category: "DevOps & infrastructure", items: ["Docker", "Kubernetes", "GitLab CI/CD", "Microservices", "Observability", "Automated testing"] },
+  { category: "Web & engineering tools", items: ["Vue.js", "React", "HTML/CSS", "Flutter", "Figma", "LaTeX"] },
   { category: "Languages", items: ["English - fluent", "Swedish - fluent", "German - A2", "Hindi - native spoken"] },
 ]
 
@@ -603,11 +657,11 @@ export const appendixDocuments = [
   {
     title: "Curriculum Vitae",
     type: "Resume",
-    date: "May 2026",
-    description: "Current English CV covering education, employment, technical projects, student engagement, and skills.",
+    date: "November 2026",
+    description: "Current English CV covering education, software engineering and research experience, selected projects, student engagement, and technical skills.",
     href: "/AbhayMishraCV-English.pdf",
     available: true,
-    translations: { sv: { title: "Curriculum Vitae", type: "CV", date: "Maj 2026", description: "Aktuellt engelskspråkigt CV med utbildning, anställningar, tekniska projekt, studentengagemang och kompetenser." } },
+    translations: { sv: { title: "Curriculum Vitae", type: "CV", date: "November 2026", description: "Aktuellt engelskspråkigt CV med utbildning, erfarenhet inom mjukvaruutveckling och forskning, utvalda projekt, studentengagemang och tekniska kompetenser." } },
   },
   {
     title: "Forsränningen 2025 Participation Certificate",
