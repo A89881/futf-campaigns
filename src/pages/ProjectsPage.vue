@@ -26,6 +26,9 @@
                         </a><a v-if="project.github" class="project-link secondary-link" :href="project.github"
                             target="_blank" rel="noopener noreferrer">{{ t('Source on GitHub') }}
                             <Github :size="15" />
+                        </a><a v-if="project.paperHref" class="project-link secondary-link" :href="project.paperHref"
+                            target="_blank" rel="noopener noreferrer">{{ t(project.paperLabel || 'Read the paper on arXiv') }}
+                            <ArrowUpRight :size="15" />
                         </a>
                     </div>
                     <div class="project-glyph" aria-hidden="true"><span></span><i></i></div>

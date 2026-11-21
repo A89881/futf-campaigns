@@ -53,8 +53,10 @@ export const projects = [
     period: "Jun 2025 - Sep 2025",
     type: "Research project · Uppsala University",
     description:
-      "Developed a computational physics solver for longitudinal spin susceptibility using Dyson equations and LSDA-based DFT methods. Built robust numerical-processing and data-visualisation scripts for large-scale Materials Theory simulation outputs.",
-    tags: ["Python", "Computational physics", "Numerical methods", "DFT"],
+      "Developed the Python RPA Dyson solver used in A Real-Space Framework for the Bare and Interacting Longitudinal Susceptibility of Solids, a 2026 research paper on longitudinal spin susceptibility in solids.",
+    paperHref: "https://arxiv.org/abs/2611.08894",
+    paperLabel: "Read the paper on arXiv",
+    tags: ["Python", "RPA Dyson solver", "Computational physics", "Numerical methods", "DFT"],
     accent: "blue",
     href: "https://github.com/A89881/Longitudinal-Spin-Susceptibility-Solver-via-RSPt-Inputs-2025",
     cta: "View on GitHub",
@@ -75,7 +77,7 @@ export const projects = [
   {
     index: "05",
     title: "RoboticHandControl",
-    period: "Aug 2023 - Jun 2024",
+    period: "Aug 2023 - May 2024",
     type: "Embedded systems project",
     description:
       "Designed and programmed a remote-controlled bionic hand using servo actuation and wireless signal processing. The project received NTI Gymnasium’s Best Practical Graduation Project award.",
@@ -270,10 +272,11 @@ export const defaultExperiences = [
     organisation: "Uppsala University",
     organisationHref: "https://www.uu.se/en/staff/faculty/science-and-technology/education-and-teaching/student-recruitment",
     location: "Uppsala, Sweden",
-    start: "September 2025",
+    start: "October 2025",
     end: "Present",
+    startDate: "2025-10",
     description:
-      "Presenting Uppsala University’s engineering and science programmes and student life to prospective students through outreach, marketing, and public speaking.",
+      "Present Uppsala University’s engineering and science programmes and student life to prospective students through outreach, marketing, and public speaking.",
     highlights: [],
   },
   {
@@ -310,25 +313,29 @@ export const defaultExperiences = [
   {
     id: "nti-substitute-teacher",
     category: "employment",
-    title: "Substitute Teacher - Tutoring Support",
+    title: "Long-Term Substitute Teacher - Mathematics & Physics",
     organisation: "NTI Gymnasium",
     organisationHref: "https://ntigymnasiet.se/uppsala/",
     location: "Uppsala, Sweden",
-    start: "September 2024",
+    start: "August 2024",
     end: "June 2025",
+    startDate: "2024-08",
+    endDate: "2025-06",
     description:
-      "Worked as a substitute teacher in secondary-level mathematics and physics and ran weekly tutoring-support sessions.",
+      "Worked as a long-term substitute teacher in mathematics and physics at NTI Gymnasiet.",
     highlights: [],
   },
   {
     id: "allakando-study-coach",
     category: "employment",
-    title: "Study Coach",
+    title: "Academic Coach",
     organisation: "Allakando",
     organisationHref: "https://www.allakando.se/",
     location: "Uppsala, Sweden",
     start: "June 2024",
     end: "October 2024",
+    startDate: "2024-06",
+    endDate: "2024-10",
     description:
       "Guided students through their studies and helped them strengthen academic habits and educational performance.",
     highlights: [],
@@ -386,6 +393,20 @@ export const defaultExperiences = [
     endDate: "2027-06",
     description:
       "Coordinate TeFAT and industry partnerships through the Engineering Physics Student Guild (FUTF), including corporate outreach and engagement.",
+    highlights: [],
+  },
+  {
+    id: "first-community-board",
+    category: "community",
+    title: "Board Member and Head of Community",
+    organisation: "F1RST - Uppsala",
+    location: "Uppsala, Sweden",
+    start: "May 2025",
+    end: "May 2026",
+    startDate: "2025-05",
+    endDate: "2026-05",
+    description:
+      "Served on the board of the Uppsala University branch, contributing to outreach, the ambassador network, and development of the local organisation.",
     highlights: [],
   },
   {
@@ -550,6 +571,11 @@ export const experienceTranslations = {
     "tefat-coordinator-2026": {
       title: "TeFAT-samordnare och företagskontakt",
       description: "Samordnar TeFAT och branschpartnerskap genom teknisk fysik-sektionen FUTF, inklusive företagskontakter och engagemang.",
+      highlights: [],
+    },
+    "first-community-board": {
+      title: "Styrelseledamot och communityansvarig",
+      description: "Var styrelseledamot i lokalavdelningen vid Uppsala universitet och bidrog till utåtriktat arbete, ambassadörsnätverket och organisationens utveckling.",
       highlights: [],
     },
     "first-community": {
