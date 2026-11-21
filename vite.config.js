@@ -9,12 +9,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // GitHub Pages can cache index.html longer than a deployment's hashed
-        // lazy chunks. Stable names keep direct SPA routes functional while
-        // the CDN moves from one release to the next.
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name][extname]',
+        // Hashed filenames ensure browsers load fresh application code after
+        // a deployment instead of reusing a cached bundle from an older release.
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
       },
     },
   },
